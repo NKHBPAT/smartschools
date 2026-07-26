@@ -222,7 +222,7 @@ select.fc{cursor:pointer}textarea.fc{resize:vertical;min-height:72px}
   <div class="ll">
    <div class="ll-brand">Smart<em>School</em></div>
    <div class="ll-co">Solution Tech Inter</div>
-   <p class="ll-tagline">Plateforme complète de gestion scolaire pour établissements primaires, secondaires et techniques — Sous-systèmes francophone et anglophone.</p>
+   <p class="ll-tagline">Plateforme de gestion scolaire pour établissements d'enseignement primaires, secondaires general et techniques — Sous-systèmes francophone et anglophone.</p>
    <div class="ll-langs" role="group" aria-label="Langue">
     <button class="ll-lb active" onclick="setLang('fr')" aria-pressed="true">🇫🇷 FR</button>
     <button class="ll-lb" onclick="setLang('en')" aria-pressed="false">🇬🇧 EN</button>
@@ -468,6 +468,20 @@ fr:{
  secretary:'Secretaire',surveillant:'Surveillant general',parentRole:'Parent/Tuteur',
  stats:'Statistiques',schools:'Établissements',users:'Utilisateurs',overview:'Vue d\'ensemble',
  students:'Élèves',classes:'Classes',subjects:'Matières',grades:'Notes',timetable:'Emploi du temps',
+ teachers:'Enseignants',distribution:'Repartition',clsEffectifs:'Classes & effectifs',
+ addTeacherBtn:'+ Ajouter enseignant',addBtn:'+ Ajouter',levelCol:'Niveau',titularTeacher:'Prof. titulaire',
+ actionsCol:'Actions',matCol:'Mat.',fullnameCol:'Nom & Prenom',genderCol:'G.',classCol:'Classe',
+ dobCol:'Naissance',parentCol:'Parent',phoneCol:'Tel.',coefCol:'Coef.',groupCol:'Groupe',
+ teacherCol:'Enseignant',allClasses:'Toutes les classes',selectClassGrades:'Selectionnez une classe pour saisir les notes.',
+ selectClassOpt:'-- Selectionner une classe --',selectClassTT:'Selectionnez une classe pour afficher et editer son emploi du temps.',
+ termDropdown:'Trimestre',printSingleBull:'🖨 Bulletin individuel',printAllBull:'🖨 Toute la classe',
+ exitAuth:'➡️ Autorisation sortie',entryAuth:'⬅️ Autorisation entree',
+ passStudent:'Élève',passDate:'Date',timeOutCol:'Heure sortie',timeInCol:'Heure retour',
+ reasonCol:'Motif',authByCol:'Autorise par',bySeq:'Par sequence',byTerm:'Par trimestre',
+ annualOpt:'Annuel',wholeSchool:'Tout l\'etablissement',matriculeCol:'Matricule',
+ sexCol:'Sexe',pobCol:'Lieu naiss.',addressCol:'Adresse',enrolledCol:'Date inscr.',
+ printStdList:'🖨 Imprimer la liste standard',previewLbl:'Aperçu',studentsCountLbl:'elèves',
+ numCol:'N°',newMsgBtn:'Nouveau',receivedTab:'Reçus',sentTab:'Envoyes',
  honor:'Tableau d\'honneur',bulletin:'Bulletins',certs:'Certificats',discipline:'Discipline & Absences',
  synthesis:'Synthèses & Statistiques',studentlist:'Liste des elèves',progression:'Progression',
  messages:'Messages',parent:'Mes resultats',docconfig:'Config. Documents',passes:'Autorisations',sms:'Notifications SMS',
@@ -495,6 +509,20 @@ en:{
  surveillant:'Head Prefect',parentRole:'Parent/Guardian',
  stats:'Statistics',schools:'Schools',users:'Users',overview:'Overview',students:'Students',
  classes:'Classes',subjects:'Subjects',grades:'Grades',timetable:'Timetable',honor:'Honor Roll',
+ teachers:'Teachers',distribution:'Distribution',clsEffectifs:'Classes & Enrollment',
+ addTeacherBtn:'+ Add Teacher',addBtn:'+ Add',levelCol:'Level',titularTeacher:'Class Teacher',
+ actionsCol:'Actions',matCol:'ID',fullnameCol:'Full Name',genderCol:'G.',classCol:'Class',
+ dobCol:'Date of Birth',parentCol:'Parent',phoneCol:'Phone',coefCol:'Coef.',groupCol:'Group',
+ teacherCol:'Teacher',allClasses:'All classes',selectClassGrades:'Select a class to enter grades.',
+ selectClassOpt:'-- Select a class --',selectClassTT:'Select a class to view and edit its timetable.',
+ termDropdown:'Term',printSingleBull:'🖨 Individual Report',printAllBull:'🖨 Whole Class',
+ exitAuth:'➡️ Exit Pass',entryAuth:'⬅️ Entry Pass',
+ passStudent:'Student',passDate:'Date',timeOutCol:'Time Out',timeInCol:'Time In',
+ reasonCol:'Reason',authByCol:'Authorized By',bySeq:'By Sequence',byTerm:'By Term',
+ annualOpt:'Annual',wholeSchool:'Whole School',matriculeCol:'Student ID',
+ sexCol:'Gender',pobCol:'Place of Birth',addressCol:'Address',enrolledCol:'Enrollment Date',
+ printStdList:'🖨 Print Standard List',previewLbl:'Preview',studentsCountLbl:'students',
+ numCol:'No.',newMsgBtn:'New',receivedTab:'Inbox',sentTab:'Sent',
  bulletin:'Report Cards',certs:'Certificates',discipline:'Discipline',synthesis:'Synthesis & Stats',
  studentlist:'Student List',progression:'Progression',messages:'Messages',parent:'My Results',
  docconfig:'Doc. Config',passes:'Passes',sms:'SMS Notifications',
@@ -522,6 +550,20 @@ es:{
  surveillant:'Vigilante general',parentRole:'Padre/Tutor',
  stats:'Estadísticas',schools:'Instituciones',users:'Usuarios',overview:'Resumen',students:'Alumnos',
  classes:'Clases',subjects:'Materias',grades:'Notas',timetable:'Horario',honor:'Cuadro de honor',
+ teachers:'Docentes',distribution:'Distribución',clsEffectifs:'Clases y Matrícula',
+ addTeacherBtn:'+ Añadir docente',addBtn:'+ Añadir',levelCol:'Nivel',titularTeacher:'Profesor titular',
+ actionsCol:'Acciones',matCol:'Mat.',fullnameCol:'Nombre completo',genderCol:'G.',classCol:'Clase',
+ dobCol:'Nacimiento',parentCol:'Padre/Tutor',phoneCol:'Tel.',coefCol:'Coef.',groupCol:'Grupo',
+ teacherCol:'Docente',allClasses:'Todas las clases',selectClassGrades:'Seleccione una clase para ingresar notas.',
+ selectClassOpt:'-- Seleccionar una clase --',selectClassTT:'Seleccione una clase para ver y editar su horario.',
+ termDropdown:'Trimestre',printSingleBull:'🖨 Boletín individual',printAllBull:'🖨 Toda la clase',
+ exitAuth:'➡️ Autorización de salida',entryAuth:'⬅️ Autorización de entrada',
+ passStudent:'Alumno',passDate:'Fecha',timeOutCol:'Hora salida',timeInCol:'Hora regreso',
+ reasonCol:'Motivo',authByCol:'Autorizado por',bySeq:'Por secuencia',byTerm:'Por trimestre',
+ annualOpt:'Anual',wholeSchool:'Toda la institución',matriculeCol:'Matrícula',
+ sexCol:'Sexo',pobCol:'Lugar de nac.',addressCol:'Dirección',enrolledCol:'Fecha inscr.',
+ printStdList:'🖨 Imprimir lista estándar',previewLbl:'Vista previa',studentsCountLbl:'alumnos',
+ numCol:'N°',newMsgBtn:'Nuevo',receivedTab:'Recibidos',sentTab:'Enviados',
  bulletin:'Boletines',certs:'Certificados',discipline:'Disciplina',synthesis:'Síntesis y Estadísticas',
  studentlist:'Lista de alumnos',progression:'Progresión',messages:'Mensajes',parent:'Mis resultados',
  docconfig:'Config. Documentos',passes:'Autorizaciones',sms:'Notificaciones SMS',
@@ -994,7 +1036,7 @@ function rStats(){
  <div class="srow">
   ${sb('🏫',DB.schools.length,t('schools'),'#eff6ff','#2563eb')}
   ${sb('🎒',DB.students.length,t('students'),'#f0fdf4','#16a34a')}
-  ${sb('👩‍🏫',DB.users.filter(u=>u.role==='teacher').length,'Enseignants','#fdf4ff','#9333ea')}
+  ${sb('👩‍🏫',DB.users.filter(u=>u.role==='teacher').length,t('teachers'),'#fdf4ff','#9333ea')}
   ${sb('📚',DB.classes.length,'Classes','#fffbeb','#d97706')}
   ${sb('👤',DB.users.filter(u=>u.role==='parent').length,'Parents','#f0fdfa','#0891b2')}
   ${sb('📝',DB.grades.length,'Notes saisies','#fff1f2','#dc2626')}
@@ -1246,20 +1288,20 @@ function rOverview(){
    <tbody>${mySbs.map(s=>{const c=DB.classes.find(c=>c.id===s.classId);return`<tr><td><strong>${esc(c?.name||'-')}</strong></td><td>${esc(s.name)}</td><td>${bd(esc(s.group||'-'),'bgray')}</td><td>${bd('×'+s.coef,'bgold')}</td><td>${DB.students.filter(x=>x.classId===s.classId).length}</td></tr>`;}).join('')||`<tr><td colspan="5">${empty('Aucune matière assignee')}</td></tr>`}</tbody>
   </table></div></div></div>`;
  }
- el.innerHTML=`<div class="ph"><h2>🏫 ${esc(school.name)}</h2><p>${esc(school.city)} - ${t('year')}</p>${canAdmin()&&CU.role!=='admin'?`<button class="btn bp" onclick="openUserModal()">+ Ajouter enseignant</button>`:''}</div>
+ el.innerHTML=`<div class="ph"><h2>🏫 ${esc(school.name)}</h2><p>${esc(school.city)} - ${t('year')}</p>${canAdmin()&&CU.role!=='admin'?`<button class="btn bp" onclick="openUserModal()">${t('addTeacherBtn')}</button>`:''}</div>
  <div class="srow">
-  ${sb('🎒',sts.length,t('students'),'#f0fdf4','#16a34a')}${sb('👩‍🏫',tes.length,'Enseignants','#eff6ff','#2563eb')}${sb('📚',cls.length,'Classes','#fdf4ff','#9333ea')}${sb('📖',DB.subjects.filter(s=>cls.some(c=>c.id===s.classId)).length,t('subjects'),'#fffbeb','#d97706')}
- </div>
+ ${sb('🎒',sts.length,t('students'),'#f0fdf4','#16a34a')}${sb('👩‍🏫',tes.length,t('teachers'),'#eff6ff','#2563eb')}${sb('📚',cls.length,t('classes'),'#fdf4ff','#9333ea')}${sb('📖',DB.subjects.filter(s=>cls.some(c=>c.id===s.classId)).length,t('subjects'),'#fffbeb','#d97706')}
+  </div>
  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
-  <div class="card"><div class="ch"><span class="ct2">👥 Repartition</span></div><div class="cb">
+  <div class="card"><div class="ch"><span class="ct2">👥 ${t('distribution')}</span></div><div class="cb">
    <div style="display:flex;justify-content:space-between;padding:8px 11px;background:#eff6ff;border-radius:7px;margin-bottom:6px"><span>♂ Garçons</span><strong>${sts.filter(s=>s.gender==='M').length}</strong></div>
    <div style="display:flex;justify-content:space-between;padding:8px 11px;background:#fce7f3;border-radius:7px"><span>♀ Filles</span><strong style="color:#be185d">${sts.filter(s=>s.gender==='F').length}</strong></div>
   </div></div>
-  <div class="card"><div class="ch"><span class="ct2">📋 Classes & effectifs</span></div><div class="cb" style="padding:11px 15px">
+  <div class="card"><div class="ch"><span class="ct2">📋 ${t('clsEffectifs')}</span></div><div class="cb" style="padding:11px 15px">
    ${cls.map(c=>`<div style="display:flex;justify-content:space-between;padding:6px 9px;background:#f8fafc;border-radius:7px;margin-bottom:5px;font-size:13px"><span>${esc(c.name)}</span><strong>${DB.students.filter(s=>s.classId===c.id).length}</strong></div>`).join('')||'<p style="color:var(--muted);font-size:13px">Aucune classe</p>'}
   </div></div>
  </div>
- ${canAdmin()&&CU.role!=='admin'?`<div class="card"><div class="ch"><span class="ct2">👩‍🏫 Enseignants (${tes.length})</span><button class="btn bp bsm" onclick="openUserModal()">+ Ajouter</button></div><div class="cb"><div class="tw"><table>
+ ${canAdmin()&&CU.role!=='admin'?`<div class="card"><div class="ch"><span class="ct2">👩‍🏫 ${t('teachers')} (${tes.length})</span><button class="btn bp bsm" onclick="openUserModal()">${t('addBtn')}</button></div><div class="cb"><div class="tw"><table>
   <thead><tr><th>Nom</th><th>Email</th><th>Matières</th><th>Classes</th><th>Actions</th></tr></thead>
   <tbody>${tes.map(te=>{const sbs=DB.subjects.filter(s=>s.teacherId===te.id&&cls.some(c=>c.id===s.classId));const teaCls=[...new Set(sbs.map(s=>s.classId))];return`<tr>
    <td><strong>${esc(te.name)}</strong></td><td style="font-size:12px">${esc(te.email)}</td>
@@ -1285,7 +1327,7 @@ function rStudents(){
   ${isAdmin?`<select class="fc" style="max-width:250px" id="st-sch" onchange="rStudents()"><option value="all">Tous etablissements</option>${allSch.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('')}</select>`:''}
   <div class="sw"><span>🔍</span><input id="st-q" placeholder="${t('search')}" oninput="rStudents()"></div>
  </div><div class="cb"><div class="tw"><table>
-  <thead><tr><th>Mat.</th><th>Nom & Prenom</th><th>G.</th><th>Classe</th>${isAdmin?'<th>École</th>':''}<th>Naissance</th><th>Parent</th><th>Tel.</th><th>Actions</th></tr></thead>
+  <thead><tr><th>${t('matCol')}</th><th>${t('fullnameCol')}</th><th>${t('genderCol')}</th><th>${t('classCol')}</th>${isAdmin?`<th>${t('school')}</th>`:''}<th>${t('dobCol')}</th><th>${t('parentCol')}</th><th>${t('phoneCol')}</th><th>${t('actionsCol')}</th></tr></thead>
   <tbody>${studs.length?studs.map(s=>`<tr>
    <td><code style="font-size:10.5px;background:#f1f5f9;padding:1px 6px;border-radius:4px">${esc(s.mat||'-')}</code></td>
    <td><div style="display:flex;align-items:center;gap:8px">${s.photo?`<img src="${s.photo}" style="width:28px;height:28px;border-radius:50%;object-fit:cover;flex-shrink:0">`:`<div style="width:28px;height:28px;border-radius:50%;background:${s.gender==='F'?'#fce7f3':'#eff6ff'};display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0">${s.gender==='F'?'👧':'👦'}</div>`}<div><strong>${esc(s.firstName)} ${esc(s.name)}</strong>${s.repeating?`<br><span style="font-size:10px;color:var(--red)">Redoublant</span>`:''}</div></div></td>
@@ -1358,7 +1400,7 @@ function rClasses(){
  const el=document.getElementById('pg-classes');const school=schoolOf();const cls=clsOf(school?.id||'');
  el.innerHTML=`<div class="ph"><h2>📚 ${t('classes')}</h2><button class="btn bp" onclick="openClassModal()">+ Ajouter</button></div>
  <div class="card"><div class="cb"><div class="tw"><table>
-  <thead><tr><th>Classe</th><th>Niveau</th><th>Élèves</th><th>Prof. titulaire</th><th>Matières</th><th>Actions</th></tr></thead>
+  <thead><tr><th>${t('classCol')}</th><th>${t('levelCol')}</th><th>${t('students')}</th><th>${t('titularTeacher')}</th><th>${t('subjects')}</th><th>${t('actionsCol')}</th></tr></thead>
   <tbody>${cls.length?cls.map(c=>{const tes=DB.users.filter(u=>u.role==='teacher'&&u.schoolId===school.id);return`<tr>
    <td><strong>${esc(c.name)}</strong></td><td>${bd(esc(c.level),'bnavy')}</td>
    <td>${DB.students.filter(s=>s.classId===c.id).length}</td>
@@ -1410,9 +1452,9 @@ function rSubjects(){
  const sc=document.getElementById('sj-cl')?.value||'';const sbs=sc?sbOf(sc):cls.flatMap(c=>sbOf(c.id));
  const grpKeys=getGrpKeys(school);
  el.innerHTML=`<div class="ph"><h2>📖 ${t('subjects')}</h2><button class="btn bp" onclick="openSubjectModal()">+ Ajouter</button></div>
- <div class="card"><div class="ch"><select class="fc" style="max-width:250px" id="sj-cl" onchange="rSubjects()"><option value="">Toutes les classes</option>${cls.map(c=>`<option value="${c.id}" ${sc===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select></div>
+ <div class="card"><div class="ch"><select class="fc" style="max-width:250px" id="sj-cl" onchange="rSubjects()"><option value="">${t('allClasses')}</option>${cls.map(c=>`<option value="${c.id}" ${sc===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select></div>
  <div class="cb"><div class="tw"><table>
-  <thead><tr><th>Matière</th><th>Classe</th><th>Coef.</th><th>Groupe</th><th>Enseignant</th><th>Actions</th></tr></thead>
+  <thead><tr><th>${t('subjects')}</th><th>${t('classCol')}</th><th>${t('coefCol')}</th><th>${t('groupCol')}</th><th>${t('teacherCol')}</th><th>${t('actionsCol')}</th></tr></thead>
   <tbody>${sbs.length?sbs.map(s=>`<tr>
    <td><strong>${esc(s.name)}</strong></td>
    <td>${bd(esc(className(s.classId)),'bnavy')}</td>
@@ -1447,7 +1489,7 @@ function rGrades(){
  <div class="card"><div class="ch" style="flex-wrap:wrap;gap:8px">
   <select class="fc" style="max-width:220px" id="gr-cl" onchange="_gClass=this.value;_gSeq='1';rGrades2()"><option value="">-- Classe --</option>${cls.map(c=>`<option value="${c.id}" ${_gClass===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select>
   <select class="fc" style="max-width:200px" id="gr-sq" onchange="_gSeq=this.value;rGrades2()">${SEQ_DEFS.map(s=>`<option value="${s.id}" ${_gSeq===s.id?'selected':''}>${s.lbl}</option>`).join('')}</select>
- </div><div id="gr-area"><div class="cb"><div class="ali ali-i">Selectionnez une classe pour saisir les notes.</div></div></div></div>`;
+ </div><div id="gr-area"><div class="cb"><div class="ali ali-i">${t('selectClassGrades')}</div></div></div></div>`;
  if(_gClass)rGrades2();
 }
 function rGrades2(){
@@ -1495,7 +1537,7 @@ function rTimetable(){
   </select>
   ${_ttClass?`<span style="font-size:12.5px;color:var(--muted)">${slots.length} creneau(x) - ${totalH.toFixed(1)}h/semaine</span>`:''}
  </div>
- ${!_ttClass?`<div class="ali ali-i">Selectionnez une classe pour afficher et editer son emploi du temps.</div>`:`
+ ${!_ttClass?`<div class="ali ali-i">${t('selectClassTT')}</div>`:`
  <div class="card" style="overflow:hidden">
   <div class="ch" style="background:var(--navy);border-radius:13px 13px 0 0;padding:10px 16px">
    <span style="color:#fff;font-weight:800;font-size:14px">📅 ${esc(DB.classes.find(c=>c.id===_ttClass)?.name||'')}</span>
@@ -1909,15 +1951,15 @@ function rPasses(){
  const el=document.getElementById('pg-passes');const school=schoolOf();const cls=clsOf(school?.id||'');
  const passes=DB.passes.filter(p=>p.schoolId===school?.id);
  el.innerHTML=`<div class="ph"><h2>🚪 ${t('passes')}</h2><div style="display:flex;gap:7px">
-  <button class="btn bp" onclick="openPassModal('sortie')">➡️ Autorisation sortie</button>
-  <button class="btn bor" onclick="openPassModal('entree')">⬅️ Autorisation entree</button>
+  <button class="btn bp" onclick="openPassModal('sortie')">${t('exitAuth')}</button>
+  <button class="btn bor" onclick="openPassModal('entree')">${t('entryAuth')}</button>
  </div></div>
  <div class="tabs">
   <button class="tab ${_passType==='sortie'?'on':''}" onclick="_passType='sortie';rPasses()">➡️ Sorties (${passes.filter(p=>p.type==='sortie').length})</button>
   <button class="tab ${_passType==='entree'?'on':''}" onclick="_passType='entree';rPasses()">⬅️ Entrees (${passes.filter(p=>p.type==='entree').length})</button>
  </div>
  <div class="card"><div class="cb"><div class="tw"><table>
-  <thead><tr><th>Élève</th><th>Classe</th><th>Date</th><th>Heure sortie</th><th>Heure retour</th><th>Motif</th><th>Autorise par</th><th>Actions</th></tr></thead>
+  <thead><tr><th>${t('passStudent')}</th><th>${t('classCol')}</th><th>${t('passDate')}</th><th>${t('timeOutCol')}</th><th>${t('timeInCol')}</th><th>${t('reasonCol')}</th><th>${t('authByCol')}</th><th>${t('actionsCol')}</th></tr></thead>
   <tbody>${passes.filter(p=>p.type===_passType).length?passes.filter(p=>p.type===_passType).sort((a,b)=>new Date(b.date)-new Date(a.date)).map(p=>{const st=DB.students.find(s=>s.id===p.studentId);return`<tr>
    <td><strong>${st?esc(st.firstName+' '+st.name):'-'}</strong></td>
    <td>${bd(esc(className(st?.classId||'')),'bnavy')}</td>
@@ -2051,9 +2093,9 @@ function rBulletins(){
     <select class="fc" id="bl-c" onchange="_blClass=this.value;_blSt='';rBulletins()"><option value="">--</option>${cls.map(c=>`<option value="${c.id}" ${_blClass===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select></div>
    <div style="flex:1;min-width:150px"><label class="lab">📅 Type</label>
     <select class="fc" id="bl-m" onchange="_blMode=this.value;rBulletins()">
-     <option value="seq" ${_blMode==='seq'?'selected':''}>Par sequence</option>
-     <option value="term" ${_blMode==='term'?'selected':''}>Par trimestre</option>
-     <option value="annual" ${_blMode==='annual'?'selected':''}>Bilan annuel</option>
+     <option value="seq" ${_blMode==='seq'?'selected':''}>${t('bySeq')}</option>
+     <option value="term" ${_blMode==='term'?'selected':''}>${t('byTerm')}</option>
+     <option value="annual" ${_blMode==='annual'?'selected':''}>${t('annual')}</option>
     </select></div>
    ${_blMode==='seq'?`<div style="flex:1;min-width:160px"><label class="lab">Sequence</label>
     <select class="fc" id="bl-sq" onchange="_blSeq=this.value;rBulletins()">${SEQ_DEFS.map(s=>`<option value="${s.id}" ${_blSeq===s.id?'selected':''}>${s.lbl} (T${s.term})</option>`).join('')}</select></div>`:
@@ -2063,8 +2105,8 @@ function rBulletins(){
     <select class="fc" id="bl-s" onchange="_blSt=this.value;rBulletins()"><option value="">-- Selectionner --</option>${clsSts.map(s=>`<option value="${s.id}" ${_blSt===s.id?'selected':''}>${esc(s.firstName)} ${esc(s.name)}</option>`).join('')}</select></div>
   </div>
   <div style="display:flex;gap:8px;flex-wrap:wrap">
-   <button class="bpr" ${!_blSt||!_blClass?'disabled':''} onclick="printOneBulletin(_blSt)">🖨 Bulletin individuel</button>
-   ${_blClass?`<button class="bpr" style="background:var(--green)" onclick="openBatchPrint()">🖨 Toute la classe</button>`:''}
+   <button class="bpr" ${!_blSt||!_blClass?'disabled':''} onclick="printOneBulletin(_blSt)">${t('printSingleBull')}</button>
+   ${_blClass?`<button class="bpr" style="background:var(--green)" onclick="openBatchPrint()">${t('printAllBull')}</button>`:''}
   </div>
  </div></div>
  <div id="bl-area">${_blClass?buildBulletinList(school):''}</div>`;
@@ -2289,10 +2331,10 @@ function rSynthesis(){
  el.innerHTML=`<div class="ph"><h2>📈 ${t('synthesis')}</h2>${hasPerm('print_synthesis')?`<button class="btn bgo" onclick="printSynthesis()">🖨 Imprimer synthèse</button>`:''}</div>
  ${isAdmin?`<div style="margin-bottom:13px"><label class="lab">🏫 Établissement</label><select class="fc" style="max-width:280px" onchange="_synSch=this.value;_synClass='';rSynthesis()">${DB.schools.map(s=>`<option value="${s.id}" ${_synSch===s.id?'selected':''}>${esc(s.name)}</option>`).join('')}</select></div>`:''}
  <div class="tabs">
-  <button class="tab ${_synMode==='seq'?'on':''}" onclick="_synMode='seq';rSynthesis()">Par sequence</button>
-  <button class="tab ${_synMode==='term'?'on':''}" onclick="_synMode='term';rSynthesis()">Par trimestre</button>
-  <button class="tab ${_synMode==='annual'?'on':''}" onclick="_synMode='annual';rSynthesis()">Annuel</button>
-  <button class="tab ${_synMode==='school'?'on':''}" onclick="_synMode='school';rSynthesis()">Tout l'etablissement</button>
+  <button class="tab ${_synMode==='seq'?'on':''}" onclick="_synMode='seq';rSynthesis()">${t('bySeq')}</button>
+  <button class="tab ${_synMode==='term'?'on':''}" onclick="_synMode='term';rSynthesis()">${t('byTerm')}</button>
+  <button class="tab ${_synMode==='annual'?'on':''}" onclick="_synMode='annual';rSynthesis()">${t('annual')}</button>
+  <button class="tab ${_synMode==='school'?'on':''}" onclick="_synMode='school';rSynthesis()">${t('wholeSchool')}</button>
  </div>
  ${_synMode!=='school'?`<div style="display:flex;gap:9px;margin-bottom:14px;flex-wrap:wrap">
   <select class="fc" style="max-width:240px" id="syn-c" onchange="_synClass=this.value;rSyn2()"><option value="">-- Classe --</option>${cls.map(c=>`<option value="${c.id}" ${_synClass===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select>
@@ -2399,7 +2441,7 @@ function rStudentList(){
  const school=isAdmin?(DB.schools.find(s=>s.id===_synSch)||DB.schools[0]):schoolOf();
  const cls=clsOf(school?.id||'');
  const dc=getDocCfg(school);
- const allCols=[{k:'mat',l:'Matricule'},{k:'name',l:'Nom & Prenom'},{k:'gender',l:'Sexe'},{k:'class',l:'Classe'},{k:'dob',l:'Naissance'},{k:'pob',l:'Lieu naiss.'},{k:'parent',l:'Parent'},{k:'phone',l:'Telephone'},{k:'address',l:'Adresse'},{k:'enrolled',l:'Date inscr.'}];
+ const allCols=[{k:'mat',l:t('matriculeCol')},{k:'name',l:t('fullnameCol')},{k:'gender',l:t('sexCol')},{k:'class',l:t('classCol')},{k:'dob',l:t('dobCol')},{k:'pob',l:t('pobCol')},{k:'parent',l:t('parentCol')},{k:'phone',l:t('phoneCol')},{k:'address',l:t('addressCol')},{k:'enrolled',l:t('enrolledCol')}];
  const defCols=dc.listColumns||['mat','name','gender','class','dob','parent'];
  el.innerHTML=`<div class="ph"><h2>📄 ${t('studentlist')}</h2></div>
  ${isAdmin?`<div style="margin-bottom:13px"><label class="lab">🏫 Établissement</label><select class="fc" style="max-width:280px" onchange="_synSch=this.value;rStudentList()">${DB.schools.map(s=>`<option value="${s.id}" ${_synSch===s.id?'selected':''}>${esc(s.name)}</option>`).join('')}</select></div>`:''}
@@ -2416,10 +2458,10 @@ function rStudentList(){
    <div style="margin-bottom:11px"><div style="font-size:12.5px;font-weight:700;color:var(--navy);margin-bottom:7px">Colonnes :</div>
     <div style="display:flex;flex-wrap:wrap;gap:5px">${allCols.map(col=>`<label style="display:flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:12.5px"><input type="checkbox" class="lc-col" value="${col.k}" ${defCols.includes(col.k)?'checked':''} style="accent-color:var(--navy)">${col.l}</label>`).join('')}</div>
    </div>
-   <button class="bpr" onclick="printStudentList()">🖨 Imprimer la liste standard</button>
+   <button class="bpr" onclick="printStudentList()">${t('printStdList')}</button>
   </div></div>
-  <div class="card"><div class="ch"><span class="ct2">Aperçu - ${DB.students.filter(s=>s.schoolId===school?.id).length} elèves</span></div><div class="cb"><div class="tw"><table>
-   <thead><tr><th>N°</th><th>Mat.</th><th>Nom & Prenom</th><th>G.</th><th>Classe</th><th>Naissance</th><th>Parent</th></tr></thead>
+  <div class="card"><div class="ch"><span class="ct2">${t('previewLbl')} - ${DB.students.filter(s=>s.schoolId===school?.id).length} ${t('studentsCountLbl')}</span></div><div class="cb"><div class="tw"><table>
+   <thead><tr><th>${t('numCol')}</th><th>${t('matCol')}</th><th>${t('fullnameCol')}</th><th>${t('genderCol')}</th><th>${t('classCol')}</th><th>${t('dobCol')}</th><th>${t('parentCol')}</th></tr></thead>
    <tbody>${DB.students.filter(s=>s.schoolId===school?.id).sort((a,b)=>a.name.localeCompare(b.name)).map((s,i)=>`<tr>
     <td>${i+1}</td><td><code style="font-size:10.5px">${esc(s.mat||'-')}</code></td>
     <td><strong>${esc(s.firstName)} ${esc(s.name)}</strong></td>
@@ -2692,8 +2734,8 @@ async function saveProg(id){
 function rMessages(){
  const el=document.getElementById('pg-messages');
  const inbox=DB.messages.filter(m=>m.to===CU.id);const sent=DB.messages.filter(m=>m.from===CU.id);const unread=inbox.filter(m=>!m.read).length;
- el.innerHTML=`<div class="ph"><h2>✉️ ${t('messages')}</h2><p>${unread} non lu(s)</p><button class="btn bp" onclick="openComposeModal()">✏️ Nouveau</button></div>
- <div class="tabs"><button class="tab ${_msgTab==='inbox'?'on':''}" onclick="_msgTab='inbox';rMessages()">📥 Reçus (${inbox.length})</button><button class="tab ${_msgTab==='sent'?'on':''}" onclick="_msgTab='sent';rMessages()">📤 Envoyes (${sent.length})</button></div>
+ el.innerHTML=`<div class="ph"><h2>✉️ ${t('messages')}</h2><p>${unread} non lu(s)</p><button class="btn bp" onclick="openComposeModal()">✏️ ${t('newMsgBtn')}</button></div>
+ <div class="tabs"><button class="tab ${_msgTab==='inbox'?'on':''}" onclick="_msgTab='inbox';rMessages()">📥 ${t('receivedTab')} (${inbox.length})</button><button class="tab ${_msgTab==='sent'?'on':''}" onclick="_msgTab='sent';rMessages()">📤 ${t('sentTab')} (${sent.length})</button></div>
  <div class="card">${buildMsgList(_msgTab==='inbox'?inbox:sent)}</div>`;
 }
 function buildMsgList(msgs){
