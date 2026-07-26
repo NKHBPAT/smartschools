@@ -271,7 +271,7 @@ select.fc{cursor:pointer}textarea.fc{resize:vertical;min-height:72px}
    <div class="tbar-ttl" id="tbar-ttl" aria-live="polite">Tableau de bord</div>
    <div class="tbar-r">
     <div class="uchip"><div class="uav" id="uav">A</div><div><div class="uname" id="uname">—</div><div class="urole" id="urole">—</div></div></div>
-    <button class="btn-lo" onclick="doLogout()" id="btn-lo" aria-label="Déconnexion">↩ Déconnexion</button>
+    <button class="btn-lo" onclick="doLogout()" id="btn-lo" aria-label="Logout"><span id="btn-lo-txt">↩ Déconnexion</span></button>
    </div>
   </header>
   <div class="ct" role="main">
@@ -496,6 +496,29 @@ fr:{
  noSmsEmpty:'📭 Aucun SMS envoye',certIndivBtn:'🖨 Certificat individuel',
  selectStudentDash:'-- Élève --',selectClassNoDash:'-- Selectionner une classe --',
  wholeSchoolDash:'-- Tout l\'etablissement --',allClassesDash2:'-- Toutes classes --',
+ dcSchoolToConfig:'Établissement a configurer',dcSelectSchool:'Selectionnez un etablissement.',
+ dcStudentInfo:'📄 Informations elève',dcBulletinContent:'📊 Contenu bulletin',
+ dcColorsLabels:'🎨 Couleurs & Labels',dcGroupLabels:'🏷 Labels des groupes',
+ dcExtraBul:'➕ Champs supplementaires - Bulletins',dcExtraCert:'➕ Champs supplementaires - Certificats',
+ dcListCols:'📋 Colonnes liste elèves',dcSynElements:'📊 Synthèses - Élements a afficher',
+ dc_showLogo:'Afficher le logo de l\'ecole',dc_showMatricule:'Afficher matricule',
+ dc_showDOB:'Date de naissance',dc_showPOB:'Lieu de naissance',dc_showGender:'Afficher sexe',
+ dc_showParent:'Nom du parent',dc_showPhone:'Telephone parent',dc_showAddress:'Adresse',
+ dc_showClassTeacher:'Prof. titulaire',dc_showAbsences:'Absences & justifications',
+ dc_showObservations:'Observations',dc_showRank:'Rang dans la classe',
+ dc_showClassStats:'Statistiques classe (moy, max, min)',dc_showDecision:'Decision admis/redoublant',
+ dc_showStamp:'Espace cachet',dc_showGroupHeaders:'En-tetes de groupe',
+ dc_useGroups:'Diviser matières en groupes',dc_synShowDist:'Graphique de distribution',
+ dc_synShowRanking:'Tableau de classement',dc_synShowStats:'Statistiques detaillees',
+ dc_synShowChart:'Taux de reussite',
+ dcMainColor:'Couleur principale',dcSignTitle1:'Titre signant 1',dcSignTitle2:'Titre signant 2',
+ dcCustomHeader:'En-tete personnalise',dcFooterNote:'Note de bas de page',
+ dcGrpSci:'Groupe Scientifique / Generaux',dcGrpLit:'Groupe Litteraire',
+ dcGrpComp:'Groupe Complementaire / Pro.',dcGrpTech:'Groupe Techniques',dcGrpGenTech:'Groupe Generaux (Technique)',
+ dcExtraBulDesc:'Ces champs apparaîtront dans les informations de l\'elève sur le bulletin.',
+ dcNoCustomField:'Aucun champ personnalise.',addFieldBtn:'+ Ajouter champ',
+ dcListColsDesc:'Colonnes par defaut pour l\'impression de la liste.',
+ dcSaveAll:'💾 Enregistrer toute la configuration',dcResetBtn:'↩ Reinitialiser',
  honor:'Tableau d\'honneur',bulletin:'Bulletins',certs:'Certificats',discipline:'Discipline & Absences',
  synthesis:'Synthèses & Statistiques',studentlist:'Liste des elèves',progression:'Progression',
  messages:'Messages',parent:'Mes resultats',docconfig:'Config. Documents',passes:'Autorisations',sms:'Notifications SMS',
@@ -515,6 +538,15 @@ fr:{
  grpGen:'Enseignements Generaux',grpTech:'Enseignements Techniques',grpPro:'Enseignements Complementaires',
  resetPwd:'Reinitialiser mot de passe',smsNotif:'Envoyer notification SMS',
  connDemo:'Comptes de demonstration',schoolYear:'Annee scolaire',
+ navLabel:'Navigation',sysLabel:'Système',resetDbNav:'Reinitialiser DB',
+ seq1:'Sequence 1',seq2:'Sequence 2',seq3:'Sequence 3',seq4:'Sequence 4',seq5:'Sequence 5',seq6:'Sequence 6',
+ seqOnlyLbl:'uniquement',annualDesc:'Bilan annuel (moy. par trimestre)',bySortRankFull:'Par rang (meilleur en premier)',
+ slnColsLbl:'Colonnes info a inclure :',rankLbl:'Rang',avgGenLbl:'Moyenne generale',
+ observationsLbl:'Observations',subjectsToShowLbl:'Matières a afficher :',
+ allSubjectsBtn:'✅ Toutes',noSubjectsBtn:'❌ Aucune',
+ printListNotesBtn:'🖨 Imprimer liste avec notes',selectClassPreview:'Selectionnez une classe pour l\'aperçu.',
+ unreadSuffix:'non lu(s)',avgOn20Lbl:'Moy./20',mentionLbl:'Mention',statusLbl:'Statut',
+ bulletinSingular:'Bulletin',distinctionLbl:'Felicitations',studentIndivLbl:'🎒 Élève (individuel)',
 },
 en:{
  login:'Sign In',email:'Email',pwd:'Password',loginerr:'Incorrect email or password',
@@ -551,6 +583,29 @@ en:{
  noSmsEmpty:'📭 No SMS sent',certIndivBtn:'🖨 Individual Certificate',
  selectStudentDash:'-- Student --',selectClassNoDash:'-- Select a class --',
  wholeSchoolDash:'-- Whole school --',allClassesDash2:'-- All classes --',
+ dcSchoolToConfig:'School to configure',dcSelectSchool:'Select a school.',
+ dcStudentInfo:'📄 Student Information',dcBulletinContent:'📊 Report Card Content',
+ dcColorsLabels:'🎨 Colors & Labels',dcGroupLabels:'🏷 Group Labels',
+ dcExtraBul:'➕ Extra Fields - Report Cards',dcExtraCert:'➕ Extra Fields - Certificates',
+ dcListCols:'📋 Student List Columns',dcSynElements:'📊 Synthesis - Elements to Show',
+ dc_showLogo:'Show school logo',dc_showMatricule:'Show student ID',
+ dc_showDOB:'Date of birth',dc_showPOB:'Place of birth',dc_showGender:'Show gender',
+ dc_showParent:'Parent name',dc_showPhone:'Parent phone',dc_showAddress:'Address',
+ dc_showClassTeacher:'Class teacher',dc_showAbsences:'Absences & justifications',
+ dc_showObservations:'Observations',dc_showRank:'Class rank',
+ dc_showClassStats:'Class statistics (avg, max, min)',dc_showDecision:'Promoted/repeating decision',
+ dc_showStamp:'Stamp space',dc_showGroupHeaders:'Group headers',
+ dc_useGroups:'Split subjects into groups',dc_synShowDist:'Distribution chart',
+ dc_synShowRanking:'Ranking table',dc_synShowStats:'Detailed statistics',
+ dc_synShowChart:'Pass rate',
+ dcMainColor:'Main color',dcSignTitle1:'Signatory title 1',dcSignTitle2:'Signatory title 2',
+ dcCustomHeader:'Custom header',dcFooterNote:'Footer note',
+ dcGrpSci:'Science Group / General',dcGrpLit:'Arts Group',
+ dcGrpComp:'Complementary Group',dcGrpTech:'Technical Group',dcGrpGenTech:'General Group (Technical)',
+ dcExtraBulDesc:'These fields will appear in the student information on the report card.',
+ dcNoCustomField:'No custom field.',addFieldBtn:'+ Add Field',
+ dcListColsDesc:'Default columns for printing the list.',
+ dcSaveAll:'💾 Save Entire Configuration',dcResetBtn:'↩ Reset',
  bulletin:'Report Cards',certs:'Certificates',discipline:'Discipline',synthesis:'Synthesis & Stats',
  studentlist:'Student List',progression:'Progression',messages:'Messages',parent:'My Results',
  docconfig:'Doc. Config',passes:'Passes',sms:'SMS Notifications',
@@ -570,6 +625,15 @@ en:{
  grpGen:'General Studies',grpTech:'Technical Studies',grpPro:'Complementary Studies',
  resetPwd:'Reset Password',smsNotif:'Send SMS Notification',
  connDemo:'Demo Accounts',schoolYear:'School Year',
+ navLabel:'Navigation',sysLabel:'System',resetDbNav:'Reset DB',
+ seq1:'Sequence 1',seq2:'Sequence 2',seq3:'Sequence 3',seq4:'Sequence 4',seq5:'Sequence 5',seq6:'Sequence 6',
+ seqOnlyLbl:'only',annualDesc:'Annual Report (avg. per term)',bySortRankFull:'By rank (best first)',
+ slnColsLbl:'Info columns to include:',rankLbl:'Rank',avgGenLbl:'Overall average',
+ observationsLbl:'Observations',subjectsToShowLbl:'Subjects to show:',
+ allSubjectsBtn:'✅ All',noSubjectsBtn:'❌ None',
+ printListNotesBtn:'🖨 Print list with grades',selectClassPreview:'Select a class for the preview.',
+ unreadSuffix:'unread',avgOn20Lbl:'Avg./20',mentionLbl:'Grade',statusLbl:'Status',
+ bulletinSingular:'Report Card',distinctionLbl:'Distinction',studentIndivLbl:'🎒 Student (individual)',
 },
 es:{
  login:'Iniciar sesión',email:'Correo electrónico',pwd:'Contraseña',loginerr:'Correo o contraseña incorrecta',
@@ -605,7 +669,396 @@ es:{
  smsHistory:'📋 Historial SMS',smsDateCol:'Fecha',smsMsgCol:'Mensaje (vista previa)',smsStatusCol:'Estado',
  noSmsEmpty:'📭 Ningún SMS enviado',certIndivBtn:'🖨 Certificado individual',
  selectStudentDash:'-- Alumno --',selectClassNoDash:'-- Seleccionar una clase --',
- wholeSchoolDash:'-- Toda la institución --',allClassesDash2:'-- Todas las clases --',
+ dcSchoolToConfig:'Institución a configurar',dcSelectSchool:'Seleccione una institución.',
+ dcStudentInfo:'📄 Información del alumno',dcBulletinContent:'📊 Contenido del boletín',
+ dcColorsLabels:'🎨 Colores y Etiquetas',dcGroupLabels:'🏷 Etiquetas de grupos',
+ dcExtraBul:'➕ Campos adicionales - Boletines',dcExtraCert:'➕ Campos adicionales - Certificados',
+ dcListCols:'📋 Columnas lista de alumnos',dcSynElements:'📊 Síntesis - Elementos a mostrar',
+ dc_showLogo:'Mostrar logo de la institución',dc_showMatricule:'Mostrar matrícula',
+ dc_showDOB:'Fecha de nacimiento',dc_showPOB:'Lugar de nacimiento',dc_showGender:'Mostrar sexo',
+ dc_showParent:'Nombre del padre/tutor',dc_showPhone:'Teléfono del padre/tutor',dc_showAddress:'Dirección',
+ dc_showClassTeacher:'Profesor titular',dc_showAbsences:'Ausencias y justificaciones',
+ dc_showObservations:'Observaciones',dc_showRank:'Rango en la clase',
+ dc_showClassStats:'Estadísticas de clase (prom, max, min)',dc_showDecision:'Decisión promovido/repite',
+ dc_showStamp:'Espacio para sello',dc_showGroupHeaders:'Encabezados de grupo',
+ dc_useGroups:'Dividir materias en grupos',dc_synShowDist:'Gráfico de distribución',
+ dc_synShowRanking:'Tabla de clasificación',dc_synShowStats:'Estadísticas detalladas',
+ dc_synShowChart:'Tasa de aprobación',
+ dcMainColor:'Color principal',dcSignTitle1:'Título firmante 1',dcSignTitle2:'Título firmante 2',
+ dcCustomHeader:'Encabezado personalizado',dcFooterNote:'Nota al pie',
+ dcGrpSci:'Grupo Científico / General',dcGrpLit:'Grupo Literario',
+ dcGrpComp:'Grupo Complementario',dcGrpTech:'Grupo Técnico',dcGrpGenTech:'Grupo General (Técnico)',
+ dcExtraBulDesc:'Estos campos aparecerán en la información del alumno en el boletín.',
+ dcNoCustomField:'Sin campo personalizado.',addFieldBtn:'+ Añadir campo',
+ dcListColsDesc:'Columnas por defecto para la impresión de la lista.',
+ dcSaveAll:'💾 Guardar toda la configuración',dcResetBtn:'↩ Restablecer',
+ dcSchoolToConfig:'Institución a configurar',dcSelectSchool:'Seleccione una institución.',
+ dcStudentInfo:'📄 Información del alumno',dcBulletinContent:'📊 Contenido del boletín',
+ dcColorsLabels:'🎨 Colores y Etiquetas',dcGroupLabels:'🏷 Etiquetas de grupos',
+ dcExtraBul:'➕ Campos adicionales - Boletines',dcExtraCert:'➕ Campos adicionales - Certificados',
+ dcListCols:'📋 Columnas lista de alumnos',dcSynElements:'📊 Síntesis - Elementos a mostrar',
+ dc_showLogo:'Mostrar logo de la institución',dc_showMatricule:'Mostrar matrícula',
+ dc_showDOB:'Fecha de nacimiento',dc_showPOB:'Lugar de nacimiento',dc_showGender:'Mostrar sexo',
+ dc_showParent:'Nombre del padre/tutor',dc_showPhone:'Teléfono del padre/tutor',dc_showAddress:'Dirección',
+ dc_showClassTeacher:'Profesor titular',dc_showAbsences:'Ausencias y justificaciones',
+ dc_showObservations:'Observaciones',dc_showRank:'Rango en la clase',
+ dc_showClassStats:'Estadísticas de clase (prom, max, min)',dc_showDecision:'Decisión promovido/repite',
+ dc_showStamp:'Espacio para sello',dc_showGroupHeaders:'Encabezados de grupo',
+ dc_useGroups:'Dividir materias en grupos',dc_synShowDist:'Gráfico de distribución',
+ dc_synShowRanking:'Tabla de clasificación',dc_synShowStats:'Estadísticas detalladas',
+ dc_synShowChart:'Tasa de aprobación',
+ dcMainColor:'Color principal',dcSignTitle1:'Título firmante 1',dcSignTitle2:'Título firmante 2',
+ dcCustomHeader:'Encabezado personalizado',dcFooterNote:'Nota al pie',
+ dcGrpSci:'Grupo Científico / General',dcGrpLit:'Grupo Literario',
+ dcGrpComp:'Grupo Complementario',dcGrpTech:'Grupo Técnico',dcGrpGenTech:'Grupo General (Técnico)',
+ dcExtraBulDesc:'Estos campos aparecerán en la información del alumno en el boletín.',
+ dcNoCustomField:'Sin campo personalizado.',addFieldBtn:'+ Añadir campo',
+ dcListColsDesc:'Columnas por defecto para la impresión de la lista.',
+ dcSaveAll:'💾 Guardar toda la configuración',dcResetBtn:'↩ Restablecer',
+ enrollBtn:'+ Inscribir',boysLbl:'♂ Niños',girlsLbl:'♀ Niñas',
+ addSlotBtn:'+ Añadir horario',selectClassDash:'-- Clase --',
+ addAbsBtn:'+ Ausencias',exitTab:'➡️ Salidas',entryTab:'⬅️ Entradas',
+ stdListTab:'📋 Lista estándar',notesListTab:'📝 Lista con notas',
+ alphaSort:'Alfabético',bySortRank:'Por rango',columnsLbl:'Columnas:',
+ printSynthBtn:'🖨 Imprimir síntesis',noMsgEmpty:'📭 Sin mensajes',
+ sendNotifTitle:'📤 Enviar una notificación',msgTypeLbl:'Tipo de mensaje',
+ resultsRankOpt:'Resultados y Rango',absenceOpt:'Ausencias',customMsgOpt:'Mensaje personalizado',
+ periodLbl:'Período',studentOptLbl:'Alumno (opc.)',allStudentsOpt:'-- Todos los alumnos --',
+ smsPreviewPh:'Vista previa del SMS...',previewBtn:'👁 Vista previa',sendSmsBtn:'📤 Enviar SMS',
+ smsHistory:'📋 Historial SMS',smsDateCol:'Fecha',smsMsgCol:'Mensaje (vista previa)',smsStatusCol:'Estado',
+ noSmsEmpty:'📭 Ningún SMS enviado',certIndivBtn:'🖨 Certificado individual',
+ selectStudentDash:'-- Alumno --',selectClassNoDash:'-- Seleccionar una clase --',
+ dcSchoolToConfig:'Institución a configurar',dcSelectSchool:'Seleccione una institución.',
+ dcStudentInfo:'📄 Información del alumno',dcBulletinContent:'📊 Contenido del boletín',
+ dcColorsLabels:'🎨 Colores y Etiquetas',dcGroupLabels:'🏷 Etiquetas de grupos',
+ dcExtraBul:'➕ Campos adicionales - Boletines',dcExtraCert:'➕ Campos adicionales - Certificados',
+ dcListCols:'📋 Columnas lista de alumnos',dcSynElements:'📊 Síntesis - Elementos a mostrar',
+ dc_showLogo:'Mostrar logo de la institución',dc_showMatricule:'Mostrar matrícula',
+ dc_showDOB:'Fecha de nacimiento',dc_showPOB:'Lugar de nacimiento',dc_showGender:'Mostrar sexo',
+ dc_showParent:'Nombre del padre/tutor',dc_showPhone:'Teléfono del padre/tutor',dc_showAddress:'Dirección',
+ dc_showClassTeacher:'Profesor titular',dc_showAbsences:'Ausencias y justificaciones',
+ dc_showObservations:'Observaciones',dc_showRank:'Rango en la clase',
+ dc_showClassStats:'Estadísticas de clase (prom, max, min)',dc_showDecision:'Decisión promovido/repite',
+ dc_showStamp:'Espacio para sello',dc_showGroupHeaders:'Encabezados de grupo',
+ dc_useGroups:'Dividir materias en grupos',dc_synShowDist:'Gráfico de distribución',
+ dc_synShowRanking:'Tabla de clasificación',dc_synShowStats:'Estadísticas detalladas',
+ dc_synShowChart:'Tasa de aprobación',
+ dcMainColor:'Color principal',dcSignTitle1:'Título firmante 1',dcSignTitle2:'Título firmante 2',
+ dcCustomHeader:'Encabezado personalizado',dcFooterNote:'Nota al pie',
+ dcGrpSci:'Grupo Científico / General',dcGrpLit:'Grupo Literario',
+ dcGrpComp:'Grupo Complementario',dcGrpTech:'Grupo Técnico',dcGrpGenTech:'Grupo General (Técnico)',
+ dcExtraBulDesc:'Estos campos aparecerán en la información del alumno en el boletín.',
+ dcNoCustomField:'Sin campo personalizado.',addFieldBtn:'+ Añadir campo',
+ dcListColsDesc:'Columnas por defecto para la impresión de la lista.',
+ dcSaveAll:'💾 Guardar toda la configuración',dcResetBtn:'↩ Restablecer',
+ dcSchoolToConfig:'Institución a configurar',dcSelectSchool:'Seleccione una institución.',
+ dcStudentInfo:'📄 Información del alumno',dcBulletinContent:'📊 Contenido del boletín',
+ dcColorsLabels:'🎨 Colores y Etiquetas',dcGroupLabels:'🏷 Etiquetas de grupos',
+ dcExtraBul:'➕ Campos adicionales - Boletines',dcExtraCert:'➕ Campos adicionales - Certificados',
+ dcListCols:'📋 Columnas lista de alumnos',dcSynElements:'📊 Síntesis - Elementos a mostrar',
+ dc_showLogo:'Mostrar logo de la institución',dc_showMatricule:'Mostrar matrícula',
+ dc_showDOB:'Fecha de nacimiento',dc_showPOB:'Lugar de nacimiento',dc_showGender:'Mostrar sexo',
+ dc_showParent:'Nombre del padre/tutor',dc_showPhone:'Teléfono del padre/tutor',dc_showAddress:'Dirección',
+ dc_showClassTeacher:'Profesor titular',dc_showAbsences:'Ausencias y justificaciones',
+ dc_showObservations:'Observaciones',dc_showRank:'Rango en la clase',
+ dc_showClassStats:'Estadísticas de clase (prom, max, min)',dc_showDecision:'Decisión promovido/repite',
+ dc_showStamp:'Espacio para sello',dc_showGroupHeaders:'Encabezados de grupo',
+ dc_useGroups:'Dividir materias en grupos',dc_synShowDist:'Gráfico de distribución',
+ dc_synShowRanking:'Tabla de clasificación',dc_synShowStats:'Estadísticas detalladas',
+ dc_synShowChart:'Tasa de aprobación',
+ dcMainColor:'Color principal',dcSignTitle1:'Título firmante 1',dcSignTitle2:'Título firmante 2',
+ dcCustomHeader:'Encabezado personalizado',dcFooterNote:'Nota al pie',
+ dcGrpSci:'Grupo Científico / General',dcGrpLit:'Grupo Literario',
+ dcGrpComp:'Grupo Complementario',dcGrpTech:'Grupo Técnico',dcGrpGenTech:'Grupo General (Técnico)',
+ dcExtraBulDesc:'Estos campos aparecerán en la información del alumno en el boletín.',
+ dcNoCustomField:'Sin campo personalizado.',addFieldBtn:'+ Añadir campo',
+ dcListColsDesc:'Columnas por defecto para la impresión de la lista.',
+ dcSaveAll:'💾 Guardar toda la configuración',dcResetBtn:'↩ Restablecer',
+ enrollBtn:'+ Inscribir',boysLbl:'♂ Niños',girlsLbl:'♀ Niñas',
+ addSlotBtn:'+ Añadir horario',selectClassDash:'-- Clase --',
+ addAbsBtn:'+ Ausencias',exitTab:'➡️ Salidas',entryTab:'⬅️ Entradas',
+ stdListTab:'📋 Lista estándar',notesListTab:'📝 Lista con notas',
+ alphaSort:'Alfabético',bySortRank:'Por rango',columnsLbl:'Columnas:',
+ printSynthBtn:'🖨 Imprimir síntesis',noMsgEmpty:'📭 Sin mensajes',
+ sendNotifTitle:'📤 Enviar una notificación',msgTypeLbl:'Tipo de mensaje',
+ resultsRankOpt:'Resultados y Rango',absenceOpt:'Ausencias',customMsgOpt:'Mensaje personalizado',
+ periodLbl:'Período',studentOptLbl:'Alumno (opc.)',allStudentsOpt:'-- Todos los alumnos --',
+ smsPreviewPh:'Vista previa del SMS...',previewBtn:'👁 Vista previa',sendSmsBtn:'📤 Enviar SMS',
+ smsHistory:'📋 Historial SMS',smsDateCol:'Fecha',smsMsgCol:'Mensaje (vista previa)',smsStatusCol:'Estado',
+ noSmsEmpty:'📭 Ningún SMS enviado',certIndivBtn:'🖨 Certificado individual',
+ selectStudentDash:'-- Alumno --',selectClassNoDash:'-- Seleccionar una clase --',
+ dcSchoolToConfig:'Institución a configurar',dcSelectSchool:'Seleccione una institución.',
+ dcStudentInfo:'📄 Información del alumno',dcBulletinContent:'📊 Contenido del boletín',
+ dcColorsLabels:'🎨 Colores y Etiquetas',dcGroupLabels:'🏷 Etiquetas de grupos',
+ dcExtraBul:'➕ Campos adicionales - Boletines',dcExtraCert:'➕ Campos adicionales - Certificados',
+ dcListCols:'📋 Columnas lista de alumnos',dcSynElements:'📊 Síntesis - Elementos a mostrar',
+ dc_showLogo:'Mostrar logo de la institución',dc_showMatricule:'Mostrar matrícula',
+ dc_showDOB:'Fecha de nacimiento',dc_showPOB:'Lugar de nacimiento',dc_showGender:'Mostrar sexo',
+ dc_showParent:'Nombre del padre/tutor',dc_showPhone:'Teléfono del padre/tutor',dc_showAddress:'Dirección',
+ dc_showClassTeacher:'Profesor titular',dc_showAbsences:'Ausencias y justificaciones',
+ dc_showObservations:'Observaciones',dc_showRank:'Rango en la clase',
+ dc_showClassStats:'Estadísticas de clase (prom, max, min)',dc_showDecision:'Decisión promovido/repite',
+ dc_showStamp:'Espacio para sello',dc_showGroupHeaders:'Encabezados de grupo',
+ dc_useGroups:'Dividir materias en grupos',dc_synShowDist:'Gráfico de distribución',
+ dc_synShowRanking:'Tabla de clasificación',dc_synShowStats:'Estadísticas detalladas',
+ dc_synShowChart:'Tasa de aprobación',
+ dcMainColor:'Color principal',dcSignTitle1:'Título firmante 1',dcSignTitle2:'Título firmante 2',
+ dcCustomHeader:'Encabezado personalizado',dcFooterNote:'Nota al pie',
+ dcGrpSci:'Grupo Científico / General',dcGrpLit:'Grupo Literario',
+ dcGrpComp:'Grupo Complementario',dcGrpTech:'Grupo Técnico',dcGrpGenTech:'Grupo General (Técnico)',
+ dcExtraBulDesc:'Estos campos aparecerán en la información del alumno en el boletín.',
+ dcNoCustomField:'Sin campo personalizado.',addFieldBtn:'+ Añadir campo',
+ dcListColsDesc:'Columnas por defecto para la impresión de la lista.',
+ dcSaveAll:'💾 Guardar toda la configuración',dcResetBtn:'↩ Restablecer',
+ dcSchoolToConfig:'Institución a configurar',dcSelectSchool:'Seleccione una institución.',
+ dcStudentInfo:'📄 Información del alumno',dcBulletinContent:'📊 Contenido del boletín',
+ dcColorsLabels:'🎨 Colores y Etiquetas',dcGroupLabels:'🏷 Etiquetas de grupos',
+ dcExtraBul:'➕ Campos adicionales - Boletines',dcExtraCert:'➕ Campos adicionales - Certificados',
+ dcListCols:'📋 Columnas lista de alumnos',dcSynElements:'📊 Síntesis - Elementos a mostrar',
+ dc_showLogo:'Mostrar logo de la institución',dc_showMatricule:'Mostrar matrícula',
+ dc_showDOB:'Fecha de nacimiento',dc_showPOB:'Lugar de nacimiento',dc_showGender:'Mostrar sexo',
+ dc_showParent:'Nombre del padre/tutor',dc_showPhone:'Teléfono del padre/tutor',dc_showAddress:'Dirección',
+ dc_showClassTeacher:'Profesor titular',dc_showAbsences:'Ausencias y justificaciones',
+ dc_showObservations:'Observaciones',dc_showRank:'Rango en la clase',
+ dc_showClassStats:'Estadísticas de clase (prom, max, min)',dc_showDecision:'Decisión promovido/repite',
+ dc_showStamp:'Espacio para sello',dc_showGroupHeaders:'Encabezados de grupo',
+ dc_useGroups:'Dividir materias en grupos',dc_synShowDist:'Gráfico de distribución',
+ dc_synShowRanking:'Tabla de clasificación',dc_synShowStats:'Estadísticas detalladas',
+ dc_synShowChart:'Tasa de aprobación',
+ dcMainColor:'Color principal',dcSignTitle1:'Título firmante 1',dcSignTitle2:'Título firmante 2',
+ dcCustomHeader:'Encabezado personalizado',dcFooterNote:'Nota al pie',
+ dcGrpSci:'Grupo Científico / General',dcGrpLit:'Grupo Literario',
+ dcGrpComp:'Grupo Complementario',dcGrpTech:'Grupo Técnico',dcGrpGenTech:'Grupo General (Técnico)',
+ dcExtraBulDesc:'Estos campos aparecerán en la información del alumno en el boletín.',
+ dcNoCustomField:'Sin campo personalizado.',addFieldBtn:'+ Añadir campo',
+ dcListColsDesc:'Columnas por defecto para la impresión de la lista.',
+ dcSaveAll:'💾 Guardar toda la configuración',dcResetBtn:'↩ Restablecer',
+ enrollBtn:'+ Inscribir',boysLbl:'♂ Niños',girlsLbl:'♀ Niñas',
+ addSlotBtn:'+ Añadir horario',selectClassDash:'-- Clase --',
+ addAbsBtn:'+ Ausencias',exitTab:'➡️ Salidas',entryTab:'⬅️ Entradas',
+ stdListTab:'📋 Lista estándar',notesListTab:'📝 Lista con notas',
+ alphaSort:'Alfabético',bySortRank:'Por rango',columnsLbl:'Columnas:',
+ printSynthBtn:'🖨 Imprimir síntesis',noMsgEmpty:'📭 Sin mensajes',
+ sendNotifTitle:'📤 Enviar una notificación',msgTypeLbl:'Tipo de mensaje',
+ resultsRankOpt:'Resultados y Rango',absenceOpt:'Ausencias',customMsgOpt:'Mensaje personalizado',
+ periodLbl:'Período',studentOptLbl:'Alumno (opc.)',allStudentsOpt:'-- Todos los alumnos --',
+ smsPreviewPh:'Vista previa del SMS...',previewBtn:'👁 Vista previa',sendSmsBtn:'📤 Enviar SMS',
+ smsHistory:'📋 Historial SMS',smsDateCol:'Fecha',smsMsgCol:'Mensaje (vista previa)',smsStatusCol:'Estado',
+ noSmsEmpty:'📭 Ningún SMS enviado',certIndivBtn:'🖨 Certificado individual',
+ selectStudentDash:'-- Alumno --',selectClassNoDash:'-- Seleccionar una clase --',
+ dcSchoolToConfig:'Institución a configurar',dcSelectSchool:'Seleccione una institución.',
+ dcStudentInfo:'📄 Información del alumno',dcBulletinContent:'📊 Contenido del boletín',
+ dcColorsLabels:'🎨 Colores y Etiquetas',dcGroupLabels:'🏷 Etiquetas de grupos',
+ dcExtraBul:'➕ Campos adicionales - Boletines',dcExtraCert:'➕ Campos adicionales - Certificados',
+ dcListCols:'📋 Columnas lista de alumnos',dcSynElements:'📊 Síntesis - Elementos a mostrar',
+ dc_showLogo:'Mostrar logo de la institución',dc_showMatricule:'Mostrar matrícula',
+ dc_showDOB:'Fecha de nacimiento',dc_showPOB:'Lugar de nacimiento',dc_showGender:'Mostrar sexo',
+ dc_showParent:'Nombre del padre/tutor',dc_showPhone:'Teléfono del padre/tutor',dc_showAddress:'Dirección',
+ dc_showClassTeacher:'Profesor titular',dc_showAbsences:'Ausencias y justificaciones',
+ dc_showObservations:'Observaciones',dc_showRank:'Rango en la clase',
+ dc_showClassStats:'Estadísticas de clase (prom, max, min)',dc_showDecision:'Decisión promovido/repite',
+ dc_showStamp:'Espacio para sello',dc_showGroupHeaders:'Encabezados de grupo',
+ dc_useGroups:'Dividir materias en grupos',dc_synShowDist:'Gráfico de distribución',
+ dc_synShowRanking:'Tabla de clasificación',dc_synShowStats:'Estadísticas detalladas',
+ dc_synShowChart:'Tasa de aprobación',
+ dcMainColor:'Color principal',dcSignTitle1:'Título firmante 1',dcSignTitle2:'Título firmante 2',
+ dcCustomHeader:'Encabezado personalizado',dcFooterNote:'Nota al pie',
+ dcGrpSci:'Grupo Científico / General',dcGrpLit:'Grupo Literario',
+ dcGrpComp:'Grupo Complementario',dcGrpTech:'Grupo Técnico',dcGrpGenTech:'Grupo General (Técnico)',
+ dcExtraBulDesc:'Estos campos aparecerán en la información del alumno en el boletín.',
+ dcNoCustomField:'Sin campo personalizado.',addFieldBtn:'+ Añadir campo',
+ dcListColsDesc:'Columnas por defecto para la impresión de la lista.',
+ dcSaveAll:'💾 Guardar toda la configuración',dcResetBtn:'↩ Restablecer',
+ dcSchoolToConfig:'Institución a configurar',dcSelectSchool:'Seleccione una institución.',
+ dcStudentInfo:'📄 Información del alumno',dcBulletinContent:'📊 Contenido del boletín',
+ dcColorsLabels:'🎨 Colores y Etiquetas',dcGroupLabels:'🏷 Etiquetas de grupos',
+ dcExtraBul:'➕ Campos adicionales - Boletines',dcExtraCert:'➕ Campos adicionales - Certificados',
+ dcListCols:'📋 Columnas lista de alumnos',dcSynElements:'📊 Síntesis - Elementos a mostrar',
+ dc_showLogo:'Mostrar logo de la institución',dc_showMatricule:'Mostrar matrícula',
+ dc_showDOB:'Fecha de nacimiento',dc_showPOB:'Lugar de nacimiento',dc_showGender:'Mostrar sexo',
+ dc_showParent:'Nombre del padre/tutor',dc_showPhone:'Teléfono del padre/tutor',dc_showAddress:'Dirección',
+ dc_showClassTeacher:'Profesor titular',dc_showAbsences:'Ausencias y justificaciones',
+ dc_showObservations:'Observaciones',dc_showRank:'Rango en la clase',
+ dc_showClassStats:'Estadísticas de clase (prom, max, min)',dc_showDecision:'Decisión promovido/repite',
+ dc_showStamp:'Espacio para sello',dc_showGroupHeaders:'Encabezados de grupo',
+ dc_useGroups:'Dividir materias en grupos',dc_synShowDist:'Gráfico de distribución',
+ dc_synShowRanking:'Tabla de clasificación',dc_synShowStats:'Estadísticas detalladas',
+ dc_synShowChart:'Tasa de aprobación',
+ dcMainColor:'Color principal',dcSignTitle1:'Título firmante 1',dcSignTitle2:'Título firmante 2',
+ dcCustomHeader:'Encabezado personalizado',dcFooterNote:'Nota al pie',
+ dcGrpSci:'Grupo Científico / General',dcGrpLit:'Grupo Literario',
+ dcGrpComp:'Grupo Complementario',dcGrpTech:'Grupo Técnico',dcGrpGenTech:'Grupo General (Técnico)',
+ dcExtraBulDesc:'Estos campos aparecerán en la información del alumno en el boletín.',
+ dcNoCustomField:'Sin campo personalizado.',addFieldBtn:'+ Añadir campo',
+ dcListColsDesc:'Columnas por defecto para la impresión de la lista.',
+ dcSaveAll:'💾 Guardar toda la configuración',dcResetBtn:'↩ Restablecer',
+ enrollBtn:'+ Inscribir',boysLbl:'♂ Niños',girlsLbl:'♀ Niñas',
+ addSlotBtn:'+ Añadir horario',selectClassDash:'-- Clase --',
+ addAbsBtn:'+ Ausencias',exitTab:'➡️ Salidas',entryTab:'⬅️ Entradas',
+ stdListTab:'📋 Lista estándar',notesListTab:'📝 Lista con notas',
+ alphaSort:'Alfabético',bySortRank:'Por rango',columnsLbl:'Columnas:',
+ printSynthBtn:'🖨 Imprimir síntesis',noMsgEmpty:'📭 Sin mensajes',
+ sendNotifTitle:'📤 Enviar una notificación',msgTypeLbl:'Tipo de mensaje',
+ resultsRankOpt:'Resultados y Rango',absenceOpt:'Ausencias',customMsgOpt:'Mensaje personalizado',
+ periodLbl:'Período',studentOptLbl:'Alumno (opc.)',allStudentsOpt:'-- Todos los alumnos --',
+ smsPreviewPh:'Vista previa del SMS...',previewBtn:'👁 Vista previa',sendSmsBtn:'📤 Enviar SMS',
+ smsHistory:'📋 Historial SMS',smsDateCol:'Fecha',smsMsgCol:'Mensaje (vista previa)',smsStatusCol:'Estado',
+ noSmsEmpty:'📭 Ningún SMS enviado',certIndivBtn:'🖨 Certificado individual',
+ selectStudentDash:'-- Alumno --',selectClassNoDash:'-- Seleccionar una clase --',
+ dcSchoolToConfig:'Institución a configurar',dcSelectSchool:'Seleccione una institución.',
+ dcStudentInfo:'📄 Información del alumno',dcBulletinContent:'📊 Contenido del boletín',
+ dcColorsLabels:'🎨 Colores y Etiquetas',dcGroupLabels:'🏷 Etiquetas de grupos',
+ dcExtraBul:'➕ Campos adicionales - Boletines',dcExtraCert:'➕ Campos adicionales - Certificados',
+ dcListCols:'📋 Columnas lista de alumnos',dcSynElements:'📊 Síntesis - Elementos a mostrar',
+ dc_showLogo:'Mostrar logo de la institución',dc_showMatricule:'Mostrar matrícula',
+ dc_showDOB:'Fecha de nacimiento',dc_showPOB:'Lugar de nacimiento',dc_showGender:'Mostrar sexo',
+ dc_showParent:'Nombre del padre/tutor',dc_showPhone:'Teléfono del padre/tutor',dc_showAddress:'Dirección',
+ dc_showClassTeacher:'Profesor titular',dc_showAbsences:'Ausencias y justificaciones',
+ dc_showObservations:'Observaciones',dc_showRank:'Rango en la clase',
+ dc_showClassStats:'Estadísticas de clase (prom, max, min)',dc_showDecision:'Decisión promovido/repite',
+ dc_showStamp:'Espacio para sello',dc_showGroupHeaders:'Encabezados de grupo',
+ dc_useGroups:'Dividir materias en grupos',dc_synShowDist:'Gráfico de distribución',
+ dc_synShowRanking:'Tabla de clasificación',dc_synShowStats:'Estadísticas detalladas',
+ dc_synShowChart:'Tasa de aprobación',
+ dcMainColor:'Color principal',dcSignTitle1:'Título firmante 1',dcSignTitle2:'Título firmante 2',
+ dcCustomHeader:'Encabezado personalizado',dcFooterNote:'Nota al pie',
+ dcGrpSci:'Grupo Científico / General',dcGrpLit:'Grupo Literario',
+ dcGrpComp:'Grupo Complementario',dcGrpTech:'Grupo Técnico',dcGrpGenTech:'Grupo General (Técnico)',
+ dcExtraBulDesc:'Estos campos aparecerán en la información del alumno en el boletín.',
+ dcNoCustomField:'Sin campo personalizado.',addFieldBtn:'+ Añadir campo',
+ dcListColsDesc:'Columnas por defecto para la impresión de la lista.',
+ dcSaveAll:'💾 Guardar toda la configuración',dcResetBtn:'↩ Restablecer',
+ dcSchoolToConfig:'Institución a configurar',dcSelectSchool:'Seleccione una institución.',
+ dcStudentInfo:'📄 Información del alumno',dcBulletinContent:'📊 Contenido del boletín',
+ dcColorsLabels:'🎨 Colores y Etiquetas',dcGroupLabels:'🏷 Etiquetas de grupos',
+ dcExtraBul:'➕ Campos adicionales - Boletines',dcExtraCert:'➕ Campos adicionales - Certificados',
+ dcListCols:'📋 Columnas lista de alumnos',dcSynElements:'📊 Síntesis - Elementos a mostrar',
+ dc_showLogo:'Mostrar logo de la institución',dc_showMatricule:'Mostrar matrícula',
+ dc_showDOB:'Fecha de nacimiento',dc_showPOB:'Lugar de nacimiento',dc_showGender:'Mostrar sexo',
+ dc_showParent:'Nombre del padre/tutor',dc_showPhone:'Teléfono del padre/tutor',dc_showAddress:'Dirección',
+ dc_showClassTeacher:'Profesor titular',dc_showAbsences:'Ausencias y justificaciones',
+ dc_showObservations:'Observaciones',dc_showRank:'Rango en la clase',
+ dc_showClassStats:'Estadísticas de clase (prom, max, min)',dc_showDecision:'Decisión promovido/repite',
+ dc_showStamp:'Espacio para sello',dc_showGroupHeaders:'Encabezados de grupo',
+ dc_useGroups:'Dividir materias en grupos',dc_synShowDist:'Gráfico de distribución',
+ dc_synShowRanking:'Tabla de clasificación',dc_synShowStats:'Estadísticas detalladas',
+ dc_synShowChart:'Tasa de aprobación',
+ dcMainColor:'Color principal',dcSignTitle1:'Título firmante 1',dcSignTitle2:'Título firmante 2',
+ dcCustomHeader:'Encabezado personalizado',dcFooterNote:'Nota al pie',
+ dcGrpSci:'Grupo Científico / General',dcGrpLit:'Grupo Literario',
+ dcGrpComp:'Grupo Complementario',dcGrpTech:'Grupo Técnico',dcGrpGenTech:'Grupo General (Técnico)',
+ dcExtraBulDesc:'Estos campos aparecerán en la información del alumno en el boletín.',
+ dcNoCustomField:'Sin campo personalizado.',addFieldBtn:'+ Añadir campo',
+ dcListColsDesc:'Columnas por defecto para la impresión de la lista.',
+ dcSaveAll:'💾 Guardar toda la configuración',dcResetBtn:'↩ Restablecer',
+ enrollBtn:'+ Inscribir',boysLbl:'♂ Niños',girlsLbl:'♀ Niñas',
+ addSlotBtn:'+ Añadir horario',selectClassDash:'-- Clase --',
+ addAbsBtn:'+ Ausencias',exitTab:'➡️ Salidas',entryTab:'⬅️ Entradas',
+ stdListTab:'📋 Lista estándar',notesListTab:'📝 Lista con notas',
+ alphaSort:'Alfabético',bySortRank:'Por rango',columnsLbl:'Columnas:',
+ printSynthBtn:'🖨 Imprimir síntesis',noMsgEmpty:'📭 Sin mensajes',
+ sendNotifTitle:'📤 Enviar una notificación',msgTypeLbl:'Tipo de mensaje',
+ resultsRankOpt:'Resultados y Rango',absenceOpt:'Ausencias',customMsgOpt:'Mensaje personalizado',
+ periodLbl:'Período',studentOptLbl:'Alumno (opc.)',allStudentsOpt:'-- Todos los alumnos --',
+ smsPreviewPh:'Vista previa del SMS...',previewBtn:'👁 Vista previa',sendSmsBtn:'📤 Enviar SMS',
+ smsHistory:'📋 Historial SMS',smsDateCol:'Fecha',smsMsgCol:'Mensaje (vista previa)',smsStatusCol:'Estado',
+ noSmsEmpty:'📭 Ningún SMS enviado',certIndivBtn:'🖨 Certificado individual',
+ selectStudentDash:'-- Alumno --',selectClassNoDash:'-- Seleccionar una clase --',
+ dcSchoolToConfig:'Institución a configurar',dcSelectSchool:'Seleccione una institución.',
+ dcStudentInfo:'📄 Información del alumno',dcBulletinContent:'📊 Contenido del boletín',
+ dcColorsLabels:'🎨 Colores y Etiquetas',dcGroupLabels:'🏷 Etiquetas de grupos',
+ dcExtraBul:'➕ Campos adicionales - Boletines',dcExtraCert:'➕ Campos adicionales - Certificados',
+ dcListCols:'📋 Columnas lista de alumnos',dcSynElements:'📊 Síntesis - Elementos a mostrar',
+ dc_showLogo:'Mostrar logo de la institución',dc_showMatricule:'Mostrar matrícula',
+ dc_showDOB:'Fecha de nacimiento',dc_showPOB:'Lugar de nacimiento',dc_showGender:'Mostrar sexo',
+ dc_showParent:'Nombre del padre/tutor',dc_showPhone:'Teléfono del padre/tutor',dc_showAddress:'Dirección',
+ dc_showClassTeacher:'Profesor titular',dc_showAbsences:'Ausencias y justificaciones',
+ dc_showObservations:'Observaciones',dc_showRank:'Rango en la clase',
+ dc_showClassStats:'Estadísticas de clase (prom, max, min)',dc_showDecision:'Decisión promovido/repite',
+ dc_showStamp:'Espacio para sello',dc_showGroupHeaders:'Encabezados de grupo',
+ dc_useGroups:'Dividir materias en grupos',dc_synShowDist:'Gráfico de distribución',
+ dc_synShowRanking:'Tabla de clasificación',dc_synShowStats:'Estadísticas detalladas',
+ dc_synShowChart:'Tasa de aprobación',
+ dcMainColor:'Color principal',dcSignTitle1:'Título firmante 1',dcSignTitle2:'Título firmante 2',
+ dcCustomHeader:'Encabezado personalizado',dcFooterNote:'Nota al pie',
+ dcGrpSci:'Grupo Científico / General',dcGrpLit:'Grupo Literario',
+ dcGrpComp:'Grupo Complementario',dcGrpTech:'Grupo Técnico',dcGrpGenTech:'Grupo General (Técnico)',
+ dcExtraBulDesc:'Estos campos aparecerán en la información del alumno en el boletín.',
+ dcNoCustomField:'Sin campo personalizado.',addFieldBtn:'+ Añadir campo',
+ dcListColsDesc:'Columnas por defecto para la impresión de la lista.',
+ dcSaveAll:'💾 Guardar toda la configuración',dcResetBtn:'↩ Restablecer',
+ enrollBtn:'+ Inscribir',boysLbl:'♂ Niños',girlsLbl:'♀ Niñas',
+ addSlotBtn:'+ Añadir horario',selectClassDash:'-- Clase --',
+ addAbsBtn:'+ Ausencias',exitTab:'➡️ Salidas',entryTab:'⬅️ Entradas',
+ stdListTab:'📋 Lista estándar',notesListTab:'📝 Lista con notas',
+ alphaSort:'Alfabético',bySortRank:'Por rango',columnsLbl:'Columnas:',
+ printSynthBtn:'🖨 Imprimir síntesis',noMsgEmpty:'📭 Sin mensajes',
+ sendNotifTitle:'📤 Enviar una notificación',msgTypeLbl:'Tipo de mensaje',
+ resultsRankOpt:'Resultados y Rango',absenceOpt:'Ausencias',customMsgOpt:'Mensaje personalizado',
+ periodLbl:'Período',studentOptLbl:'Alumno (opc.)',allStudentsOpt:'-- Todos los alumnos --',
+ smsPreviewPh:'Vista previa del SMS...',previewBtn:'👁 Vista previa',sendSmsBtn:'📤 Enviar SMS',
+ smsHistory:'📋 Historial SMS',smsDateCol:'Fecha',smsMsgCol:'Mensaje (vista previa)',smsStatusCol:'Estado',
+ noSmsEmpty:'📭 Ningún SMS enviado',certIndivBtn:'🖨 Certificado individual',
+ selectStudentDash:'-- Alumno --',selectClassNoDash:'-- Seleccionar una clase --',
+ dcSchoolToConfig:'Institución a configurar',dcSelectSchool:'Seleccione una institución.',
+ dcStudentInfo:'📄 Información del alumno',dcBulletinContent:'📊 Contenido del boletín',
+ dcColorsLabels:'🎨 Colores y Etiquetas',dcGroupLabels:'🏷 Etiquetas de grupos',
+ dcExtraBul:'➕ Campos adicionales - Boletines',dcExtraCert:'➕ Campos adicionales - Certificados',
+ dcListCols:'📋 Columnas lista de alumnos',dcSynElements:'📊 Síntesis - Elementos a mostrar',
+ dc_showLogo:'Mostrar logo de la institución',dc_showMatricule:'Mostrar matrícula',
+ dc_showDOB:'Fecha de nacimiento',dc_showPOB:'Lugar de nacimiento',dc_showGender:'Mostrar sexo',
+ dc_showParent:'Nombre del padre/tutor',dc_showPhone:'Teléfono del padre/tutor',dc_showAddress:'Dirección',
+ dc_showClassTeacher:'Profesor titular',dc_showAbsences:'Ausencias y justificaciones',
+ dc_showObservations:'Observaciones',dc_showRank:'Rango en la clase',
+ dc_showClassStats:'Estadísticas de clase (prom, max, min)',dc_showDecision:'Decisión promovido/repite',
+ dc_showStamp:'Espacio para sello',dc_showGroupHeaders:'Encabezados de grupo',
+ dc_useGroups:'Dividir materias en grupos',dc_synShowDist:'Gráfico de distribución',
+ dc_synShowRanking:'Tabla de clasificación',dc_synShowStats:'Estadísticas detalladas',
+ dc_synShowChart:'Tasa de aprobación',
+ dcMainColor:'Color principal',dcSignTitle1:'Título firmante 1',dcSignTitle2:'Título firmante 2',
+ dcCustomHeader:'Encabezado personalizado',dcFooterNote:'Nota al pie',
+ dcGrpSci:'Grupo Científico / General',dcGrpLit:'Grupo Literario',
+ dcGrpComp:'Grupo Complementario',dcGrpTech:'Grupo Técnico',dcGrpGenTech:'Grupo General (Técnico)',
+ dcExtraBulDesc:'Estos campos aparecerán en la información del alumno en el boletín.',
+ dcNoCustomField:'Sin campo personalizado.',addFieldBtn:'+ Añadir campo',
+ dcListColsDesc:'Columnas por defecto para la impresión de la lista.',
+ dcSaveAll:'💾 Guardar toda la configuración',dcResetBtn:'↩ Restablecer',
+ enrollBtn:'+ Inscribir',boysLbl:'♂ Niños',girlsLbl:'♀ Niñas',
+ addSlotBtn:'+ Añadir horario',selectClassDash:'-- Clase --',
+ addAbsBtn:'+ Ausencias',exitTab:'➡️ Salidas',entryTab:'⬅️ Entradas',
+ stdListTab:'📋 Lista estándar',notesListTab:'📝 Lista con notas',
+ alphaSort:'Alfabético',bySortRank:'Por rango',columnsLbl:'Columnas:',
+ printSynthBtn:'🖨 Imprimir síntesis',noMsgEmpty:'📭 Sin mensajes',
+ sendNotifTitle:'📤 Enviar una notificación',msgTypeLbl:'Tipo de mensaje',
+ resultsRankOpt:'Resultados y Rango',absenceOpt:'Ausencias',customMsgOpt:'Mensaje personalizado',
+ periodLbl:'Período',studentOptLbl:'Alumno (opc.)',allStudentsOpt:'-- Todos los alumnos --',
+ smsPreviewPh:'Vista previa del SMS...',previewBtn:'👁 Vista previa',sendSmsBtn:'📤 Enviar SMS',
+ smsHistory:'📋 Historial SMS',smsDateCol:'Fecha',smsMsgCol:'Mensaje (vista previa)',smsStatusCol:'Estado',
+ noSmsEmpty:'📭 Ningún SMS enviado',certIndivBtn:'🖨 Certificado individual',
+ selectStudentDash:'-- Alumno --',selectClassNoDash:'-- Seleccionar una clase --',
+ dcSchoolToConfig:'Institución a configurar',dcSelectSchool:'Seleccione una institución.',
+ dcStudentInfo:'📄 Información del alumno',dcBulletinContent:'📊 Contenido del boletín',
+ dcColorsLabels:'🎨 Colores y Etiquetas',dcGroupLabels:'🏷 Etiquetas de grupos',
+ dcExtraBul:'➕ Campos adicionales - Boletines',dcExtraCert:'➕ Campos adicionales - Certificados',
+ dcListCols:'📋 Columnas lista de alumnos',dcSynElements:'📊 Síntesis - Elementos a mostrar',
+ dc_showLogo:'Mostrar logo de la institución',dc_showMatricule:'Mostrar matrícula',
+ dc_showDOB:'Fecha de nacimiento',dc_showPOB:'Lugar de nacimiento',dc_showGender:'Mostrar sexo',
+ dc_showParent:'Nombre del padre/tutor',dc_showPhone:'Teléfono del padre/tutor',dc_showAddress:'Dirección',
+ dc_showClassTeacher:'Profesor titular',dc_showAbsences:'Ausencias y justificaciones',
+ dc_showObservations:'Observaciones',dc_showRank:'Rango en la clase',
+ dc_showClassStats:'Estadísticas de clase (prom, max, min)',dc_showDecision:'Decisión promovido/repite',
+ dc_showStamp:'Espacio para sello',dc_showGroupHeaders:'Encabezados de grupo',
+ dc_useGroups:'Dividir materias en grupos',dc_synShowDist:'Gráfico de distribución',
+ dc_synShowRanking:'Tabla de clasificación',dc_synShowStats:'Estadísticas detalladas',
+ dc_synShowChart:'Tasa de aprobación',
+ dcMainColor:'Color principal',dcSignTitle1:'Título firmante 1',dcSignTitle2:'Título firmante 2',
+ dcCustomHeader:'Encabezado personalizado',dcFooterNote:'Nota al pie',
+ dcGrpSci:'Grupo Científico / General',dcGrpLit:'Grupo Literario',
+ dcGrpComp:'Grupo Complementario',dcGrpTech:'Grupo Técnico',dcGrpGenTech:'Grupo General (Técnico)',
+ dcExtraBulDesc:'Estos campos aparecerán en la información del alumno en el boletín.',
+ dcNoCustomField:'Sin campo personalizado.',addFieldBtn:'+ Añadir campo',
+ dcListColsDesc:'Columnas por defecto para la impresión de la lista.',
+ dcSaveAll:'💾 Guardar toda la configuración',dcResetBtn:'↩ Restablecer',
  enrollBtn:'+ Inscribir',boysLbl:'♂ Niños',girlsLbl:'♀ Niñas',
  addSlotBtn:'+ Añadir horario',selectClassDash:'-- Clase --',
  addAbsBtn:'+ Ausencias',exitTab:'➡️ Salidas',entryTab:'⬅️ Entradas',
@@ -620,104 +1073,52 @@ es:{
  noSmsEmpty:'📭 Ningún SMS enviado',certIndivBtn:'🖨 Certificado individual',
  selectStudentDash:'-- Alumno --',selectClassNoDash:'-- Seleccionar una clase --',
  wholeSchoolDash:'-- Toda la institución --',allClassesDash2:'-- Todas las clases --',
- enrollBtn:'+ Inscribir',boysLbl:'♂ Niños',girlsLbl:'♀ Niñas',
- addSlotBtn:'+ Añadir horario',selectClassDash:'-- Clase --',
- addAbsBtn:'+ Ausencias',exitTab:'➡️ Salidas',entryTab:'⬅️ Entradas',
- stdListTab:'📋 Lista estándar',notesListTab:'📝 Lista con notas',
- alphaSort:'Alfabético',bySortRank:'Por rango',columnsLbl:'Columnas:',
- printSynthBtn:'🖨 Imprimir síntesis',noMsgEmpty:'📭 Sin mensajes',
- sendNotifTitle:'📤 Enviar una notificación',msgTypeLbl:'Tipo de mensaje',
- resultsRankOpt:'Resultados y Rango',absenceOpt:'Ausencias',customMsgOpt:'Mensaje personalizado',
- periodLbl:'Período',studentOptLbl:'Alumno (opc.)',allStudentsOpt:'-- Todos los alumnos --',
- smsPreviewPh:'Vista previa del SMS...',previewBtn:'👁 Vista previa',sendSmsBtn:'📤 Enviar SMS',
- smsHistory:'📋 Historial SMS',smsDateCol:'Fecha',smsMsgCol:'Mensaje (vista previa)',smsStatusCol:'Estado',
- noSmsEmpty:'📭 Ningún SMS enviado',certIndivBtn:'🖨 Certificado individual',
- selectStudentDash:'-- Alumno --',selectClassNoDash:'-- Seleccionar una clase --',
- wholeSchoolDash:'-- Toda la institución --',allClassesDash2:'-- Todas las clases --',
- enrollBtn:'+ Inscribir',boysLbl:'♂ Niños',girlsLbl:'♀ Niñas',
- addSlotBtn:'+ Añadir horario',selectClassDash:'-- Clase --',
- addAbsBtn:'+ Ausencias',exitTab:'➡️ Salidas',entryTab:'⬅️ Entradas',
- stdListTab:'📋 Lista estándar',notesListTab:'📝 Lista con notas',
- alphaSort:'Alfabético',bySortRank:'Por rango',columnsLbl:'Columnas:',
- printSynthBtn:'🖨 Imprimir síntesis',noMsgEmpty:'📭 Sin mensajes',
- sendNotifTitle:'📤 Enviar una notificación',msgTypeLbl:'Tipo de mensaje',
- resultsRankOpt:'Resultados y Rango',absenceOpt:'Ausencias',customMsgOpt:'Mensaje personalizado',
- periodLbl:'Período',studentOptLbl:'Alumno (opc.)',allStudentsOpt:'-- Todos los alumnos --',
- smsPreviewPh:'Vista previa del SMS...',previewBtn:'👁 Vista previa',sendSmsBtn:'📤 Enviar SMS',
- smsHistory:'📋 Historial SMS',smsDateCol:'Fecha',smsMsgCol:'Mensaje (vista previa)',smsStatusCol:'Estado',
- noSmsEmpty:'📭 Ningún SMS enviado',certIndivBtn:'🖨 Certificado individual',
- selectStudentDash:'-- Alumno --',selectClassNoDash:'-- Seleccionar una clase --',
- wholeSchoolDash:'-- Toda la institución --',allClassesDash2:'-- Todas las clases --',
- enrollBtn:'+ Inscribir',boysLbl:'♂ Niños',girlsLbl:'♀ Niñas',
- addSlotBtn:'+ Añadir horario',selectClassDash:'-- Clase --',
- addAbsBtn:'+ Ausencias',exitTab:'➡️ Salidas',entryTab:'⬅️ Entradas',
- stdListTab:'📋 Lista estándar',notesListTab:'📝 Lista con notas',
- alphaSort:'Alfabético',bySortRank:'Por rango',columnsLbl:'Columnas:',
- printSynthBtn:'🖨 Imprimir síntesis',noMsgEmpty:'📭 Sin mensajes',
- sendNotifTitle:'📤 Enviar una notificación',msgTypeLbl:'Tipo de mensaje',
- resultsRankOpt:'Resultados y Rango',absenceOpt:'Ausencias',customMsgOpt:'Mensaje personalizado',
- periodLbl:'Período',studentOptLbl:'Alumno (opc.)',allStudentsOpt:'-- Todos los alumnos --',
- smsPreviewPh:'Vista previa del SMS...',previewBtn:'👁 Vista previa',sendSmsBtn:'📤 Enviar SMS',
- smsHistory:'📋 Historial SMS',smsDateCol:'Fecha',smsMsgCol:'Mensaje (vista previa)',smsStatusCol:'Estado',
- noSmsEmpty:'📭 Ningún SMS enviado',certIndivBtn:'🖨 Certificado individual',
- selectStudentDash:'-- Alumno --',selectClassNoDash:'-- Seleccionar una clase --',
- wholeSchoolDash:'-- Toda la institución --',allClassesDash2:'-- Todas las clases --',
- enrollBtn:'+ Inscribir',boysLbl:'♂ Niños',girlsLbl:'♀ Niñas',
- addSlotBtn:'+ Añadir horario',selectClassDash:'-- Clase --',
- addAbsBtn:'+ Ausencias',exitTab:'➡️ Salidas',entryTab:'⬅️ Entradas',
- stdListTab:'📋 Lista estándar',notesListTab:'📝 Lista con notas',
- alphaSort:'Alfabético',bySortRank:'Por rango',columnsLbl:'Columnas:',
- printSynthBtn:'🖨 Imprimir síntesis',noMsgEmpty:'📭 Sin mensajes',
- sendNotifTitle:'📤 Enviar una notificación',msgTypeLbl:'Tipo de mensaje',
- resultsRankOpt:'Resultados y Rango',absenceOpt:'Ausencias',customMsgOpt:'Mensaje personalizado',
- periodLbl:'Período',studentOptLbl:'Alumno (opc.)',allStudentsOpt:'-- Todos los alumnos --',
- smsPreviewPh:'Vista previa del SMS...',previewBtn:'👁 Vista previa',sendSmsBtn:'📤 Enviar SMS',
- smsHistory:'📋 Historial SMS',smsDateCol:'Fecha',smsMsgCol:'Mensaje (vista previa)',smsStatusCol:'Estado',
- noSmsEmpty:'📭 Ningún SMS enviado',certIndivBtn:'🖨 Certificado individual',
- selectStudentDash:'-- Alumno --',selectClassNoDash:'-- Seleccionar una clase --',
- wholeSchoolDash:'-- Toda la institución --',allClassesDash2:'-- Todas las clases --',
- enrollBtn:'+ Inscribir',boysLbl:'♂ Niños',girlsLbl:'♀ Niñas',
- addSlotBtn:'+ Añadir horario',selectClassDash:'-- Clase --',
- addAbsBtn:'+ Ausencias',exitTab:'➡️ Salidas',entryTab:'⬅️ Entradas',
- stdListTab:'📋 Lista estándar',notesListTab:'📝 Lista con notas',
- alphaSort:'Alfabético',bySortRank:'Por rango',columnsLbl:'Columnas:',
- printSynthBtn:'🖨 Imprimir síntesis',noMsgEmpty:'📭 Sin mensajes',
- sendNotifTitle:'📤 Enviar una notificación',msgTypeLbl:'Tipo de mensaje',
- resultsRankOpt:'Resultados y Rango',absenceOpt:'Ausencias',customMsgOpt:'Mensaje personalizado',
- periodLbl:'Período',studentOptLbl:'Alumno (opc.)',allStudentsOpt:'-- Todos los alumnos --',
- smsPreviewPh:'Vista previa del SMS...',previewBtn:'👁 Vista previa',sendSmsBtn:'📤 Enviar SMS',
- smsHistory:'📋 Historial SMS',smsDateCol:'Fecha',smsMsgCol:'Mensaje (vista previa)',smsStatusCol:'Estado',
- noSmsEmpty:'📭 Ningún SMS enviado',certIndivBtn:'🖨 Certificado individual',
- selectStudentDash:'-- Alumno --',selectClassNoDash:'-- Seleccionar una clase --',
- wholeSchoolDash:'-- Toda la institución --',allClassesDash2:'-- Todas las clases --',
- enrollBtn:'+ Inscribir',boysLbl:'♂ Niños',girlsLbl:'♀ Niñas',
- addSlotBtn:'+ Añadir horario',selectClassDash:'-- Clase --',
- addAbsBtn:'+ Ausencias',exitTab:'➡️ Salidas',entryTab:'⬅️ Entradas',
- stdListTab:'📋 Lista estándar',notesListTab:'📝 Lista con notas',
- alphaSort:'Alfabético',bySortRank:'Por rango',columnsLbl:'Columnas:',
- printSynthBtn:'🖨 Imprimir síntesis',noMsgEmpty:'📭 Sin mensajes',
- sendNotifTitle:'📤 Enviar una notificación',msgTypeLbl:'Tipo de mensaje',
- resultsRankOpt:'Resultados y Rango',absenceOpt:'Ausencias',customMsgOpt:'Mensaje personalizado',
- periodLbl:'Período',studentOptLbl:'Alumno (opc.)',allStudentsOpt:'-- Todos los alumnos --',
- smsPreviewPh:'Vista previa del SMS...',previewBtn:'👁 Vista previa',sendSmsBtn:'📤 Enviar SMS',
- smsHistory:'📋 Historial SMS',smsDateCol:'Fecha',smsMsgCol:'Mensaje (vista previa)',smsStatusCol:'Estado',
- noSmsEmpty:'📭 Ningún SMS enviado',certIndivBtn:'🖨 Certificado individual',
- selectStudentDash:'-- Alumno --',selectClassNoDash:'-- Seleccionar una clase --',
- wholeSchoolDash:'-- Toda la institución --',allClassesDash2:'-- Todas las clases --',
- enrollBtn:'+ Inscribir',boysLbl:'♂ Niños',girlsLbl:'♀ Niñas',
- addSlotBtn:'+ Añadir horario',selectClassDash:'-- Clase --',
- addAbsBtn:'+ Ausencias',exitTab:'➡️ Salidas',entryTab:'⬅️ Entradas',
- stdListTab:'📋 Lista estándar',notesListTab:'📝 Lista con notas',
- alphaSort:'Alfabético',bySortRank:'Por rango',columnsLbl:'Columnas:',
- printSynthBtn:'🖨 Imprimir síntesis',noMsgEmpty:'📭 Sin mensajes',
- sendNotifTitle:'📤 Enviar una notificación',msgTypeLbl:'Tipo de mensaje',
- resultsRankOpt:'Resultados y Rango',absenceOpt:'Ausencias',customMsgOpt:'Mensaje personalizado',
- periodLbl:'Período',studentOptLbl:'Alumno (opc.)',allStudentsOpt:'-- Todos los alumnos --',
- smsPreviewPh:'Vista previa del SMS...',previewBtn:'👁 Vista previa',sendSmsBtn:'📤 Enviar SMS',
- smsHistory:'📋 Historial SMS',smsDateCol:'Fecha',smsMsgCol:'Mensaje (vista previa)',smsStatusCol:'Estado',
- noSmsEmpty:'📭 Ningún SMS enviado',certIndivBtn:'🖨 Certificado individual',
- selectStudentDash:'-- Alumno --',selectClassNoDash:'-- Seleccionar una clase --',
- wholeSchoolDash:'-- Toda la institución --',allClassesDash2:'-- Todas las clases --',
+ dcSchoolToConfig:'Institución a configurar',dcSelectSchool:'Seleccione una institución.',
+ dcStudentInfo:'📄 Información del alumno',dcBulletinContent:'📊 Contenido del boletín',
+ dcColorsLabels:'🎨 Colores y Etiquetas',dcGroupLabels:'🏷 Etiquetas de grupos',
+ dcExtraBul:'➕ Campos adicionales - Boletines',dcExtraCert:'➕ Campos adicionales - Certificados',
+ dcListCols:'📋 Columnas lista de alumnos',dcSynElements:'📊 Síntesis - Elementos a mostrar',
+ dc_showLogo:'Mostrar logo de la institución',dc_showMatricule:'Mostrar matrícula',
+ dc_showDOB:'Fecha de nacimiento',dc_showPOB:'Lugar de nacimiento',dc_showGender:'Mostrar sexo',
+ dc_showParent:'Nombre del padre/tutor',dc_showPhone:'Teléfono del padre/tutor',dc_showAddress:'Dirección',
+ dc_showClassTeacher:'Profesor titular',dc_showAbsences:'Ausencias y justificaciones',
+ dc_showObservations:'Observaciones',dc_showRank:'Rango en la clase',
+ dc_showClassStats:'Estadísticas de clase (prom, max, min)',dc_showDecision:'Decisión promovido/repite',
+ dc_showStamp:'Espacio para sello',dc_showGroupHeaders:'Encabezados de grupo',
+ dc_useGroups:'Dividir materias en grupos',dc_synShowDist:'Gráfico de distribución',
+ dc_synShowRanking:'Tabla de clasificación',dc_synShowStats:'Estadísticas detalladas',
+ dc_synShowChart:'Tasa de aprobación',
+ dcMainColor:'Color principal',dcSignTitle1:'Título firmante 1',dcSignTitle2:'Título firmante 2',
+ dcCustomHeader:'Encabezado personalizado',dcFooterNote:'Nota al pie',
+ dcGrpSci:'Grupo Científico / General',dcGrpLit:'Grupo Literario',
+ dcGrpComp:'Grupo Complementario',dcGrpTech:'Grupo Técnico',dcGrpGenTech:'Grupo General (Técnico)',
+ dcExtraBulDesc:'Estos campos aparecerán en la información del alumno en el boletín.',
+ dcNoCustomField:'Sin campo personalizado.',addFieldBtn:'+ Añadir campo',
+ dcListColsDesc:'Columnas por defecto para la impresión de la lista.',
+ dcSaveAll:'💾 Guardar toda la configuración',dcResetBtn:'↩ Restablecer',
+ dcSchoolToConfig:'Institución a configurar',dcSelectSchool:'Seleccione una institución.',
+ dcStudentInfo:'📄 Información del alumno',dcBulletinContent:'📊 Contenido del boletín',
+ dcColorsLabels:'🎨 Colores y Etiquetas',dcGroupLabels:'🏷 Etiquetas de grupos',
+ dcExtraBul:'➕ Campos adicionales - Boletines',dcExtraCert:'➕ Campos adicionales - Certificados',
+ dcListCols:'📋 Columnas lista de alumnos',dcSynElements:'📊 Síntesis - Elementos a mostrar',
+ dc_showLogo:'Mostrar logo de la institución',dc_showMatricule:'Mostrar matrícula',
+ dc_showDOB:'Fecha de nacimiento',dc_showPOB:'Lugar de nacimiento',dc_showGender:'Mostrar sexo',
+ dc_showParent:'Nombre del padre/tutor',dc_showPhone:'Teléfono del padre/tutor',dc_showAddress:'Dirección',
+ dc_showClassTeacher:'Profesor titular',dc_showAbsences:'Ausencias y justificaciones',
+ dc_showObservations:'Observaciones',dc_showRank:'Rango en la clase',
+ dc_showClassStats:'Estadísticas de clase (prom, max, min)',dc_showDecision:'Decisión promovido/repite',
+ dc_showStamp:'Espacio para sello',dc_showGroupHeaders:'Encabezados de grupo',
+ dc_useGroups:'Dividir materias en grupos',dc_synShowDist:'Gráfico de distribución',
+ dc_synShowRanking:'Tabla de clasificación',dc_synShowStats:'Estadísticas detalladas',
+ dc_synShowChart:'Tasa de aprobación',
+ dcMainColor:'Color principal',dcSignTitle1:'Título firmante 1',dcSignTitle2:'Título firmante 2',
+ dcCustomHeader:'Encabezado personalizado',dcFooterNote:'Nota al pie',
+ dcGrpSci:'Grupo Científico / General',dcGrpLit:'Grupo Literario',
+ dcGrpComp:'Grupo Complementario',dcGrpTech:'Grupo Técnico',dcGrpGenTech:'Grupo General (Técnico)',
+ dcExtraBulDesc:'Estos campos aparecerán en la información del alumno en el boletín.',
+ dcNoCustomField:'Sin campo personalizado.',addFieldBtn:'+ Añadir campo',
+ dcListColsDesc:'Columnas por defecto para la impresión de la lista.',
+ dcSaveAll:'💾 Guardar toda la configuración',dcResetBtn:'↩ Restablecer',
  bulletin:'Boletines',certs:'Certificados',discipline:'Disciplina',synthesis:'Síntesis y Estadísticas',
  studentlist:'Lista de alumnos',progression:'Progresión',messages:'Mensajes',parent:'Mis resultados',
  docconfig:'Config. Documentos',passes:'Autorizaciones',sms:'Notificaciones SMS',
@@ -737,6 +1138,15 @@ es:{
  grpGen:'Enseñanzas Generales',grpTech:'Enseñanzas Tecnicas',grpPro:'Enseñanzas Complementarias',
  resetPwd:'Restablecer contraseña',smsNotif:'Enviar notificación SMS',
  connDemo:'Cuentas de demostración',schoolYear:'Año escolar',
+ navLabel:'Navegación',sysLabel:'Sistema',resetDbNav:'Restablecer BD',
+ seq1:'Secuencia 1',seq2:'Secuencia 2',seq3:'Secuencia 3',seq4:'Secuencia 4',seq5:'Secuencia 5',seq6:'Secuencia 6',
+ seqOnlyLbl:'solamente',annualDesc:'Informe anual (prom. por trimestre)',bySortRankFull:'Por rango (mejor primero)',
+ slnColsLbl:'Columnas de información a incluir:',rankLbl:'Rango',avgGenLbl:'Promedio general',
+ observationsLbl:'Observaciones',subjectsToShowLbl:'Materias a mostrar:',
+ allSubjectsBtn:'✅ Todas',noSubjectsBtn:'❌ Ninguna',
+ printListNotesBtn:'🖨 Imprimir lista con notas',selectClassPreview:'Seleccione una clase para la vista previa.',
+ unreadSuffix:'sin leer',avgOn20Lbl:'Prom./20',mentionLbl:'Mención',statusLbl:'Estado',
+ bulletinSingular:'Boletín',distinctionLbl:'Felicitaciones',studentIndivLbl:'🎒 Alumno (individual)',
 }};
 
 /* ===== LEVELS ===== */
@@ -775,7 +1185,7 @@ const SEQ_DEFS=[
  {id:'5',lbl:'Sequence 5',term:'3'},{id:'6',lbl:'Sequence 6',term:'3'}
 ];
 const TERM_SEQS={'1':['1','2'],'2':['3','4'],'3':['5','6']};
-function seqLbl(s){return SEQ_DEFS.find(x=>x.id===s)?.lbl||'Seq.'+s;}
+function seqLbl(s){return t('seq'+s)||'Seq.'+s;}
 function termLbl(t2){return{'1':t('t1'),'2':t('t2'),'3':t('t3')}[String(t2)]||'Trimestre '+t2;}
 
 /* ===== GROUPS ===== */
@@ -1069,7 +1479,8 @@ function setLang(l){
  // Update login page text
  const updates={
   'lf-ttl':t('login'),'lbl-em':t('email'),'lbl-pw':t('pwd'),
-  'btnl':t('login'),'demo-lbl':t('connDemo'),'lf-sub':t('schoolYear')+' '+t('year')
+  'btnl':t('login'),'demo-lbl':t('connDemo'),'lf-sub':t('schoolYear')+' '+t('year'),
+  'btn-lo-txt':'↩ '+t('logout')
  };
  Object.entries(updates).forEach(([id,v])=>{const el=document.getElementById(id);if(el)el.textContent=v;});
  if(CU)renderCV();
@@ -1157,7 +1568,7 @@ function buildNav(){
   if(hasPerm('send_sms'))nav.push({id:'sms',ic:'📱',k:'sms'});
   if(hasPerm('config_docs'))nav.push({id:'docconfig',ic:'🔧',k:'docconfig'});
  }
- document.getElementById('nav-ct').innerHTML='<div class="sb-sec">Navigation</div>'+
+ document.getElementById('nav-ct').innerHTML=`<div class="sb-sec">${t('navLabel')}</div>`+
   nav.map(n=>`<button class="sb-itm" id="nb-${n.id}" onclick="showView('${n.id}')" aria-label="${t(n.k)}"><span class="ic">${n.ic}</span><span>${t(n.k)}</span>${(n.badge||0)>0?`<span class="sb-badge">${n.badge}</span>`:''}</button>`).join('');
  if(CU.role==='admin'){document.getElementById('nav-ct').innerHTML+=`<div class="sb-sec" style="margin-top:15px">Système</div><button class="sb-itm" onclick="resetDB()" style="color:rgba(239,68,68,.7)"><span class="ic">🔄</span><span>Reinitialiser DB</span></button>`;}
 }
@@ -1196,7 +1607,7 @@ function rStats(){
   ${sb('📝',DB.grades.length,'Notes saisies','#fff1f2','#dc2626')}
  </div>
  <div class="card"><div class="ch"><span class="ct2">🏫 Établissements - Vue consolidee</span><button class="btn bgo bsm" onclick="showView('synthesis')">📈 Voir synthèses →</button></div><div class="cb"><div class="tw"><table>
-  <thead><tr><th>Nom</th><th>Type</th><th>Sys.</th><th>Ville</th><th>Élèves</th><th>Classes</th><th>Ens.</th><th>Actions</th></tr></thead>
+  <thead><tr><th>${t('fullnameCol')}</th><th>Type</th><th>Sys.</th><th>Ville</th><th>${t('students')}</th><th>${t('classes')}</th><th>Ens.</th><th>${t('actionsCol')}</th></tr></thead>
   <tbody>${DB.schools.map(s=>{const sts=DB.students.filter(x=>x.schoolId===s.id);const tes=DB.users.filter(u=>u.role==='teacher'&&u.schoolId===s.id);const cls=clsOf(s.id);
    return`<tr>
     <td>${s.logo?`<img src="${s.logo}" style="width:22px;height:22px;border-radius:4px;object-fit:contain;vertical-align:middle;margin-right:5px">`:'🏫 '}<strong>${esc(s.name)}</strong></td>
@@ -1219,9 +1630,9 @@ function rStats(){
 /* ===== ADMIN SCHOOLS ===== */
 function rSchools(){
  const el=document.getElementById('pg-schools');
- el.innerHTML=`<div class="ph"><h2>🏫 ${t('schools')}</h2><button class="btn bp" onclick="openSchoolModal()">+ Ajouter</button></div>
+ el.innerHTML=`<div class="ph"><h2>🏫 ${t('schools')}</h2><button class="btn bp" onclick="openSchoolModal()">${t('addBtn')}</button></div>
  <div class="card"><div class="cb"><div class="tw"><table>
-  <thead><tr><th>Logo</th><th>Nom</th><th>Type</th><th>Sys.</th><th>Ville</th><th>Code</th><th>Chef</th><th>Actions</th></tr></thead>
+  <thead><tr><th>Logo</th><th>${t('fullnameCol')}</th><th>Type</th><th>Sys.</th><th>Ville</th><th>Code</th><th>Chef</th><th>${t('actionsCol')}</th></tr></thead>
   <tbody>${DB.schools.map(s=>{const pr=DB.users.find(u=>u.id===s.principalId);return`<tr>
    <td>${s.logo?`<img src="${s.logo}" style="width:32px;height:32px;border-radius:7px;object-fit:contain">`:`<div onclick="openLogoModal('${s.id}')" style="width:32px;height:32px;border-radius:7px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;cursor:pointer;border:1px dashed var(--border)" title="Logo">🏫</div>`}</td>
    <td><strong>${esc(s.name)}</strong></td><td>${bd(typeLbl(s.type),typeBd(s.type))}</td>
@@ -1309,7 +1720,7 @@ function rUsers(){
   <select class="fc" id="usr-rf" style="max-width:170px" onchange="fUsers()"><option value="">Tous rôles</option>${['admin','principal','teacher','secretary','surveillant','parent'].map(r=>`<option value="${r}">${t(r)}</option>`).join('')}</select>
   <select class="fc" id="usr-sc" style="max-width:220px" onchange="fUsers()"><option value="">Tous etablissements</option>${DB.schools.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('')}</select>
  </div><div class="cb"><div class="tw"><table>
-  <thead><tr><th>Nom</th><th>Email</th><th>Rôle</th><th>Établissement</th><th>Code</th><th>Validite</th><th>Actions</th></tr></thead>
+  <thead><tr><th>${t('fullnameCol')}</th><th>Email</th><th>${t('role')}</th><th>${t('school')}</th><th>Code</th><th>Validite</th><th>${t('actionsCol')}</th></tr></thead>
   <tbody id="usr-tb">${renderUserRows(DB.users)}</tbody>
  </table></div></div></div>`;
 }
@@ -1456,7 +1867,7 @@ function rOverview(){
   </div></div>
  </div>
  ${canAdmin()&&CU.role!=='admin'?`<div class="card"><div class="ch"><span class="ct2">👩‍🏫 ${t('teachers')} (${tes.length})</span><button class="btn bp bsm" onclick="openUserModal()">${t('addBtn')}</button></div><div class="cb"><div class="tw"><table>
-  <thead><tr><th>Nom</th><th>Email</th><th>Matières</th><th>Classes</th><th>Actions</th></tr></thead>
+  <thead><tr><th>${t('fullnameCol')}</th><th>Email</th><th>${t('subjects')}</th><th>${t('classes')}</th><th>${t('actionsCol')}</th></tr></thead>
   <tbody>${tes.map(te=>{const sbs=DB.subjects.filter(s=>s.teacherId===te.id&&cls.some(c=>c.id===s.classId));const teaCls=[...new Set(sbs.map(s=>s.classId))];return`<tr>
    <td><strong>${esc(te.name)}</strong></td><td style="font-size:12px">${esc(te.email)}</td>
    <td style="font-size:12.5px">${sbs.map(s=>esc(s.name)).join(', ')||'-'}</td>
@@ -1552,7 +1963,7 @@ async function saveStudent(id){
 /* ===== CLASSES ===== */
 function rClasses(){
  const el=document.getElementById('pg-classes');const school=schoolOf();const cls=clsOf(school?.id||'');
- el.innerHTML=`<div class="ph"><h2>📚 ${t('classes')}</h2><button class="btn bp" onclick="openClassModal()">+ Ajouter</button></div>
+ el.innerHTML=`<div class="ph"><h2>📚 ${t('classes')}</h2><button class="btn bp" onclick="openClassModal()">${t('addBtn')}</button></div>
  <div class="card"><div class="cb"><div class="tw"><table>
   <thead><tr><th>${t('classCol')}</th><th>${t('levelCol')}</th><th>${t('students')}</th><th>${t('titularTeacher')}</th><th>${t('subjects')}</th><th>${t('actionsCol')}</th></tr></thead>
   <tbody>${cls.length?cls.map(c=>{const tes=DB.users.filter(u=>u.role==='teacher'&&u.schoolId===school.id);return`<tr>
@@ -1605,7 +2016,7 @@ function rSubjects(){
  const el=document.getElementById('pg-subjects');const school=schoolOf();const cls=clsOf(school?.id||'');
  const sc=document.getElementById('sj-cl')?.value||'';const sbs=sc?sbOf(sc):cls.flatMap(c=>sbOf(c.id));
  const grpKeys=getGrpKeys(school);
- el.innerHTML=`<div class="ph"><h2>📖 ${t('subjects')}</h2><button class="btn bp" onclick="openSubjectModal()">+ Ajouter</button></div>
+ el.innerHTML=`<div class="ph"><h2>📖 ${t('subjects')}</h2><button class="btn bp" onclick="openSubjectModal()">${t('addBtn')}</button></div>
  <div class="card"><div class="ch"><select class="fc" style="max-width:250px" id="sj-cl" onchange="rSubjects()"><option value="">${t('allClasses')}</option>${cls.map(c=>`<option value="${c.id}" ${sc===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select></div>
  <div class="cb"><div class="tw"><table>
   <thead><tr><th>${t('subjects')}</th><th>${t('classCol')}</th><th>${t('coefCol')}</th><th>${t('groupCol')}</th><th>${t('teacherCol')}</th><th>${t('actionsCol')}</th></tr></thead>
@@ -1649,7 +2060,7 @@ function rGrades(){
 function rGrades2(){
  _gClass=document.getElementById('gr-cl')?.value||_gClass;
  _gSeq=document.getElementById('gr-sq')?.value||_gSeq;
- if(!_gClass){document.getElementById('gr-area').innerHTML=`<div class="cb"><div class="ali ali-i">Selectionnez une classe.</div></div>`;return;}
+ if(!_gClass){document.getElementById('gr-area').innerHTML=`<div class="cb"><div class="ali ali-i">${t('selectClassGrades')}</div></div>`;return;}
  let sbs=sbOf(_gClass);
  if(CU.role==='teacher')sbs=sbs.filter(s=>s.teacherId===CU.id);
  const sts=stOf(_gClass);
@@ -1844,7 +2255,7 @@ function rHonor(){
  el.innerHTML=`<div class="ph"><h2>🏆 ${t('honor')}</h2></div>
  <div style="display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px">
   <select class="fc" style="max-width:230px" id="hr-cl" onchange="_hrClass=this.value;rHonor2()"><option value="">${t('selectClassDash')}</option>${cls.map(c=>`<option value="${c.id}" ${_hrClass===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select>
-  <select class="fc" style="max-width:210px" id="hr-tr" onchange="_hrTerm=this.value;rHonor2()">${['1','2','3'].map(x=>`<option value="${x}" ${_hrTerm===x?'selected':''}>Trimestre ${x}</option>`).join('')}</select>
+  <select class="fc" style="max-width:210px" id="hr-tr" onchange="_hrTerm=this.value;rHonor2()">${['1','2','3'].map(x=>`<option value="${x}" ${_hrTerm===x?'selected':''}>${termLbl(x)}</option>`).join('')}</select>
   ${_hrClass?`<button class="btn bgo" onclick="printHonor()">🖨 Imprimer tableau</button>`:''}
  </div>
  <div id="hr-area">${_hrClass?buildHonorList():''}</div>`;
@@ -1855,7 +2266,7 @@ function buildHonorList(){
  const honor=rankings.filter(s=>s.avg>=12);const cls=DB.classes.find(c=>c.id===_hrClass);
  if(!honor.length)return`<div class="ali ali-w">Aucun elève au tableau d'honneur (moyenne ≥ 12) pour ${termLbl(_hrTerm)}.</div>`;
  return`<div class="card"><div class="ch"><span class="ct2">🏆 ${esc(cls?.name||'')} - ${termLbl(_hrTerm)} - ${honor.length} honore(s)</span></div><div class="cb"><div class="tw"><table>
-  <thead><tr><th>Rang</th><th>Nom & Prenom</th><th style="text-align:center">Moy./20</th><th>Mention</th><th>Felicitations</th></tr></thead>
+  <thead><tr><th>${t('rankLbl')}</th><th>${t('fullnameCol')}</th><th style="text-align:center">${t('avgOn20Lbl')}</th><th>${t('mentionLbl')}</th><th>${t('distinctionLbl')}</th></tr></thead>
   <tbody>${honor.map(s=>{const ri=s.rank===1?'🥇':s.rank===2?'🥈':s.rank===3?'🥉':'#'+s.rank;return`<tr><td style="font-size:18px;text-align:center">${ri}</td><td><strong>${esc(s.firstName)} ${esc(s.name)}</strong></td>
    <td style="text-align:center"><span class="gp ${gpC(s.avg)}">${s.avg.toFixed(2)}</span></td>
    <td>${bd(getMention(s.avg).l,getMention(s.avg).c)}</td>
@@ -1959,7 +2370,7 @@ function rDiscipline(){
  <div class="card"><div class="ch" style="flex-wrap:wrap;gap:8px">
   <select class="fc" style="max-width:230px" id="ab-cl" onchange="rAbsTable()"><option value="">${t('selectClassDash')}</option>${cls.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select>
   <select class="fc" style="max-width:190px" id="ab-sq" onchange="rAbsTable()">${SEQ_DEFS.map(s=>`<option value="${s.id}">${s.lbl}</option>`).join('')}</select>
- </div><div id="ab-area"><div class="cb"><div class="ali ali-i">Selectionnez une classe.</div></div></div></div>`;
+ </div><div id="ab-area"><div class="cb"><div class="ali ali-i">${t('selectClassGrades')}</div></div></div></div>`;
 }
 function rAbsTable(){
  const cid=document.getElementById('ab-cl')?.value;const seq=document.getElementById('ab-sq')?.value||'1';
@@ -2015,7 +2426,7 @@ function rDocConfig(){
  const school=isAdmin?DB.schools[0]:schoolOf();
  const dc=getDocCfg(school);
  el.innerHTML=`<div class="ph"><h2>🔧 ${t('docconfig')}</h2></div>
- ${isAdmin?`<div style="margin-bottom:14px"><label class="lab">Établissement a configurer</label><select class="fc" style="max-width:300px" id="dcc-sc" onchange="rDocConfig2()"><option value="">--</option>${DB.schools.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('')}</select></div>`:''}
+ ${isAdmin?`<div style="margin-bottom:14px"><label class="lab">${t('dcSchoolToConfig')}</label><select class="fc" style="max-width:300px" id="dcc-sc" onchange="rDocConfig2()"><option value="">--</option>${DB.schools.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('')}</select></div>`:''}
  <div id="dcc-area">${buildDocConfigForm(school?.id||'')}</div>`;
 }
 function rDocConfig2(){const sid=document.getElementById('dcc-sc')?.value;document.getElementById('dcc-area').innerHTML=buildDocConfigForm(sid);}
@@ -2025,49 +2436,49 @@ function openDocConfig(sid){
  setTimeout(()=>{const el=document.getElementById('dcc-sc');if(el){el.value=sid;rDocConfig2();}},100);
 }
 function buildDocConfigForm(sid){
- if(!sid)return`<div class="ali ali-i">Selectionnez un etablissement.</div>`;
+  if(!sid)return`<div class="ali ali-i">${t('dcSelectSchool')}</div>`;
  const school=DB.schools.find(s=>s.id===sid);if(!school)return'';
  const dc=getDocCfg(school);
  const toggle=(id,lbl)=>`<label class="perm-item" style="margin-bottom:5px"><input type="checkbox" id="dcc-${id}" ${dc[id]?'checked':''}><span>${lbl}</span></label>`;
  return`<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px">
-  <div class="card"><div class="ch"><span class="ct2">📄 Informations elève</span></div><div class="cb">
-   ${toggle('showLogo','Afficher le logo de l\'ecole')}${toggle('showMatricule','Afficher matricule')}${toggle('showDOB','Date de naissance')}${toggle('showPOB','Lieu de naissance')}${toggle('showGender','Afficher sexe')}${toggle('showParent','Nom du parent')}${toggle('showPhone','Telephone parent')}${toggle('showAddress','Adresse')}${toggle('showClassTeacher','Prof. titulaire')}
+  <div class="card"><div class="ch"><span class="ct2">${t('dcStudentInfo')}</span></div><div class="cb">
+   ${toggle('showLogo',t('dc_showLogo'))}${toggle('showMatricule',t('dc_showMatricule'))}${toggle('showDOB',t('dc_showDOB'))}${toggle('showPOB',t('dc_showPOB'))}${toggle('showGender',t('dc_showGender'))}${toggle('showParent',t('dc_showParent'))}${toggle('showPhone',t('dc_showPhone'))}${toggle('showAddress',t('dc_showAddress'))}${toggle('showClassTeacher',t('dc_showClassTeacher'))}
   </div></div>
-  <div class="card"><div class="ch"><span class="ct2">📊 Contenu bulletin</span></div><div class="cb">
-   ${toggle('showAbsences','Absences & justifications')}${toggle('showObservations','Observations')}${toggle('showRank','Rang dans la classe')}${toggle('showClassStats','Statistiques classe (moy, max, min)')}${toggle('showDecision','Decision admis/redoublant')}${toggle('showStamp','Espace cachet')}${toggle('showGroupHeaders','En-tetes de groupe')}${toggle('useGroups','Diviser matières en groupes')}
+  <div class="card"><div class="ch"><span class="ct2">${t('dcBulletinContent')}</span></div><div class="cb">
+   ${toggle('showAbsences',t('dc_showAbsences'))}${toggle('showObservations',t('dc_showObservations'))}${toggle('showRank',t('dc_showRank'))}${toggle('showClassStats',t('dc_showClassStats'))}${toggle('showDecision',t('dc_showDecision'))}${toggle('showStamp',t('dc_showStamp'))}${toggle('showGroupHeaders',t('dc_showGroupHeaders'))}${toggle('useGroups',t('dc_useGroups'))}
   </div></div>
-  <div class="card"><div class="ch"><span class="ct2">🎨 Couleurs & Labels</span></div><div class="cb">
-   <div class="fr"><div class="fg"><label class="lab">Couleur principale</label><div style="display:flex;gap:7px;align-items:center"><input type="color" id="dcc-bulletinColor" value="${dc.bulletinColor||'#1a3a6c'}" style="width:42px;height:36px;border-radius:6px;border:1.5px solid var(--border);cursor:pointer"><input class="fc" id="dcc-bcHex" value="${dc.bulletinColor||'#1a3a6c'}" style="flex:1;font-family:monospace" oninput="syncColor(this)"></div></div>
-   <div class="fg" style="margin-top:0"><label class="lab">Titre signant 1</label><input class="fc" id="dcc-signTitle1" value="${esc(dc.signTitle1||'Le Professeur Principal')}"></div></div>
-   <div class="fg"><label class="lab">Titre signant 2</label><input class="fc" id="dcc-signTitle2" value="${esc(dc.signTitle2||'Le Chef d\'Établissement')}"></div>
-   <div class="fg"><label class="lab">En-tete personnalise</label><textarea class="fc" id="dcc-customHeader" rows="2">${esc(dc.customHeader||'')}</textarea></div>
-   <div class="fg"><label class="lab">Note de bas de page</label><input class="fc" id="dcc-footerNote" value="${esc(dc.footerNote||'')}"></div>
+  <div class="card"><div class="ch"><span class="ct2">${t('dcColorsLabels')}</span></div><div class="cb">
+   <div class="fr"><div class="fg"><label class="lab">${t('dcMainColor')}</label><div style="display:flex;gap:7px;align-items:center"><input type="color" id="dcc-bulletinColor" value="${dc.bulletinColor||'#1a3a6c'}" style="width:42px;height:36px;border-radius:6px;border:1.5px solid var(--border);cursor:pointer"><input class="fc" id="dcc-bcHex" value="${dc.bulletinColor||'#1a3a6c'}" style="flex:1;font-family:monospace" oninput="syncColor(this)"></div></div>
+   <div class="fg" style="margin-top:0"><label class="lab">${t('dcSignTitle1')}</label><input class="fc" id="dcc-signTitle1" value="${esc(dc.signTitle1||'Le Professeur Principal')}"></div></div>
+   <div class="fg"><label class="lab">${t('dcSignTitle2')}</label><input class="fc" id="dcc-signTitle2" value="${esc(dc.signTitle2||'Le Chef d\'Établissement')}"></div>
+   <div class="fg"><label class="lab">${t('dcCustomHeader')}</label><textarea class="fc" id="dcc-customHeader" rows="2">${esc(dc.customHeader||'')}</textarea></div>
+   <div class="fg"><label class="lab">${t('dcFooterNote')}</label><input class="fc" id="dcc-footerNote" value="${esc(dc.footerNote||'')}"></div>
   </div></div>
-  <div class="card"><div class="ch"><span class="ct2">🏷 Labels des groupes</span></div><div class="cb">
-   <div class="fg"><label class="lab">Groupe Scientifique / Generaux</label><input class="fc" id="dcc-grpSciLabel" value="${esc(dc.grpSciLabel||'Groupe Scientifique')}"></div>
-   <div class="fg"><label class="lab">Groupe Litteraire</label><input class="fc" id="dcc-grpLitLabel" value="${esc(dc.grpLitLabel||'Groupe Litteraire')}"></div>
-   <div class="fg"><label class="lab">Groupe Complementaire / Pro.</label><input class="fc" id="dcc-grpCompLabel" value="${esc(dc.grpCompLabel||'Groupe Complementaire')}"></div>
-   <div class="fg"><label class="lab">Groupe Techniques</label><input class="fc" id="dcc-grpTechLabel" value="${esc(dc.grpTechLabel||'Enseignements Techniques')}"></div>
-   <div class="fg"><label class="lab">Groupe Generaux (Technique)</label><input class="fc" id="dcc-grpGenLabel" value="${esc(dc.grpGenLabel||'Enseignements Generaux')}"></div>
+  <div class="card"><div class="ch"><span class="ct2">${t('dcGroupLabels')}</span></div><div class="cb">
+   <div class="fg"><label class="lab">${t('dcGrpSci')}</label><input class="fc" id="dcc-grpSciLabel" value="${esc(dc.grpSciLabel||'Groupe Scientifique')}"></div>
+   <div class="fg"><label class="lab">${t('dcGrpLit')}</label><input class="fc" id="dcc-grpLitLabel" value="${esc(dc.grpLitLabel||'Groupe Litteraire')}"></div>
+   <div class="fg"><label class="lab">${t('dcGrpComp')}</label><input class="fc" id="dcc-grpCompLabel" value="${esc(dc.grpCompLabel||'Groupe Complementaire')}"></div>
+   <div class="fg"><label class="lab">${t('dcGrpTech')}</label><input class="fc" id="dcc-grpTechLabel" value="${esc(dc.grpTechLabel||'Enseignements Techniques')}"></div>
+   <div class="fg"><label class="lab">${t('dcGrpGenTech')}</label><input class="fc" id="dcc-grpGenLabel" value="${esc(dc.grpGenLabel||'Enseignements Generaux')}"></div>
   </div></div>
-  <div class="card"><div class="ch"><span class="ct2">➕ Champs supplementaires - Bulletins</span><button class="btn bp bsm" onclick="addExtraField('bul','${sid}')">+ Ajouter champ</button></div><div class="cb">
-   <p style="font-size:12.5px;color:var(--muted);margin-bottom:10px">Ces champs apparaîtront dans les informations de l'elève sur le bulletin.</p>
-   <div id="extra-bul-fields">${(dc.extraBulletinFields||[]).map((f,i)=>`<div style="display:flex;gap:6px;margin-bottom:7px"><input class="fc" style="flex:1" placeholder="Label" value="${esc(f.label)}" id="ebf-l-${i}"><input class="fc" style="flex:1" placeholder="Valeur/contenu" value="${esc(f.val||'')}" id="ebf-v-${i}"><button class="btn br bsm" onclick="removeExtraField('bul',${i},'${sid}')">✕</button></div>`).join('')||'<p style="color:var(--muted);font-size:12.5px">Aucun champ personnalise.</p>'}</div>
+  <div class="card"><div class="ch"><span class="ct2">${t('dcExtraBul')}</span><button class="btn bp bsm" onclick="addExtraField('bul','${sid}')">${t('addFieldBtn')}</button></div><div class="cb">
+   <p style="font-size:12.5px;color:var(--muted);margin-bottom:10px">${t('dcExtraBulDesc')}</p>
+   <div id="extra-bul-fields">${(dc.extraBulletinFields||[]).map((f,i)=>`<div style="display:flex;gap:6px;margin-bottom:7px"><input class="fc" style="flex:1" placeholder="Label" value="${esc(f.label)}" id="ebf-l-${i}"><input class="fc" style="flex:1" placeholder="Valeur/contenu" value="${esc(f.val||'')}" id="ebf-v-${i}"><button class="btn br bsm" onclick="removeExtraField('bul',${i},'${sid}')">✕</button></div>`).join('')||`<p style="color:var(--muted);font-size:12.5px">${t('dcNoCustomField')}</p>`}</div>
   </div></div>
-  <div class="card"><div class="ch"><span class="ct2">➕ Champs supplementaires - Certificats</span><button class="btn btl bsm" onclick="addExtraField('cert','${sid}')">+ Ajouter champ</button></div><div class="cb">
-   <div id="extra-cert-fields">${(dc.extraCertFields||[]).map((f,i)=>`<div style="display:flex;gap:6px;margin-bottom:7px"><input class="fc" style="flex:1" placeholder="Label" value="${esc(f.label)}" id="ecf-l-${i}"><input class="fc" style="flex:1" placeholder="Valeur" value="${esc(f.val||'')}" id="ecf-v-${i}"><button class="btn br bsm" onclick="removeExtraField('cert',${i},'${sid}')">✕</button></div>`).join('')||'<p style="color:var(--muted);font-size:12.5px">Aucun champ personnalise.</p>'}</div>
+  <div class="card"><div class="ch"><span class="ct2">${t('dcExtraCert')}</span><button class="btn btl bsm" onclick="addExtraField('cert','${sid}')">${t('addFieldBtn')}</button></div><div class="cb">
+   <div id="extra-cert-fields">${(dc.extraCertFields||[]).map((f,i)=>`<div style="display:flex;gap:6px;margin-bottom:7px"><input class="fc" style="flex:1" placeholder="Label" value="${esc(f.label)}" id="ecf-l-${i}"><input class="fc" style="flex:1" placeholder="Valeur" value="${esc(f.val||'')}" id="ecf-v-${i}"><button class="btn br bsm" onclick="removeExtraField('cert',${i},'${sid}')">✕</button></div>`).join('')||`<p style="color:var(--muted);font-size:12.5px">${t('dcNoCustomField')}</p>`}</div>
   </div></div>
-  <div class="card"><div class="ch"><span class="ct2">📋 Colonnes liste elèves</span></div><div class="cb">
-   <p style="font-size:12.5px;color:var(--muted);margin-bottom:8px">Colonnes par defaut pour l'impression de la liste.</p>
-   ${[{k:'mat',l:'Matricule'},{k:'name',l:'Nom & Prenom'},{k:'gender',l:'Sexe'},{k:'class',l:'Classe'},{k:'dob',l:'Naissance'},{k:'pob',l:'Lieu naiss.'},{k:'parent',l:'Parent'},{k:'phone',l:'Telephone'},{k:'address',l:'Adresse'},{k:'enrolled',l:'Date inscr.'}].map(col=>`<label class="perm-item" style="margin-bottom:5px"><input type="checkbox" id="dcc-lc-${col.k}" ${(dc.listColumns||[]).includes(col.k)?'checked':''}><span>${col.l}</span></label>`).join('')}
+  <div class="card"><div class="ch"><span class="ct2">${t('dcListCols')}</span></div><div class="cb">
+   <p style="font-size:12.5px;color:var(--muted);margin-bottom:8px">${t('dcListColsDesc')}</p>
+   ${[{k:'mat',l:t('matriculeCol')},{k:'name',l:t('fullnameCol')},{k:'gender',l:t('sexCol')},{k:'class',l:t('classCol')},{k:'dob',l:t('dobCol')},{k:'pob',l:t('pobCol')},{k:'parent',l:t('parentCol')},{k:'phone',l:t('phoneCol')},{k:'address',l:t('addressCol')},{k:'enrolled',l:t('enrolledCol')}].map(col=>`<label class="perm-item" style="margin-bottom:5px"><input type="checkbox" id="dcc-lc-${col.k}" ${(dc.listColumns||[]).includes(col.k)?'checked':''}><span>${col.l}</span></label>`).join('')}
   </div></div>
-  <div class="card"><div class="ch"><span class="ct2">📊 Synthèses - Élements a afficher</span></div><div class="cb">
-   ${toggle('synShowDist','Graphique de distribution')}${toggle('synShowRanking','Tableau de classement')}${toggle('synShowStats','Statistiques detaillees')}${toggle('synShowChart','Taux de reussite')}
+  <div class="card"><div class="ch"><span class="ct2">${t('dcSynElements')}</span></div><div class="cb">
+   ${toggle('synShowDist',t('dc_synShowDist'))}${toggle('synShowRanking',t('dc_synShowRanking'))}${toggle('synShowStats',t('dc_synShowStats'))}${toggle('synShowChart',t('dc_synShowChart'))}
   </div></div>
  </div>
  <div style="margin-top:16px;display:flex;gap:9px">
-  <button class="btn bp" onclick="saveDocConfig('${sid}')">💾 Enregistrer toute la configuration</button>
-  <button class="btn bo" onclick="rDocConfig()">↩ Reinitialiser</button>
+  <button class="btn bp" onclick="saveDocConfig('${sid}')">${t('dcSaveAll')}</button>
+  <button class="btn bo" onclick="rDocConfig()">${t('dcResetBtn')}</button>
  </div>`;
 }
 function syncColor(el){const cb=document.getElementById('dcc-bulletinColor');if(cb&&el.value.match(/^#[0-9a-f]{6}$/i))cb.value=el.value;}
@@ -2253,9 +2664,9 @@ function rBulletins(){
     </select></div>
    ${_blMode==='seq'?`<div style="flex:1;min-width:160px"><label class="lab">Sequence</label>
     <select class="fc" id="bl-sq" onchange="_blSeq=this.value;rBulletins()">${SEQ_DEFS.map(s=>`<option value="${s.id}" ${_blSeq===s.id?'selected':''}>${s.lbl} (T${s.term})</option>`).join('')}</select></div>`:
-    _blMode==='term'?`<div style="flex:1;min-width:160px"><label class="lab">Trimestre</label>
-    <select class="fc" id="bl-tm" onchange="_blTerm=this.value;rBulletins()">${['1','2','3'].map(x=>`<option value="${x}" ${_blTerm===x?'selected':''}>Trimestre ${x}</option>`).join('')}</select></div>`:''}
-   <div style="flex:1;min-width:180px"><label class="lab">🎒 Élève (individuel)</label>
+    _blMode==='term'?`<div style="flex:1;min-width:160px"><label class="lab">${t('termDropdown')}</label>
+    <select class="fc" id="bl-tm" onchange="_blTerm=this.value;rBulletins()">${['1','2','3'].map(x=>`<option value="${x}" ${_blTerm===x?'selected':''}>${termLbl(x)}</option>`).join('')}</select></div>`:''}
+   <div style="flex:1;min-width:180px"><label class="lab">${t('studentIndivLbl')}</label>
     <select class="fc" id="bl-s" onchange="_blSt=this.value;rBulletins()"><option value="">-- Selectionner --</option>${clsSts.map(s=>`<option value="${s.id}" ${_blSt===s.id?'selected':''}>${esc(s.firstName)} ${esc(s.name)}</option>`).join('')}</select></div>
   </div>
   <div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -2271,7 +2682,7 @@ function buildBulletinList(school){
  const cls=DB.classes.find(c=>c.id===_blClass);
  if(!rankings.length)return`<div class="ali ali-i">ℹ️ Aucune note enregistree pour la periode selectionnee.</div>`;
  return`<div class="card"><div class="ch"><span class="ct2">📊 ${esc(cls?.name||'')} - ${rankings.length} elèves notes</span></div><div class="cb"><div class="tw"><table>
-  <thead><tr><th>Rang</th><th>Nom & Prenom</th><th style="text-align:center">Moy./20</th><th>Mention</th><th>Statut</th><th>Bulletin</th></tr></thead>
+  <thead><tr><th>${t('rankLbl')}</th><th>${t('fullnameCol')}</th><th style="text-align:center">${t('avgOn20Lbl')}</th><th>${t('mentionLbl')}</th><th>${t('statusLbl')}</th><th>${t('bulletinSingular')}</th></tr></thead>
   <tbody>${rankings.map(s=>{const ri=s.rank===1?'🥇':s.rank===2?'🥈':s.rank===3?'🥉':s.rank;return`<tr>
    <td style="text-align:center;font-size:15px">${ri}</td>
    <td><strong>${esc(s.firstName)} ${esc(s.name)}</strong></td>
@@ -2493,7 +2904,7 @@ function rSynthesis(){
  ${_synMode!=='school'?`<div style="display:flex;gap:9px;margin-bottom:14px;flex-wrap:wrap">
   <select class="fc" style="max-width:240px" id="syn-c" onchange="_synClass=this.value;rSyn2()"><option value="">-- Classe --</option>${cls.map(c=>`<option value="${c.id}" ${_synClass===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select>
   ${_synMode==='seq'?`<select class="fc" style="max-width:200px" id="syn-p" onchange="_synPeriod=this.value;rSyn2()">${SEQ_DEFS.map(s=>`<option value="${s.id}" ${_synPeriod===s.id?'selected':''}>${s.lbl}</option>`).join('')}</select>`:''}
-  ${_synMode==='term'?`<select class="fc" style="max-width:200px" id="syn-p" onchange="_synPeriod=this.value;rSyn2()">${['1','2','3'].map(x=>`<option value="${x}" ${_synPeriod===x?'selected':''}>Trimestre ${x}</option>`).join('')}</select>`:''}
+  ${_synMode==='term'?`<select class="fc" style="max-width:200px" id="syn-p" onchange="_synPeriod=this.value;rSyn2()">${['1','2','3'].map(x=>`<option value="${x}" ${_synPeriod===x?'selected':''}>${termLbl(x)}</option>`).join('')}</select>`:''}
  </div>`:''}
  <div id="syn-area">${buildSynContent(school,cls,dc)}</div>`;
 }
@@ -2631,41 +3042,41 @@ function rStudentList(){
    <div style="display:flex;gap:9px;flex-wrap:wrap;margin-bottom:13px">
     <div style="flex:1;min-width:200px"><label class="lab">Classe *</label>
      <select class="fc" id="sln-cl" onchange="previewNotesTable()"><option value="">-- Selectionner --</option>${cls.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select></div>
-    <div style="flex:1;min-width:180px"><label class="lab">Periode / Sequences</label>
+    <div style="flex:1;min-width:180px"><label class="lab">${t('periodLbl')} / ${t('bySeq')}</label>
      <select class="fc" id="sln-pd" onchange="previewNotesTable()">
-      <option value="term1">📅 Trimestre 1 (Seq 1 + Seq 2)</option>
-      <option value="term2">📅 Trimestre 2 (Seq 3 + Seq 4)</option>
-      <option value="term3">📅 Trimestre 3 (Seq 5 + Seq 6)</option>
-      <option value="seq1">Sequence 1 uniquement</option>
-      <option value="seq2">Sequence 2 uniquement</option>
-      <option value="seq3">Sequence 3 uniquement</option>
-      <option value="seq4">Sequence 4 uniquement</option>
-      <option value="seq5">Sequence 5 uniquement</option>
-      <option value="seq6">Sequence 6 uniquement</option>
-      <option value="annual">Bilan annuel (moy. par trimestre)</option>
+      <option value="term1">📅 ${termLbl('1')} (${seqLbl('1')} + ${seqLbl('2')})</option>
+      <option value="term2">📅 ${termLbl('2')} (${seqLbl('3')} + ${seqLbl('4')})</option>
+      <option value="term3">📅 ${termLbl('3')} (${seqLbl('5')} + ${seqLbl('6')})</option>
+      <option value="seq1">${seqLbl('1')} ${t('seqOnlyLbl')}</option>
+      <option value="seq2">${seqLbl('2')} ${t('seqOnlyLbl')}</option>
+      <option value="seq3">${seqLbl('3')} ${t('seqOnlyLbl')}</option>
+      <option value="seq4">${seqLbl('4')} ${t('seqOnlyLbl')}</option>
+      <option value="seq5">${seqLbl('5')} ${t('seqOnlyLbl')}</option>
+      <option value="seq6">${seqLbl('6')} ${t('seqOnlyLbl')}</option>
+      <option value="annual">${t('annualDesc')}</option>
      </select></div>
     <div style="flex:1;min-width:180px"><label class="lab">Tri</label>
-     <select class="fc" id="sln-so" onchange="previewNotesTable()"><option value="alpha">Alphabetique</option><option value="rank">Par rang (meilleur en premier)</option><option value="mat">Matricule</option></select></div>
+     <select class="fc" id="sln-so" onchange="previewNotesTable()"><option value="alpha">${t('alphaSort')}</option><option value="rank">${t('bySortRankFull')}</option><option value="mat">${t('matriculeCol')}</option></select></div>
    </div>
-   <div style="margin-bottom:11px"><div style="font-size:12.5px;font-weight:700;color:var(--navy);margin-bottom:7px">Colonnes info a inclure :</div>
+   <div style="margin-bottom:11px"><div style="font-size:12.5px;font-weight:700;color:var(--navy);margin-bottom:7px">${t('slnColsLbl')}</div>
     <div style="display:flex;flex-wrap:wrap;gap:5px">
-     <label style="display:flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:12.5px"><input type="checkbox" id="sln-mat" checked style="accent-color:var(--navy)">Matricule</label>
-     <label style="display:flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:12.5px"><input type="checkbox" id="sln-gndr" style="accent-color:var(--navy)">Sexe</label>
-     <label style="display:flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:12.5px"><input type="checkbox" id="sln-rank" checked style="accent-color:var(--navy)">Rang</label>
-     <label style="display:flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:12.5px"><input type="checkbox" id="sln-avg" checked style="accent-color:var(--navy)">Moyenne generale</label>
-     <label style="display:flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:12.5px"><input type="checkbox" id="sln-obs" style="accent-color:var(--navy)">Observations</label>
+     <label style="display:flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:12.5px"><input type="checkbox" id="sln-mat" checked style="accent-color:var(--navy)">${t('matriculeCol')}</label>
+     <label style="display:flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:12.5px"><input type="checkbox" id="sln-gndr" style="accent-color:var(--navy)">${t('sexCol')}</label>
+     <label style="display:flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:12.5px"><input type="checkbox" id="sln-rank" checked style="accent-color:var(--navy)">${t('rankLbl')}</label>
+     <label style="display:flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:12.5px"><input type="checkbox" id="sln-avg" checked style="accent-color:var(--navy)">${t('avgGenLbl')}</label>
+     <label style="display:flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:12.5px"><input type="checkbox" id="sln-obs" style="accent-color:var(--navy)">${t('observationsLbl')}</label>
     </div>
    </div>
-   <div style="margin-bottom:11px"><div style="font-size:12.5px;font-weight:700;color:var(--navy);margin-bottom:7px">Matières a afficher :</div>
+   <div style="margin-bottom:11px"><div style="font-size:12.5px;font-weight:700;color:var(--navy);margin-bottom:7px">${t('subjectsToShowLbl')}</div>
     <div style="display:flex;gap:6px;margin-bottom:7px">
-     <button class="btn bo bsm" onclick="document.querySelectorAll('.sln-sb').forEach(c=>c.checked=true);previewNotesTable()">✅ Toutes</button>
-     <button class="btn bo bsm" onclick="document.querySelectorAll('.sln-sb').forEach(c=>c.checked=false);previewNotesTable()">❌ Aucune</button>
+     <button class="btn bo bsm" onclick="document.querySelectorAll('.sln-sb').forEach(c=>c.checked=true);previewNotesTable()">${t('allSubjectsBtn')}</button>
+     <button class="btn bo bsm" onclick="document.querySelectorAll('.sln-sb').forEach(c=>c.checked=false);previewNotesTable()">${t('noSubjectsBtn')}</button>
     </div>
     <div id="sln-sb-list" style="display:flex;flex-wrap:wrap;gap:5px"></div>
    </div>
    <div style="display:flex;gap:8px;flex-wrap:wrap">
-    <button class="bpr" onclick="printNotesTable()">🖨 Imprimer liste avec notes</button>
-    <button class="btn bo" onclick="previewNotesTable()">👁 Aperçu</button>
+    <button class="bpr" onclick="printNotesTable()">${t('printListNotesBtn')}</button>
+    <button class="btn bo" onclick="previewNotesTable()">${t('previewBtn')}</button>
    </div>
   </div></div>
   <div id="sln-preview"></div>
@@ -2714,7 +3125,7 @@ function previewNotesTable(){
  const listEl=document.getElementById('sln-sb-list');
  const sbs=cid?sbOf(cid):[];
  if(listEl)listEl.innerHTML=sbs.map(s=>`<label style="display:flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:12.5px"><input type="checkbox" class="sln-sb" value="${s.id}" checked style="accent-color:var(--navy)">${esc(s.name)} <span style="font-size:10.5px;color:var(--muted)">×${s.coef}</span></label>`).join('');
- if(!cid){document.getElementById('sln-preview').innerHTML=`<div class="ali ali-i">Selectionnez une classe pour l'aperçu.</div>`;return;}
+ if(!cid){document.getElementById('sln-preview').innerHTML=`<div class="ali ali-i">${t('selectClassPreview')}</div>`;return;}
  const pd=document.getElementById('sln-pd')?.value||'term1';
  const sort=document.getElementById('sln-so')?.value||'alpha';
  document.getElementById('sln-preview').innerHTML=buildNotesTableHTML(cid,pd,sort,true);
@@ -2888,7 +3299,7 @@ async function saveProg(id){
 function rMessages(){
  const el=document.getElementById('pg-messages');
  const inbox=DB.messages.filter(m=>m.to===CU.id);const sent=DB.messages.filter(m=>m.from===CU.id);const unread=inbox.filter(m=>!m.read).length;
- el.innerHTML=`<div class="ph"><h2>✉️ ${t('messages')}</h2><p>${unread} non lu(s)</p><button class="btn bp" onclick="openComposeModal()">✏️ ${t('newMsgBtn')}</button></div>
+ el.innerHTML=`<div class="ph"><h2>✉️ ${t('messages')}</h2><p>${unread} ${t('unreadSuffix')}</p><button class="btn bp" onclick="openComposeModal()">✏️ ${t('newMsgBtn')}</button></div>
  <div class="tabs"><button class="tab ${_msgTab==='inbox'?'on':''}" onclick="_msgTab='inbox';rMessages()">📥 ${t('receivedTab')} (${inbox.length})</button><button class="tab ${_msgTab==='sent'?'on':''}" onclick="_msgTab='sent';rMessages()">📤 ${t('sentTab')} (${sent.length})</button></div>
  <div class="card">${buildMsgList(_msgTab==='inbox'?inbox:sent)}</div>`;
 }
@@ -3039,7 +3450,7 @@ function rSMS(){
    <option value="custom">${t('customMsgOpt')}</option>
   </select></div></div>
   <div class="fr"><div class="fg"><label class="lab">${t('periodLbl')}</label><select class="fc" id="sms-pd">
-   ${SEQ_DEFS.map(s=>`<option value="seq:${s.id}">${s.lbl}</option>`).join('')}
+   ${SEQ_DEFS.map(s=>`<option value="seq:${s.id}">${seqLbl(s.id)}</option>`).join('')}
    ${['1','2','3'].map(x=>`<option value="term:${x}">${termLbl(x)}</option>`).join('')}
    <option value="annual">Bilan annuel</option>
   </select></div>
