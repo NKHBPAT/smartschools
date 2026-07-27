@@ -2960,7 +2960,7 @@ function bulletinHTML(st,cls,sbs,school,seq,term,stRank,classAvg,maxAvg,minAvg,s
     else{tableRows+=`<tr><td class="thl"><span class="tname">${esc(s.name)}</span>${sbTe?`<span class="tsub">${esc(sbTe.name)}</span>`:''}</td><td style="text-align:center">${s.coef}</td><td style="text-align:center;font-weight:bold;color:${val!==null&&val<10?'#dc2626':'inherit'}">${val!==null?val:'-'}</td><td style="text-align:center">${val!==null?(val*s.coef).toFixed(1):'-'}</td><td class="${app.cls}">${app.l}</td></tr>`;}
    });
    const grpAvg=gCoef?gPts/gCoef:null;
-   tableRows+=`<tr style="background:#f8fafc"><td colspan="${term?'4':'3'}" style="font-size:9.5px;color:#555">Sous-total ${gLabel}</td><td style="text-align:center;font-weight:bold;font-size:11px;color:#1a3a6c">${grpAvg!==null?grpAvg.toFixed(2):'-'}</td><td colspan="${term?'2':'1'}"></td></tr>`;
+   tableRows+=`<tr style="background:#f8fafc"><td colspan="${term?'4':'2'}" style="font-size:9.5px;color:#555">Sous-total ${gLabel}</td><td style="text-align:center;font-weight:bold;font-size:11px;color:#1a3a6c">${grpAvg!==null?grpAvg.toFixed(2):'-'}</td><td colspan="${term?'2':'1'}"></td></tr>`;
   });
  } else {
   sbs.forEach(s=>{const sbTe=DB.users.find(u=>u.id===s.teacherId);const val=getVal(st.id,s.id);const app=getApp(val);
@@ -2989,7 +2989,7 @@ function bulletinHTML(st,cls,sbs,school,seq,term,stRank,classAvg,maxAvg,minAvg,s
     ${term?`<th style="width:54px">Seq.${TERM_SEQS[term]?.[0]}/20</th><th style="width:54px">Seq.${TERM_SEQS[term]?.[1]}/20</th><th style="width:57px">${t('avgOn20Lbl')}</th><th style="width:50px">${t('pointsHdrLbl')}</th>`:`<th style="width:57px">${t('gradeOn20Lbl')}</th><th style="width:50px">${t('pointsHdrLbl')}</th>`}
     <th style="width:95px">${t('appreciationHdrLbl')}</th></tr></thead>
    <tbody>${tableRows}
-   <tr class="trow"><td colspan="${term?'4':'3'}"><strong>${t('generalAvgLbl')}</strong></td>
+   <tr class="trow"><td colspan="${term?'4':'2'}"><strong>${t('generalAvgLbl')}</strong></td>
     <td style="text-align:center;font-size:14px;color:${color}"><strong>${stRank?stRank.avg.toFixed(2)+'/20':'-'}</strong></td>
     <td style="text-align:center">${dc.showRank&&stRank?'Rang '+stRank.rank+'/'+rankTotal:'-'}</td>
     <td style="text-align:center">${stRank?`<span style="background:${stRank.avg>=14?'#d1fae5':stRank.avg>=10?'#fef3c7':'#fee2e2'};padding:2px 6px;border-radius:4px;font-size:9.5px;font-weight:bold">${getMention(stRank.avg).l}</span>`:'-'}</td>
