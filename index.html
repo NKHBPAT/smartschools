@@ -2276,7 +2276,7 @@ function rTimetable(){
  el.innerHTML=`<div class="ph"><h2>🗓 ${t('timetable')}</h2>
   <div style="display:flex;gap:8px;flex-wrap:wrap">
    ${hasPerm('manage_timetable')?`<button class="btn bp" onclick="openTTModal()">${t('addSlotBtn')}</button>`:''}
-   ${_ttClass&&hasPerm('manage_timetable')?`<button class="btn bgo" onclick="printTimetable()">🖨 Imprimer</button>`:''}
+   ${_ttClass&&hasPerm('manage_timetable')?`<button class="btn bgo" onclick="printTimetable()">${t('printBtn')}</button>`:''}
    ${_ttClass&&hasPerm('manage_timetable')?`<button class="btn br bsm" onclick="askDel('Vider tout l\'emploi du temps ?',async()=>{const slots=DB.timetable.filter(s=>s.classId==='${_ttClass}');for(const s of slots)await apiDelete('/timetable/'+s.id);DB.timetable=DB.timetable.filter(s=>s.classId!=='${_ttClass}');rTimetable();})">${t('clearAllBtn')}</button>`:''}
   </div>
  </div>
@@ -2852,7 +2852,7 @@ function rBulletins(){
     _blMode==='term'?`<div style="flex:1;min-width:160px"><label class="lab">${t('termDropdown')}</label>
     <select class="fc" id="bl-tm" onchange="_blTerm=this.value;rBulletins()">${['1','2','3'].map(x=>`<option value="${x}" ${_blTerm===x?'selected':''}>${termLbl(x)}</option>`).join('')}</select></div>`:''}
    <div style="flex:1;min-width:180px"><label class="lab">${t('studentIndivLbl')}</label>
-    <select class="fc" id="bl-s" onchange="_blSt=this.value;rBulletins()"><option value="">-- Selectionner --</option>${clsSts.map(s=>`<option value="${s.id}" ${_blSt===s.id?'selected':''}>${esc(s.firstName)} ${esc(s.name)}</option>`).join('')}</select></div>
+    <select class="fc" id="bl-s" onchange="_blSt=this.value;rBulletins()"><option value="">${t('selectStudentDash')}</option>${clsSts.map(s=>`<option value="${s.id}" ${_blSt===s.id?'selected':''}>${esc(s.firstName)} ${esc(s.name)}</option>`).join('')}</select></div>
   </div>
   <div style="display:flex;gap:8px;flex-wrap:wrap">
    <button class="bpr" ${!_blSt||!_blClass?'disabled':''} onclick="printOneBulletin(_blSt)">${t('printSingleBull')}</button>
@@ -3225,8 +3225,8 @@ function rStudentList(){
  <div id="sl-notes-panel" style="display:none">
   <div class="card" style="margin-bottom:14px"><div class="cb">
    <div style="display:flex;gap:9px;flex-wrap:wrap;margin-bottom:13px">
-    <div style="flex:1;min-width:200px"><label class="lab">Classe *</label>
-     <select class="fc" id="sln-cl" onchange="previewNotesTable()"><option value="">-- Selectionner --</option>${cls.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select></div>
+    <div style="flex:1;min-width:200px"><label class="lab">${t('classCol')} *</label>
+     <select class="fc" id="sln-cl" onchange="previewNotesTable()"><option value="">${t('selectClassNoDash')}</option>${cls.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select></div>
     <div style="flex:1;min-width:180px"><label class="lab">${t('periodLbl')} / ${t('bySeq')}</label>
      <select class="fc" id="sln-pd" onchange="previewNotesTable()">
       <option value="term1">📅 ${termLbl('1')} (${seqLbl('1')} + ${seqLbl('2')})</option>
