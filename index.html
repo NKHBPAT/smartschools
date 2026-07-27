@@ -1160,6 +1160,10 @@ const L_EN_N=['Nursery 1','Nursery 2'];
 const L_EN_P=['Primary 1','Primary 2','Primary 3','Primary 4','Primary 5','Primary 6'];
 const L_EN_S=['Form 1','Form 2','Form 3','Form 4','Form 5'];
 const L_EN_A=['Lower Sixth','Upper Sixth'];
+const DAYS_FR=['Lundi','Mardi','Mercredi','Jeudi','Vendredi'];
+const DAYS_EN=['Monday','Tuesday','Wednesday','Thursday','Friday'];
+const DAYS_ES=['Lunes','Martes','Miércoles','Jueves','Viernes'];
+function daysForLang(){return lang==='en'?DAYS_EN:lang==='es'?DAYS_ES:DAYS_FR;}
 
 function getLevels(school){
  if(!school)return[...L_FR_M,...L_FR_P,...L_FR_C,...L_FR_L];
@@ -1777,15 +1781,15 @@ function openUserModal(id){
   ['teacher','secretary','surveillant'].map(r=>`<option value="${r}" ${u?.role===r?'selected':''}>${t(r)}</option>`).join('');
  const schOpts=isAdmin?DB.schools.map(s=>`<option value="${s.id}" ${u?.schoolId===s.id?'selected':''}>${esc(s.name)}</option>`).join(''):
   `<option value="${CU.schoolId}" selected>${esc(schoolName(CU.schoolId))}</option>`;
- showModal(u?`✏️ ${esc(u.name)}`:'👤 Nouvel utilisateur',`
-  <div class="fg"><label class="lab">Nom complet *</label><input class="fc" id="um-n" value="${esc(u?.name||'')}"></div>
+ showModal(u?`✏️ ${esc(u.name)}`:t('newUserModalTtl'),`
+  <div class="fg"><label class="lab">${t('fullNameLbl')} *</label><input class="fc" id="um-n" value="${esc(u?.name||'')}"></div>
   <div class="fr"><div class="fg"><label class="lab">Email *</label><input class="fc" id="um-e" type="email" value="${esc(u?.email||'')}"></div>
-  <div class="fg"><label class="lab">Mot de passe ${u?'(vide=inchange)':'*'}</label><input class="fc" id="um-p" type="password"></div></div>
-  <div class="fr"><div class="fg"><label class="lab">Rôle</label><select class="fc" id="um-r" onchange="toggleUExtra()">${roleOpts}</select></div>
-  <div class="fg" id="um-sc-w"><label class="lab">Établissement</label><select class="fc" id="um-sc">${schOpts}</select></div></div>
-  <div class="fr"><div class="fg"><label class="lab">Telephone (SMS)</label><input class="fc" id="um-ph" value="${esc(u?.phone||'')}"></div>
-  <div class="fg"><label class="lab">Code d'accès</label><div style="display:flex;gap:5px"><input class="fc" id="um-cd" value="${esc(u?.accessCode||'')}" style="flex:1"><button class="btn bo bsm" onclick="document.getElementById('um-cd').value=genCode()">🔄</button></div></div></div>
-  <div class="fr"><div class="fg"><label class="lab">Annee validite</label><select class="fc" id="um-vy">${[yn,yn+1,yn+2].map(y=>`<option value="${y}" ${u?.validYear==y?'selected':''}>${y}</option>`).join('')}</select></div>
+  <div class="fg"><label class="lab">${t('pwd')} ${u?t('passwordUnchangedLbl'):'*'}</label><input class="fc" id="um-p" type="password"></div></div>
+  <div class="fr"><div class="fg"><label class="lab">${t('role')}</label><select class="fc" id="um-r" onchange="toggleUExtra()">${roleOpts}</select></div>
+  <div class="fg" id="um-sc-w"><label class="lab">${t('school')}</label><select class="fc" id="um-sc">${schOpts}</select></div></div>
+  <div class="fr"><div class="fg"><label class="lab">${t('phoneSmsLbl')}</label><input class="fc" id="um-ph" value="${esc(u?.phone||'')}"></div>
+  <div class="fg"><label class="lab">${t('code')}</label><div style="display:flex;gap:5px"><input class="fc" id="um-cd" value="${esc(u?.accessCode||'')}" style="flex:1"><button class="btn bo bsm" onclick="document.getElementById('um-cd').value=genCode()">🔄</button></div></div></div>
+  <div class="fr"><div class="fg"><label class="lab">${t('validYearLbl')}</label><select class="fc" id="um-vy">${[yn,yn+1,yn+2].map(y=>`<option value="${y}" ${u?.validYear==y?'selected':''}>${y}</option>`).join('')}</select></div>
   <div class="fg" id="um-ch-w" style="display:${u?.role==='parent'?'':'none'}"><label class="lab">IDs enfants (virgule)</label><input class="fc" id="um-ch" value="${esc((u?.childIds||[]).join(','))}"></div></div>
  `,`<button class="btn bo" onclick="closeModal()">${t('cancel')}</button><button class="btn bp" onclick="saveUser('${id||''}')">💾 ${t('save')}</button>`,'mlg');
  toggleUExtra();
@@ -1916,20 +1920,20 @@ function openStudentModal(id){
  const allSch=CU.role==='admin'?DB.schools:[school].filter(Boolean);
  const schoolId=s?.schoolId||(school?.id||allSch[0]?.id||'');
  const cls=clsOf(schoolId);
- showModal(s?`✏️ ${esc(s?.firstName||'')} ${esc(s?.name||'')}`:'🎒 Inscrire un elève',`
+ showModal(s?`✏️ ${esc(s?.firstName||'')} ${esc(s?.name||'')}`:t('enrollModalTtl'),`
   <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:12px">
-   <div class="photo-box" onclick="document.getElementById('st-ph').click()" title="Photo"><input type="file" id="st-ph" style="display:none" accept="image/*" onchange="previewSt(event)"><div id="stph-prev">${s?.photo?`<img src="${s.photo}">`:'?<br><span>Photo</span>'}</div></div>
+   <div class="photo-box" onclick="document.getElementById('st-ph').click()" title="${t('photoLbl')}"><input type="file" id="st-ph" style="display:none" accept="image/*" onchange="previewSt(event)"><div id="stph-prev">${s?.photo?`<img src="${s.photo}">`:'?<br><span>'+t('photoLbl')+'</span>'}</div></div>
    <div style="flex:1"><div class="fr">
-    <div class="fg"><label class="lab">Prenom *</label><input class="fc" id="sm-fn" value="${esc(s?.firstName||'')}"></div>
-    <div class="fg"><label class="lab">Nom *</label><input class="fc" id="sm-nm" value="${esc(s?.name||'')}"></div>
+    <div class="fg"><label class="lab">${t('firstNameFieldLbl')} *</label><input class="fc" id="sm-fn" value="${esc(s?.firstName||'')}"></div>
+    <div class="fg"><label class="lab">${t('name')} *</label><input class="fc" id="sm-nm" value="${esc(s?.name||'')}"></div>
    </div>
    <div class="fr">
-    <div class="fg"><label class="lab">Matricule</label><input class="fc" id="sm-mt" value="${esc(s?.mat||'')}" placeholder="Auto-genere si vide"></div>
-    <div class="fg"><label class="lab">Sexe</label><select class="fc" id="sm-gn"><option value="M" ${s?.gender!=='F'?'selected':''}>♂ Masculin</option><option value="F" ${s?.gender==='F'?'selected':''}>♀ Feminin</option></select></div>
+    <div class="fg"><label class="lab">${t('mat')}</label><input class="fc" id="sm-mt" value="${esc(s?.mat||'')}" placeholder="${t('autoGenPh')}"></div>
+    <div class="fg"><label class="lab">${t('gender')}</label><select class="fc" id="sm-gn"><option value="M" ${s?.gender!=='F'?'selected':''}>${t('maleOpt')}</option><option value="F" ${s?.gender==='F'?'selected':''}>${t('femaleOpt')}</option></select></div>
    </div></div>
   </div>
-  <div class="fr"><div class="fg"><label class="lab">Date de naissance</label><input class="fc" id="sm-db" type="date" value="${s?.dob||''}"></div>
-  <div class="fg"><label class="lab">Lieu de naissance</label><input class="fc" id="sm-pb" value="${esc(s?.pob||'')}"></div></div>
+  <div class="fr"><div class="fg"><label class="lab">${t('dob')}</label><input class="fc" id="sm-db" type="date" value="${s?.dob||''}"></div>
+  <div class="fg"><label class="lab">${t('pob')}</label><input class="fc" id="sm-pb" value="${esc(s?.pob||'')}"></div></div>
   ${CU.role==='admin'?`<div class="fr"><div class="fg"><label class="lab">Établissement</label><select class="fc" id="sm-si" onchange="reloadClsOpts(this.value)">${allSch.map(sc=>`<option value="${sc.id}" ${schoolId===sc.id?'selected':''}>${esc(sc.name)}</option>`).join('')}</select></div>`:'<div style="display:none">'}
   <div class="fg"><label class="lab">Classe</label><select class="fc" id="sm-ci">${cls.map(c=>`<option value="${c.id}" ${s?.classId===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select></div>
   ${CU.role==='admin'?'</div>':''}
@@ -1981,10 +1985,10 @@ function rClasses(){
 function openClassModal(id){
  const c=id?DB.classes.find(x=>x.id===id):null;const school=schoolOf();
  const lvls=getLevels(school);const tes=DB.users.filter(u=>u.role==='teacher'&&u.schoolId===school?.id);
- showModal(c?'✏️ Modifier classe':'📚 Nouvelle classe',`
-  <div class="fr"><div class="fg"><label class="lab">Nom de la classe *</label><input class="fc" id="cm-n" value="${esc(c?.name||'')}" placeholder="Ex: 6ème A"></div>
-  <div class="fg"><label class="lab">Niveau</label><select class="fc" id="cm-lv">${lvls.map(l=>`<option ${c?.level===l?'selected':''}>${l}</option>`).join('')}</select></div></div>
-  <div class="fg"><label class="lab">Professeur titulaire</label><select class="fc" id="cm-te"><option value="">-- Aucun --</option>${tes.map(te=>`<option value="${te.id}" ${c?.teacherId===te.id?'selected':''}>${esc(te.name)}</option>`).join('')}</select></div>
+ showModal(c?t('editClassTtl'):t('newClassTtl'),`
+  <div class="fr"><div class="fg"><label class="lab">${t('classNameLbl')} *</label><input class="fc" id="cm-n" value="${esc(c?.name||'')}" placeholder="Ex: 6ème A"></div>
+  <div class="fg"><label class="lab">${t('levelCol')}</label><select class="fc" id="cm-lv">${lvls.map(l=>`<option ${c?.level===l?'selected':''}>${l}</option>`).join('')}</select></div></div>
+  <div class="fg"><label class="lab">${t('titularTeacher')}</label><select class="fc" id="cm-te"><option value="">${t('noneOpt')}</option>${tes.map(te=>`<option value="${te.id}" ${c?.teacherId===te.id?'selected':''}>${esc(te.name)}</option>`).join('')}</select></div>
  `,`<button class="btn bo" onclick="closeModal()">${t('cancel')}</button><button class="btn bp" onclick="saveClass('${id||''}')">💾 ${t('save')}</button>`);
 }
 async function saveClass(id){
@@ -2037,12 +2041,12 @@ function openSubjectModal(id){
  const s=id?DB.subjects.find(x=>x.id===id):null;const school=schoolOf();
  const cls=clsOf(school?.id||'');const tes=DB.users.filter(u=>u.role==='teacher'&&u.schoolId===school?.id);
  const grpKeys=getGrpKeys(school);const grpDefs=getGrpDefs(school);
- showModal(s?'✏️ Modifier matière':'📖 Nouvelle matière',`
-  <div class="fr"><div class="fg"><label class="lab">Nom de la matière *</label><input class="fc" id="sbm-n" value="${esc(s?.name||'')}"></div>
-  <div class="fg"><label class="lab">Classe *</label><select class="fc" id="sbm-c">${cls.map(c=>`<option value="${c.id}" ${s?.classId===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select></div></div>
-  <div class="fr"><div class="fg"><label class="lab">Coefficient *</label><input class="fc" id="sbm-cf" type="number" min="1" max="9" value="${s?.coef||2}"></div>
-  <div class="fg"><label class="lab">Groupe</label><select class="fc" id="sbm-g">${grpKeys.map(k=>`<option value="${k}" ${s?.group===k?'selected':''}>${grpDefs[k].lbl}</option>`).join('')}</select></div></div>
-  <div class="fg"><label class="lab">Enseignant</label><select class="fc" id="sbm-t"><option value="">-- Non assigne --</option>${tes.map(te=>`<option value="${te.id}" ${s?.teacherId===te.id?'selected':''}>${esc(te.name)}</option>`).join('')}</select></div>
+ showModal(s?t('editSubjectTtl'):t('newSubjectTtl'),`
+  <div class="fr"><div class="fg"><label class="lab">${t('subjectNameLbl')} *</label><input class="fc" id="sbm-n" value="${esc(s?.name||'')}"></div>
+  <div class="fg"><label class="lab">${t('classCol')} *</label><select class="fc" id="sbm-c">${cls.map(c=>`<option value="${c.id}" ${s?.classId===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select></div></div>
+  <div class="fr"><div class="fg"><label class="lab">${t('coefficientLbl')} *</label><input class="fc" id="sbm-cf" type="number" min="1" max="9" value="${s?.coef||2}"></div>
+  <div class="fg"><label class="lab">${t('groupCol')}</label><select class="fc" id="sbm-g">${grpKeys.map(k=>{const grpLblMap={scientifique:t('grpSci'),litteraire:t('grpLit'),complementaire:t('grpComp'),general:t('grpGen'),technique:t('grpTech')};return`<option value="${k}" ${s?.group===k?'selected':''}>${grpLblMap[k]||grpDefs[k].lbl}</option>`;}).join('')}</select></div></div>
+  <div class="fg"><label class="lab">${t('teacherCol')}</label><select class="fc" id="sbm-t"><option value="">${t('notAssignedOpt')}</option>${tes.map(te=>`<option value="${te.id}" ${s?.teacherId===te.id?'selected':''}>${esc(te.name)}</option>`).join('')}</select></div>
  `,`<button class="btn bo" onclick="closeModal()">${t('cancel')}</button><button class="btn bp" onclick="saveSubject('${id||''}')">💾 ${t('save')}</button>`);
 }
 /* saveSubject ? async API version defined above */
@@ -2067,8 +2071,8 @@ function rGrades2(){
  if(!sbs.length){document.getElementById('gr-area').innerHTML=`<div class="cb"><div class="ali ali-w">⚠️ Aucune matière dans cette classe${CU.role==='teacher'?' assignee a vous':''}.</div></div>`;return;}
  if(!sts.length){document.getElementById('gr-area').innerHTML=`<div class="cb"><div class="ali ali-w">⚠️ Aucun elève dans cette classe.</div></div>`;return;}
  const rows=sts.map(st=>`<tr><td><strong>${esc(st.firstName)} ${esc(st.name)}</strong></td>${sbs.map(sb=>{const g=DB.grades.find(g=>g.stId===st.id&&g.sbId===sb.id&&g.seq===_gSeq);return`<td style="padding:3px"><input type="number" min="0" max="20" step="0.5" class="fc" style="width:62px;text-align:center;padding:5px;font-size:13px" value="${g?g.val:''}" placeholder="-" onchange="saveGrade('${st.id}','${sb.id}',this.value)" onfocus="this.select()"></td>`;}).join('')}</tr>`).join('');
- document.getElementById('gr-area').innerHTML=`<div class="cb"><div class="ali ali-i" style="margin-bottom:9px">💡 Entrez les notes (0-20) et elles sont sauvegardees automatiquement.</div><div class="tw"><table>
-  <thead><tr><th>Élève</th>${sbs.map(s=>`<th style="text-align:center;min-width:75px">${esc(s.name)}<br><span style="font-weight:600;font-size:10px;color:#94a3b8">×${s.coef}</span></th>`).join('')}</tr></thead>
+ document.getElementById('gr-area').innerHTML=`<div class="cb"><div class="ali ali-i" style="margin-bottom:9px">💡 ${lang==='en'?'Enter grades (0-20), they are saved automatically.':lang==='es'?'Ingrese las notas (0-20), se guardan automáticamente.':'Entrez les notes (0-20) et elles sont sauvegardees automatiquement.'}</div><div class="tw"><table>
+  <thead><tr><th>${t('passStudent')}</th>${sbs.map(s=>`<th style="text-align:center;min-width:75px">${esc(s.name)}<br><span style="font-weight:600;font-size:10px;color:#94a3b8">×${s.coef}</span></th>`).join('')}</tr></thead>
   <tbody>${rows}</tbody>
  </table></div></div>`;
 }
@@ -2080,7 +2084,7 @@ function rTimetable(){
  const el=document.getElementById('pg-timetable');
  const school=schoolOf();const cls=clsOf(school?.id||'');
  const isEn=isAnglophone(school);
- const days=isEn?['Monday','Tuesday','Wednesday','Thursday','Friday']:['Lundi','Mardi','Mercredi','Jeudi','Vendredi'];
+ const days=daysForLang();
  // Build unique sorted time slots from existing data + defaults
  const defSlots=['07:00','07:30','08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30'];
  const existSlots=_ttClass?DB.timetable.filter(s=>s.classId===_ttClass).map(s=>s.start):[];
@@ -2092,7 +2096,7 @@ function rTimetable(){
   <div style="display:flex;gap:8px;flex-wrap:wrap">
    ${hasPerm('manage_timetable')?`<button class="btn bp" onclick="openTTModal()">${t('addSlotBtn')}</button>`:''}
    ${_ttClass&&hasPerm('manage_timetable')?`<button class="btn bgo" onclick="printTimetable()">🖨 Imprimer</button>`:''}
-   ${_ttClass&&hasPerm('manage_timetable')?`<button class="btn br bsm" onclick="askDel('Vider tout l\'emploi du temps ?',async()=>{const slots=DB.timetable.filter(s=>s.classId==='${_ttClass}');for(const s of slots)await apiDelete('/timetable/'+s.id);DB.timetable=DB.timetable.filter(s=>s.classId!=='${_ttClass}');rTimetable();})">🗑 Tout effacer</button>`:''}
+   ${_ttClass&&hasPerm('manage_timetable')?`<button class="btn br bsm" onclick="askDel('Vider tout l\'emploi du temps ?',async()=>{const slots=DB.timetable.filter(s=>s.classId==='${_ttClass}');for(const s of slots)await apiDelete('/timetable/'+s.id);DB.timetable=DB.timetable.filter(s=>s.classId!=='${_ttClass}');rTimetable();})">${t('clearAllBtn')}</button>`:''}
   </div>
  </div>
  <div style="display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px;align-items:center">
@@ -2100,18 +2104,18 @@ function rTimetable(){
    <option value="">${t('selectClassNoDash')}</option>
    ${cls.map(c=>`<option value="${c.id}" ${_ttClass===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}
   </select>
-  ${_ttClass?`<span style="font-size:12.5px;color:var(--muted)">${slots.length} creneau(x) - ${totalH.toFixed(1)}h/semaine</span>`:''}
+  ${_ttClass?`<span style="font-size:12.5px;color:var(--muted)">${slots.length} ${t('slotsWeekLbl')} - ${totalH.toFixed(1)}${t('perWeekLbl')}</span>`:''}
  </div>
  ${!_ttClass?`<div class="ali ali-i">${t('selectClassTT')}</div>`:`
  <div class="card" style="overflow:hidden">
   <div class="ch" style="background:var(--navy);border-radius:13px 13px 0 0;padding:10px 16px">
    <span style="color:#fff;font-weight:800;font-size:14px">📅 ${esc(DB.classes.find(c=>c.id===_ttClass)?.name||'')}</span>
-   <span style="color:rgba(255,255,255,.5);font-size:12px">${isEn?'School Week':'Semaine scolaire'}</span>
+   <span style="color:rgba(255,255,255,.5);font-size:12px">${t('schoolWeekLbl')}</span>
   </div>
   <div style="overflow-x:auto">
   <table class="ttg" id="tt-grid">
    <thead><tr>
-    <th style="min-width:80px;background:var(--navy-d)!important">Heure</th>
+    <th style="min-width:80px;background:var(--navy-d)!important">${t('hourColLbl')}</th>
     ${days.map(d=>`<th style="min-width:140px;background:var(--navy-d)!important">${d}</th>`).join('')}
    </tr></thead>
    <tbody>
@@ -2167,7 +2171,7 @@ function rTimetable(){
 function openTTModal(id,preDay,preHr){
  const school=schoolOf();const cls=clsOf(school?.id||'');
  const isEn=isAnglophone(school);
- const days=isEn?['Monday','Tuesday','Wednesday','Thursday','Friday']:['Lundi','Mardi','Mercredi','Jeudi','Vendredi'];
+ const days=daysForLang();
  const slot=id?DB.timetable.find(x=>x.id===id):null;
  const usedCid=slot?.classId||_ttClass||'';
  const tes=DB.users.filter(u=>u.role==='teacher'&&u.schoolId===school?.id);
@@ -2181,26 +2185,26 @@ function openTTModal(id,preDay,preHr){
    </select>
   </div>
  </div>`;
- showModal(slot?'✏️ Modifier creneau':'🗓 Nouveau creneau',`
+ showModal(slot?t('editSlotTtl'):t('newSlotTtl'),`
   <div class="fr">
-   <div class="fg"><label class="lab">Classe *</label>
+   <div class="fg"><label class="lab">${t('classCol')} *</label>
     <select class="fc" id="ttm-cl" onchange="reloadTTSbs(this.value)">${cls.map(c=>`<option value="${c.id}" ${usedCid===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select>
    </div>
-   <div class="fg"><label class="lab">Matière *</label>
+   <div class="fg"><label class="lab">${t('subjects')} *</label>
     <select class="fc" id="ttm-sb">${sbOf(usedCid).map(s=>`<option value="${s.id}" ${slot?.subjectId===s.id?'selected':''}>${esc(s.name)}</option>`).join('')}</select>
    </div>
   </div>
   <div class="fr">
-   <div class="fg"><label class="lab">Enseignant</label>
+   <div class="fg"><label class="lab">${t('teacherCol')}</label>
     <select class="fc" id="ttm-te">${tes.map(u=>`<option value="${u.id}" ${slot?.teacherId===u.id?'selected':''}>${esc(u.name)}</option>`).join('')}</select>
    </div>
-   <div class="fg"><label class="lab">Jour *</label>
+   <div class="fg"><label class="lab">${t('dayLbl')} *</label>
     <select class="fc" id="ttm-dy">${days.map(d=>`<option value="${d}" ${(slot?.day||preDay||'')===d?'selected':''}>${d}</option>`).join('')}</select>
    </div>
   </div>
   <div class="fr">
-   ${mkTimeSelect('ttm-st',slot?.start||preHr||'07:30','⏰ Heure de debut')}
-   ${mkTimeSelect('ttm-en',slot?.end||'09:00','⏱ Heure de fin')}
+   ${mkTimeSelect('ttm-st',slot?.start||preHr||'07:30',t('startTimeLbl'))}
+   ${mkTimeSelect('ttm-en',slot?.end||'09:00',t('endTimeLbl'))}
   </div>
   <div id="ttm-dur" style="margin-top:6px;padding:7px 11px;background:#f0fdf4;border-radius:8px;font-size:12.5px;color:#15803d;font-weight:700"></div>
   <script>
@@ -2229,7 +2233,7 @@ async function saveTT(id){
 function printTimetable(){
  if(!_ttClass)return;
  const school=schoolOf();const isEn=isAnglophone(school);
- const days=isEn?['Monday','Tuesday','Wednesday','Thursday','Friday']:['Lundi','Mardi','Mercredi','Jeudi','Vendredi'];
+ const days=daysForLang();
  const cls=DB.classes.find(c=>c.id===_ttClass);const slots=DB.timetable.filter(s=>s.classId===_ttClass);
  const allTimes=[...new Set(['07:00','07:30','08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00',...slots.map(s=>s.start)])].sort();
  const dc=getDocCfg(school);const color=dc.bulletinColor||'#1a3a6c';
@@ -2238,13 +2242,13 @@ function printTimetable(){
   return`<tr><td style="text-align:center;font-weight:700;font-size:11px;background:#f8fafc;border:1px solid #ddd;white-space:nowrap;padding:4px 7px">${hr}</td>${cells}</tr>`;
  }).join('');
  const w=window.open('','_blank');
- w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>EDT</title><style>*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}body{font-family:sans-serif;padding:14px;font-size:11px}table{width:100%;border-collapse:collapse}th{background:${color}!important;color:#fff!important;padding:7px;border:1px solid #ccc;font-size:11px}@media print{@page{size:A4 landscape;margin:.8cm}}</style></head><body>
+ w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${t('timetableTitle')}</title><style>*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}body{font-family:sans-serif;padding:14px;font-size:11px}table{width:100%;border-collapse:collapse}th{background:${color}!important;color:#fff!important;padding:7px;border:1px solid #ccc;font-size:11px}@media print{@page{size:A4 landscape;margin:.8cm}}</style></head><body>
  <div style="text-align:center;margin-bottom:12px;border-bottom:2px solid ${color};padding-bottom:8px">
   ${school?.logo&&dc.showLogo?`<img src="${school.logo}" style="width:35px;height:35px;object-fit:contain;vertical-align:middle;margin-right:8px">`:''}
-  <strong style="font-size:14px;color:${color}">${esc(school?.name||'')} - EMPLOI DU TEMPS</strong><br>
+  <strong style="font-size:14px;color:${color}">${esc(school?.name||'')} - ${t('timetableTitle')}</strong><br>
   <span>${esc(cls?.name||'')} - ${t('year')}</span>
  </div>
- <table><thead><tr><th style="width:70px">Heure</th>${days.map(d=>`<th>${d}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table>
+ <table><thead><tr><th style="width:70px">${t('hourColLbl')}</th>${days.map(d=>`<th>${d}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table>
  ${printFooter()}<script>window.onload=()=>setTimeout(()=>window.print(),300)<\/script></body></html>`);
  w.document.close();
 }
@@ -2277,16 +2281,16 @@ function buildHonorList(){
 function printHonor(){
  const rankings=rankByTerm(_hrClass,_hrTerm);const honor=rankings.filter(s=>s.avg>=12);
  const cls=DB.classes.find(c=>c.id===_hrClass);const school=schoolOf();const dc=getDocCfg(school);
- const rows=honor.map((s,i)=>`<tr style="${i%2?'background:#f9fafb':''}"><td style="text-align:center">${s.rank===1?'🥇':s.rank===2?'🥈':s.rank===3?'🥉':'#'+s.rank}</td><td><strong>${esc(s.firstName)} ${esc(s.name)}</strong></td><td style="text-align:center;font-weight:700">${s.avg.toFixed(2)}/20</td><td>${getMention(s.avg).l}</td><td>${s.avg>=16?'Excellence':s.avg>=14?'Felicitations':'Encouragements'}</td></tr>`).join('');
+ const rows=honor.map((s,i)=>`<tr style="${i%2?'background:#f9fafb':''}"><td style="text-align:center">${s.rank===1?'🥇':s.rank===2?'🥈':s.rank===3?'🥉':'#'+s.rank}</td><td><strong>${esc(s.firstName)} ${esc(s.name)}</strong></td><td style="text-align:center;font-weight:700">${s.avg.toFixed(2)}/20</td><td>${getMention(s.avg).l}</td><td>${s.avg>=16?t('excellenceLbl'):s.avg>=14?t('congratsLbl'):t('encouragementLbl')}</td></tr>`).join('');
  const w=window.open('','_blank');
- w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Tableau d'Honneur</title><style>*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}body{font-family:'Times New Roman',serif;font-size:12px;margin:0;padding:14px}table{width:100%;border-collapse:collapse}th{background:#1a3a6c!important;color:#fff!important;padding:8px;font-size:11px;border:1px solid #ccc}td{border:1px solid #ddd;padding:7px}@media print{@page{size:A4;margin:.8cm}}</style></head><body>
+ w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${t('honorTableTitle')}</title><style>*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}body{font-family:'Times New Roman',serif;font-size:12px;margin:0;padding:14px}table{width:100%;border-collapse:collapse}th{background:#1a3a6c!important;color:#fff!important;padding:8px;font-size:11px;border:1px solid #ccc}td{border:1px solid #ddd;padding:7px}@media print{@page{size:A4;margin:.8cm}}</style></head><body>
  <div style="text-align:center;margin-bottom:12px;border-bottom:2px solid #1a3a6c;padding-bottom:9px">
   ${school?.logo&&dc.showLogo?`<img src="${school.logo}" style="width:50px;height:50px;object-fit:contain;margin-bottom:5px"><br>`:''}
   <div style="font-size:15px;font-weight:bold;color:#1a3a6c">${esc(school?.name||'')}</div>
-  <div style="font-size:13px">🏆 TABLEAU D'HONNEUR - ${esc(cls?.name||'')} - ${termLbl(_hrTerm)}</div>
-  <div style="font-size:11px;margin-top:3px">${honor.length} elève(s) honore(s) - Annee ${t('year')}</div>
+  <div style="font-size:13px">🏆 ${t('honorTableTitle')} - ${esc(cls?.name||'')} - ${termLbl(_hrTerm)}</div>
+  <div style="font-size:11px;margin-top:3px">${honor.length} ${t('honoredCountLbl')} - ${t('year')}</div>
  </div>
- <table><thead><tr><th>Rang</th><th>Nom & Prenom</th><th>Moy./20</th><th>Mention</th><th>Distinction</th></tr></thead><tbody>${rows}</tbody></table>
+ <table><thead><tr><th>${t('rankLbl')}</th><th>${t('fullnameCol')}</th><th>${t('avgOn20Lbl')}</th><th>${t('mentionLbl')}</th><th>${t('distinctionColHdr')}</th></tr></thead><tbody>${rows}</tbody></table>
  ${printFooter()}<script>window.onload=()=>setTimeout(()=>window.print(),300)<\/script></body></html>`);
  w.document.close();
 }
@@ -2299,7 +2303,7 @@ function rCerts(){
   <select class="fc" style="max-width:230px" id="cf-cl" onchange="_cfClass=this.value;_cfSt='';rCerts2()"><option value="">${t('selectClassDash')}</option>${cls.map(c=>`<option value="${c.id}" ${_cfClass===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select>
   <select class="fc" style="max-width:230px" id="cf-st" onchange="_cfSt=this.value;rCerts2()"><option value="">${t('selectStudentDash')}</option>${(_cfClass?stOf(_cfClass):[]).map(s=>`<option value="${s.id}">${esc(s.firstName+' '+s.name)}</option>`).join('')}</select>
   <button class="btn btl" ${!_cfSt?'disabled':''} onclick="printCertSingle(_cfSt)">${t('certIndivBtn')}</button>
-  ${_cfClass?`<button class="btn bgo" onclick="printAllCerts()">🖨 Toute la classe</button>`:''}
+  ${_cfClass?`<button class="btn bgo" onclick="printAllCerts()">${t('printAllBull')}</button>`:''}
  </div></div>
  <div id="cf-area"></div>`;
 }
@@ -2323,23 +2327,23 @@ function certHTML(st,school,cls){
    <div style="font-size:11.5px;color:#666;margin:3px 0">${esc(school?.city||'')}${school?.region?' - Region du '+esc(school.region):''}</div>
    <div style="font-size:16px;font-weight:bold;letter-spacing:2px;color:${color};margin-top:11px;text-transform:uppercase;border:1.5px solid ${color};padding:7px 20px;display:inline-block;border-radius:4px">${certTitle}</div>
   </div>
-  <p style="text-align:center;font-size:13px;margin-bottom:14px">Le soussigne(e), <strong>${esc(principal?.name||'Chef d\'Établissement')}</strong>, ${esc(dc.signTitle2||'Chef d\'Établissement')}, certifie que :</p>
+  <p style="text-align:center;font-size:13px;margin-bottom:14px">${t('certSignedLbl')} <strong>${esc(principal?.name||dc.signTitle2||'')}</strong>, ${esc(dc.signTitle2||t('sigprincipal'))}${t('certThatLbl')}</p>
   <table style="width:100%;border-collapse:collapse;margin-bottom:14px">
-   <tr><td style="width:35%;padding:6px 10px;font-weight:600;border:1px solid #ddd">${dc.showMatricule?'Matricule':'N°'}</td><td style="padding:6px 10px;border:1px solid #ddd">${esc(st.mat||'-')}</td></tr>
-   <tr><td style="padding:6px 10px;font-weight:600;border:1px solid #ddd">${isEn?'Last Name':'Nom'}</td><td style="padding:6px 10px;border:1px solid #ddd"><strong>${esc(st.name)}</strong></td></tr>
-   <tr><td style="padding:6px 10px;font-weight:600;border:1px solid #ddd">${isEn?'First Name':'Prenom'}</td><td style="padding:6px 10px;border:1px solid #ddd"><strong>${esc(st.firstName)}</strong></td></tr>
-   ${dc.showGender?`<tr><td style="padding:6px 10px;font-weight:600;border:1px solid #ddd">${isEn?'Gender':'Sexe'}</td><td style="padding:6px 10px;border:1px solid #ddd">${st.gender==='M'?'Masculin / Male':'Feminin / Female'}</td></tr>`:''}
-   ${dc.showDOB?`<tr><td style="padding:6px 10px;font-weight:600;border:1px solid #ddd">${isEn?'Date of Birth':'Date de naissance'}</td><td style="padding:6px 10px;border:1px solid #ddd">${fmtDate(st.dob)||'-'}</td></tr>`:''}
-   ${dc.showPOB?`<tr><td style="padding:6px 10px;font-weight:600;border:1px solid #ddd">${isEn?'Place of Birth':'Lieu de naissance'}</td><td style="padding:6px 10px;border:1px solid #ddd">${esc(st.pob||'-')}</td></tr>`:''}
-   <tr><td style="padding:6px 10px;font-weight:600;border:1px solid #ddd">${isEn?'Class':'Classe'}</td><td style="padding:6px 10px;border:1px solid #ddd"><strong>${esc(cls?.name||'-')}</strong></td></tr>
-   <tr><td style="padding:6px 10px;font-weight:600;border:1px solid #ddd">${isEn?'School Year':'Annee scolaire'}</td><td style="padding:6px 10px;border:1px solid #ddd">${t('year')}</td></tr>
-   ${dc.showParent?`<tr><td style="padding:6px 10px;font-weight:600;border:1px solid #ddd">${isEn?'Parent/Guardian':'Parent/Tuteur'}</td><td style="padding:6px 10px;border:1px solid #ddd">${esc(st.parent||'-')}</td></tr>`:''}
+   <tr><td style="width:35%;padding:6px 10px;font-weight:600;border:1px solid #ddd">${dc.showMatricule?t('mat'):t('certNumLbl')}</td><td style="padding:6px 10px;border:1px solid #ddd">${esc(st.mat||'-')}</td></tr>
+   <tr><td style="padding:6px 10px;font-weight:600;border:1px solid #ddd">${t('certLastName')}</td><td style="padding:6px 10px;border:1px solid #ddd"><strong>${esc(st.name)}</strong></td></tr>
+   <tr><td style="padding:6px 10px;font-weight:600;border:1px solid #ddd">${t('certFirstName')}</td><td style="padding:6px 10px;border:1px solid #ddd"><strong>${esc(st.firstName)}</strong></td></tr>
+   ${dc.showGender?`<tr><td style="padding:6px 10px;font-weight:600;border:1px solid #ddd">${t('gender')}</td><td style="padding:6px 10px;border:1px solid #ddd">${st.gender==='M'?t('male'):t('female')}</td></tr>`:''}
+   ${dc.showDOB?`<tr><td style="padding:6px 10px;font-weight:600;border:1px solid #ddd">${t('dob')}</td><td style="padding:6px 10px;border:1px solid #ddd">${fmtDate(st.dob)||'-'}</td></tr>`:''}
+   ${dc.showPOB?`<tr><td style="padding:6px 10px;font-weight:600;border:1px solid #ddd">${t('pob')}</td><td style="padding:6px 10px;border:1px solid #ddd">${esc(st.pob||'-')}</td></tr>`:''}
+   <tr><td style="padding:6px 10px;font-weight:600;border:1px solid #ddd">${t('classCol')}</td><td style="padding:6px 10px;border:1px solid #ddd"><strong>${esc(cls?.name||'-')}</strong></td></tr>
+   <tr><td style="padding:6px 10px;font-weight:600;border:1px solid #ddd">${t('schoolYear')}</td><td style="padding:6px 10px;border:1px solid #ddd">${t('year')}</td></tr>
+   ${dc.showParent?`<tr><td style="padding:6px 10px;font-weight:600;border:1px solid #ddd">${t('parentRole')}</td><td style="padding:6px 10px;border:1px solid #ddd">${esc(st.parent||'-')}</td></tr>`:''}
    ${extraRows}
   </table>
-  <p style="text-align:center;margin:14px 0;font-size:12.5px">est regulièrement inscrit(e) dans notre etablissement pour l'annee scolaire <strong>${t('year')}</strong>.</p>
-  <p style="margin-bottom:16px;font-size:12px;color:#666">Ce certificat lui est delivre pour servir et valoir ce que de droit.</p>
+  <p style="text-align:center;margin:14px 0;font-size:12.5px">${t('certEnrolledStmt')} <strong>${t('year')}</strong>.</p>
+  <p style="margin-bottom:16px;font-size:12px;color:#666">${t('certValidStmt')}</p>
   <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:22px">
-   <div style="text-align:left"><div style="font-size:11px;color:#666">Fait a ${esc(school?.city||'-')}, le ${new Date().toLocaleDateString('fr-FR')}</div></div>
+   <div style="text-align:left"><div style="font-size:11px;color:#666">${t('certMadeAt')} ${esc(school?.city||'-')}, ${new Date().toLocaleDateString(lang==='en'?'en-GB':lang==='es'?'es-ES':'fr-FR')}</div></div>
    <div style="text-align:center">${dc.showStamp?`<div style="width:70px;height:70px;border:1px dashed #aaa;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:9px;margin:0 auto 5px">Cachet</div>`:''}<div style="font-size:11.5px;font-weight:600">${esc(dc.signTitle2||'Le Chef d\'Établissement')}</div><div style="font-size:11px;color:#666">${esc(principal?.name||'')}</div></div>
   </div>
   ${dc.footerNote?`<div style="margin-top:14px;padding:7px 10px;background:#f9fafb;border-radius:6px;font-size:11px;color:#666;text-align:center;font-style:italic">${esc(dc.footerNote)}</div>`:''}
@@ -2385,7 +2389,7 @@ function rAbsTable(){
   <td><button class="btn bo bsm" onclick="openAbsModal('${s.id}','${seq}')">✏️</button></td>
  </tr>`;}).join('');
  document.getElementById('ab-area').innerHTML=`<div class="cb"><div class="tw"><table>
-  <thead><tr><th>Élève</th><th style="text-align:center">Total</th><th style="text-align:center">Justif.</th><th style="text-align:center">Non just.</th><th>Motif</th><th>Action</th></tr></thead>
+  <thead><tr><th>${t('passStudent')}</th><th style="text-align:center">${t('totalLbl')}</th><th style="text-align:center">${t('justifLbl')}</th><th style="text-align:center">${t('nonJustLbl')}</th><th>${t('reasonCol')}</th><th>${t('actionsCol')}</th></tr></thead>
   <tbody>${rows||`<tr><td colspan="6">${empty()}</td></tr>`}</tbody>
  </table></div></div>`;
 }
@@ -2393,14 +2397,14 @@ function openAbsModal(stId,seq){
  const school=schoolOf();const cls=clsOf(school?.id||'');
  const a=stId&&seq?getAbsence(stId,seq):{hours:0,justified:0,unjustified:0,note:''};
  const st=stId?DB.students.find(s=>s.id===stId):null;
- showModal(`⚠️ Absences${st?' - '+st.firstName+' '+st.name:''}`,`
-  ${!stId?`<div class="fr"><div class="fg"><label class="lab">Classe</label><select class="fc" id="ab-mcl" onchange="reloadAbsSts(this.value)"><option value="">--</option>${cls.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select></div>
-  <div class="fg"><label class="lab">Élève</label><select class="fc" id="ab-mst"><option value="">--</option></select></div></div>`:''}
-  <div class="fr"><div class="fg"><label class="lab">Total heures</label><input class="fc" id="ab-mh" type="number" min="0" value="${a.hours||0}"></div>
-  <div class="fg"><label class="lab">Sequence</label><select class="fc" id="ab-msq">${SEQ_DEFS.map(s=>`<option value="${s.id}" ${seq===s.id?'selected':''}>${s.lbl}</option>`).join('')}</select></div></div>
-  <div class="fr"><div class="fg"><label class="lab">Justifiees (h)</label><input class="fc" id="ab-mj" type="number" min="0" value="${a.justified||0}"></div>
-  <div class="fg"><label class="lab">Non justifiees (h)</label><input class="fc" id="ab-mn" type="number" min="0" value="${a.unjustified||0}"></div></div>
-  <div class="fg"><label class="lab">Motif / Note</label><input class="fc" id="ab-mo" value="${esc(a.note||'')}"></div>
+ showModal(`${t('absencesModalTtl')}${st?' - '+st.firstName+' '+st.name:''}`,`
+  ${!stId?`<div class="fr"><div class="fg"><label class="lab">${t('classCol')}</label><select class="fc" id="ab-mcl" onchange="reloadAbsSts(this.value)"><option value="">${t('noneDashOpt')}</option>${cls.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select></div>
+  <div class="fg"><label class="lab">${t('passStudent')}</label><select class="fc" id="ab-mst"><option value="">${t('noneDashOpt')}</option></select></div></div>`:''}
+  <div class="fr"><div class="fg"><label class="lab">${t('totalHoursLbl')}</label><input class="fc" id="ab-mh" type="number" min="0" value="${a.hours||0}"></div>
+  <div class="fg"><label class="lab">${t('seqFieldLbl')}</label><select class="fc" id="ab-msq">${SEQ_DEFS.map(s=>`<option value="${s.id}" ${seq===s.id?'selected':''}>${seqLbl(s.id)}</option>`).join('')}</select></div></div>
+  <div class="fr"><div class="fg"><label class="lab">${t('justifiedHLbl')}</label><input class="fc" id="ab-mj" type="number" min="0" value="${a.justified||0}"></div>
+  <div class="fg"><label class="lab">${t('unjustifiedHLbl')}</label><input class="fc" id="ab-mn" type="number" min="0" value="${a.unjustified||0}"></div></div>
+  <div class="fg"><label class="lab">${t('reasonNoteLbl')}</label><input class="fc" id="ab-mo" value="${esc(a.note||'')}"></div>
  `,`<button class="btn bo" onclick="closeModal()">${t('cancel')}</button><button class="btn bp" onclick="saveAbsence('${stId||''}')">💾 ${t('save')}</button>`);
 }
 function reloadAbsSts(cid){const sel=document.getElementById('ab-mst');if(sel)sel.innerHTML=`<option value="">--</option>`+stOf(cid).map(s=>`<option value="${s.id}">${esc(s.firstName+' '+s.name)}</option>`).join('');}
@@ -2535,7 +2539,7 @@ function rPasses(){
     <button class="btn btl bsm" onclick="printPass('${p.id}')">🖨</button>
     <button class="btn br bsm" onclick="askDel('Supprimer cette autorisation ?',async()=>{if(await apiDelete('/passes/${p.id}')){DB.passes=DB.passes.filter(x=>x.id!=='${p.id}');rPasses();}})">🗑</button>
    </div></td>
-  </tr>`;}).join(''):`<tr><td colspan="8">${empty('Aucune autorisation')}</td></tr>`}</tbody>
+  </tr>`;}).join(''):`<tr><td colspan="8">${empty(t('noPassesEmpty'))}</td></tr>`}</tbody>
  </table></div></div></div>`;
 }
 function openPassModal(type){
@@ -2575,18 +2579,18 @@ function printPass(pid){
    <div style="font-size:14px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;color:${color};margin-top:8px;border:1.5px solid ${color};padding:5px 15px;display:inline-block;border-radius:4px">${title}</div>
   </div>
   <table style="width:100%;font-size:12px;border-collapse:collapse">
-   <tr><td style="padding:5px 8px;font-weight:600;width:40%;border:1px solid #ddd">Nom complet</td><td style="padding:5px 8px;border:1px solid #ddd"><strong>${esc(st?st.firstName+' '+st.name:'-')}</strong></td></tr>
-   <tr><td style="padding:5px 8px;font-weight:600;border:1px solid #ddd">Matricule</td><td style="padding:5px 8px;border:1px solid #ddd">${esc(st?.mat||'-')}</td></tr>
-   <tr><td style="padding:5px 8px;font-weight:600;border:1px solid #ddd">Classe</td><td style="padding:5px 8px;border:1px solid #ddd">${esc(cls?.name||'-')}</td></tr>
-   <tr><td style="padding:5px 8px;font-weight:600;border:1px solid #ddd">Date</td><td style="padding:5px 8px;border:1px solid #ddd">${fmtDate(p.date)}</td></tr>
-   <tr><td style="padding:5px 8px;font-weight:600;border:1px solid #ddd">Heure ${p.type==='sortie'?'sortie':'entree'}</td><td style="padding:5px 8px;border:1px solid #ddd"><strong>${esc(p.timeOut||'-')}</strong></td></tr>
-   ${p.timeIn?`<tr><td style="padding:5px 8px;font-weight:600;border:1px solid #ddd">Heure retour</td><td style="padding:5px 8px;border:1px solid #ddd"><strong>${esc(p.timeIn)}</strong></td></tr>`:''}
-   <tr><td style="padding:5px 8px;font-weight:600;border:1px solid #ddd">Motif</td><td style="padding:5px 8px;border:1px solid #ddd">${esc(p.reason||'-')}</td></tr>
+   <tr><td style="padding:5px 8px;font-weight:600;width:40%;border:1px solid #ddd">${t('fullNameColLbl')}</td><td style="padding:5px 8px;border:1px solid #ddd"><strong>${esc(st?st.firstName+' '+st.name:'-')}</strong></td></tr>
+   <tr><td style="padding:5px 8px;font-weight:600;border:1px solid #ddd">${t('matriculeColLbl')}</td><td style="padding:5px 8px;border:1px solid #ddd">${esc(st?.mat||'-')}</td></tr>
+   <tr><td style="padding:5px 8px;font-weight:600;border:1px solid #ddd">${t('classColLbl')}</td><td style="padding:5px 8px;border:1px solid #ddd">${esc(cls?.name||'-')}</td></tr>
+   <tr><td style="padding:5px 8px;font-weight:600;border:1px solid #ddd">${t('dateColLbl')}</td><td style="padding:5px 8px;border:1px solid #ddd">${fmtDate(p.date)}</td></tr>
+   <tr><td style="padding:5px 8px;font-weight:600;border:1px solid #ddd">${p.type==='sortie'?t('exitHourLbl'):t('entryHourLbl')}</td><td style="padding:5px 8px;border:1px solid #ddd"><strong>${esc(p.timeOut||'-')}</strong></td></tr>
+   ${p.timeIn?`<tr><td style="padding:5px 8px;font-weight:600;border:1px solid #ddd">${t('returnHourLbl')}</td><td style="padding:5px 8px;border:1px solid #ddd"><strong>${esc(p.timeIn)}</strong></td></tr>`:''}
+   <tr><td style="padding:5px 8px;font-weight:600;border:1px solid #ddd">${t('reasonCol')}</td><td style="padding:5px 8px;border:1px solid #ddd">${esc(p.reason||'-')}</td></tr>
   </table>
   <div style="display:flex;justify-content:space-between;margin-top:18px;font-size:11px">
-   <div style="text-align:center"><div>Signature Élève</div><div style="border-top:1px solid #333;margin-top:30px;padding-top:4px">Signature</div></div>
-   <div style="text-align:center">${dc.showStamp?`<div style="width:55px;height:55px;border:1px dashed #aaa;border-radius:50%;margin:0 auto 3px;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:9px">Cachet</div>`:''}
-   <div>${esc(auth?.name||'-')}</div><div style="border-top:1px solid #333;margin-top:5px;padding-top:4px">${esc(dc.signTitle2||'Autorite')}</div></div>
+   <div style="text-align:center"><div>${t('studentSigLbl')}</div><div style="border-top:1px solid #333;margin-top:30px;padding-top:4px">${t('signatureLbl')}</div></div>
+   <div style="text-align:center">${dc.showStamp?`<div style="width:55px;height:55px;border:1px dashed #aaa;border-radius:50%;margin:0 auto 3px;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:9px">${lang==='en'?'Stamp':lang==='es'?'Sello':'Cachet'}</div>`:''}
+   <div>${esc(auth?.name||'-')}</div><div style="border-top:1px solid #333;margin-top:5px;padding-top:4px">${esc(dc.signTitle2||t('authorityLbl'))}</div></div>
   </div>
   ${printFooter()}
  </div>
@@ -2681,7 +2685,7 @@ function buildBulletinList(school){
  const rankings=_blMode==='seq'?rankBySeq(_blClass,_blSeq):_blMode==='term'?rankByTerm(_blClass,_blTerm):rankAnnual(_blClass);
  const cls=DB.classes.find(c=>c.id===_blClass);
  if(!rankings.length)return`<div class="ali ali-i">ℹ️ Aucune note enregistree pour la periode selectionnee.</div>`;
- return`<div class="card"><div class="ch"><span class="ct2">📊 ${esc(cls?.name||'')} - ${rankings.length} elèves notes</span></div><div class="cb"><div class="tw"><table>
+ return`<div class="card"><div class="ch"><span class="ct2">📊 ${esc(cls?.name||'')} - ${rankings.length} ${t('studentsNotedLbl')}</span></div><div class="cb"><div class="tw"><table>
   <thead><tr><th>${t('rankLbl')}</th><th>${t('fullnameCol')}</th><th style="text-align:center">${t('avgOn20Lbl')}</th><th>${t('mentionLbl')}</th><th>${t('statusLbl')}</th><th>${t('bulletinSingular')}</th></tr></thead>
   <tbody>${rankings.map(s=>{const ri=s.rank===1?'🥇':s.rank===2?'🥈':s.rank===3?'🥉':s.rank;return`<tr>
    <td style="text-align:center;font-size:15px">${ri}</td>
@@ -2696,16 +2700,16 @@ function buildBulletinList(school){
 function openBatchPrint(){
  const sts=stOf(_blClass);const cls=DB.classes.find(c=>c.id===_blClass);
  const rankings=_blMode==='seq'?rankBySeq(_blClass,_blSeq):_blMode==='term'?rankByTerm(_blClass,_blTerm):rankAnnual(_blClass);
- showModal(`🖨 Impression en lot - ${esc(cls?.name||'')}`,`
+ showModal(`${t('batchPrintTtl')} - ${esc(cls?.name||'')}`,`
   <div style="display:flex;gap:6px;margin-bottom:9px">
-   <button class="btn bo bsm" onclick="document.querySelectorAll('.bsel').forEach(c=>c.checked=true)">✅ Tout</button>
-   <button class="btn bo bsm" onclick="document.querySelectorAll('.bsel').forEach(c=>c.checked=false)">❌ Decocher</button>
+   <button class="btn bo bsm" onclick="document.querySelectorAll('.bsel').forEach(c=>c.checked=true)">${t('checkAllBtn')}</button>
+   <button class="btn bo bsm" onclick="document.querySelectorAll('.bsel').forEach(c=>c.checked=false)">${t('uncheckAllBtn')}</button>
   </div>
   <div style="max-height:340px;overflow-y:auto">
    ${sts.map(s=>{const r=rankings.find(x=>x.id===s.id);return`<label style="display:flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid var(--border);border-radius:8px;margin-bottom:4px;cursor:pointer;font-size:13px">
     <input type="checkbox" class="bsel" value="${s.id}" checked style="width:14px;height:14px;accent-color:var(--navy)">
     <span style="flex:1"><strong>${esc(s.firstName)} ${esc(s.name)}</strong></span>
-    ${r?`<span class="gp ${gpC(r.avg)}" style="padding:2px 8px;font-size:12px">${r.avg.toFixed(2)}/20</span>`:`<span style="color:var(--muted);font-size:12px">Pas de notes</span>`}
+    ${r?`<span class="gp ${gpC(r.avg)}" style="padding:2px 8px;font-size:12px">${r.avg.toFixed(2)}/20</span>`:`<span style="color:var(--muted);font-size:12px">${t('noGradesLbl')}</span>`}
    </label>`;}).join('')}
   </div>
  `,`<button class="btn bo" onclick="closeModal()">Annuler</button><button class="btn bg2" onclick="doBatchPrint()">🖨 Imprimer</button>`,'mlg');
@@ -2751,7 +2755,7 @@ function bulletinHTML(st,cls,sbs,school,seq,term,stRank,classAvg,maxAvg,minAvg,s
  const principal=school?DB.users.find(u=>u.id===school.principalId):null;
  const periodLabel=seq?seqLbl(seq):(term?termLbl(term):'');
  const absInfo=seq?getAbsence(st.id,seq):{hours:0,justified:0,unjustified:0,note:'-'};
- const obs=stRank?(stRank.avg>=16?'Felicitations ! Resultats exceptionnels.':stRank.avg>=14?'Très bons resultats. Perseverez dans cette voie.':stRank.avg>=12?'Bons resultats. Continuez vos efforts.':stRank.avg>=10?'Resultats passables. Plus d\'efforts necessaires.':'Resultats insuffisants. Un effort soutenu est indispensable.'):'-';
+ const obs=stRank?(stRank.avg>=16?t('obs16'):stRank.avg>=14?t('obs14'):stRank.avg>=12?t('obs12'):stRank.avg>=10?t('obs10'):t('obsFail')):'-';
  const color=dc.bulletinColor||'#1a3a6c';
  const customHdr=dc.customHeader?`<div style="text-align:center;font-size:10.5px;color:#555;margin-bottom:3px;font-style:italic;border-bottom:1px dashed #ccc;padding-bottom:3px">${esc(dc.customHeader)}</div>`:'';
  const getVal=(stId,sbId)=>{if(seq)return DB.grades.find(g=>g.stId===stId&&g.sbId===sbId&&g.seq===seq)?.val??null;const seqs=TERM_SEQS[term]||[];let p=0,c=0;seqs.forEach(s=>{const g=DB.grades.find(g=>g.stId===stId&&g.sbId===sbId&&g.seq===s);if(g!=null){p+=g.val;c++;}});return c?p/c:null;};
@@ -2784,7 +2788,7 @@ function bulletinHTML(st,cls,sbs,school,seq,term,stRank,classAvg,maxAvg,minAvg,s
   });
  }
  const cycleHeader=isSecondary&&!isEn?`<div style="font-size:10.5px;text-align:center;color:#777;margin-bottom:3px">${getCycleLabel(cls?.level||'')} - ${esc(cls?.level||'')}</div>`:'';
- const infoRows=[dc.showMatricule&&st.mat?`<div class="ir"><span class="ib">Matricule :</span><strong>${esc(st.mat)}</strong></div>`:'',`<div class="ir"><span class="ib">Nom & Prenom :</span><strong>${esc(st.firstName)} ${esc(st.name)}</strong></div>`,`<div class="ir"><span class="ib">Classe :</span><strong>${esc(cls?.name||'-')}</strong></div>`,dc.showDOB&&st.dob?`<div class="ir"><span class="ib">Ne(e) le :</span>${fmtDate(st.dob)}</div>`:'',dc.showPOB&&st.pob?`<div class="ir"><span class="ib">Lieu naiss. :</span>${esc(st.pob)}</div>`:'',dc.showGender?`<div class="ir"><span class="ib">Sexe :</span>${st.gender==='M'?'Masculin':'Feminin'}</div>`:'',`<div class="ir"><span class="ib">Redoublant :</span>${st.repeating?'Oui':'Non'}</div>`,dc.showClassTeacher&&classTeacher?`<div class="ir"><span class="ib">Prof. titulaire :</span>${esc(classTeacher.name)}</div>`:'',dc.showParent&&st.parent?`<div class="ir"><span class="ib">Parent/Tuteur :</span>${esc(st.parent)}</div>`:'',dc.showPhone&&st.phone?`<div class="ir"><span class="ib">Tel. :</span>${esc(st.phone)}</div>`:'',dc.showRank&&stRank?`<div class="ir"><span class="ib">N° d'ordre :</span><strong>${orderNum}</strong></div>`:'',`<div class="ir"><span class="ib">Effectif :</span>${stCount} elèves</div>`,extraBulRows].filter(Boolean).join('');
+ const infoRows=[dc.showMatricule&&st.mat?`<div class="ir"><span class="ib">${t('mat')} :</span><strong>${esc(st.mat)}</strong></div>`:'',`<div class="ir"><span class="ib">${t('nameFullLbl')} :</span><strong>${esc(st.firstName)} ${esc(st.name)}</strong></div>`,`<div class="ir"><span class="ib">${t('classCol')} :</span><strong>${esc(cls?.name||'-')}</strong></div>`,dc.showDOB&&st.dob?`<div class="ir"><span class="ib">${t('bornOnLbl')} :</span>${fmtDate(st.dob)}</div>`:'',dc.showPOB&&st.pob?`<div class="ir"><span class="ib">${t('pob')} :</span>${esc(st.pob)}</div>`:'',dc.showGender?`<div class="ir"><span class="ib">${t('gender')} :</span>${st.gender==='M'?t('male'):t('female')}</div>`:'',`<div class="ir"><span class="ib">${t('repeatingLbl')} :</span>${st.repeating?t('yesLbl'):t('noLbl')}</div>`,dc.showClassTeacher&&classTeacher?`<div class="ir"><span class="ib">${t('titularTeacher')} :</span>${esc(classTeacher.name)}</div>`:'',dc.showParent&&st.parent?`<div class="ir"><span class="ib">${t('parentRole')} :</span>${esc(st.parent)}</div>`:'',dc.showPhone&&st.phone?`<div class="ir"><span class="ib">${t('phone')} :</span>${esc(st.phone)}</div>`:'',dc.showRank&&stRank?`<div class="ir"><span class="ib">${t('orderNumLbl')} :</span><strong>${orderNum}</strong></div>`:'',`<div class="ir"><span class="ib">${t('enrollmentCountLbl')} :</span>${stCount} ${t('studentsCountLbl')}</div>`,extraBulRows].filter(Boolean).join('');
  return`<div class="bull" style="border-color:${color}">
   ${customHdr}${cycleHeader}
   <div class="btop" style="border-color:${color}">
@@ -2800,25 +2804,25 @@ function bulletinHTML(st,cls,sbs,school,seq,term,stRank,classAvg,maxAvg,minAvg,s
   </div>
   <div class="igrid">${infoRows}</div>
   <table>
-   <thead><tr><th class="thl" style="min-width:120px">Matière / Enseignant</th><th style="width:38px">Coef.</th>
-    ${term?`<th style="width:54px">Seq.${TERM_SEQS[term]?.[0]}/20</th><th style="width:54px">Seq.${TERM_SEQS[term]?.[1]}/20</th><th style="width:57px">Moy./20</th><th style="width:50px">Points</th>`:`<th style="width:57px">Note/20</th><th style="width:50px">Points</th>`}
-    <th style="width:95px">Appreciation</th></tr></thead>
+   <thead><tr><th class="thl" style="min-width:120px">${t('subjTeacherHdrLbl')}</th><th style="width:38px">${t('coefCol')}</th>
+    ${term?`<th style="width:54px">Seq.${TERM_SEQS[term]?.[0]}/20</th><th style="width:54px">Seq.${TERM_SEQS[term]?.[1]}/20</th><th style="width:57px">${t('avgOn20Lbl')}</th><th style="width:50px">${t('pointsHdrLbl')}</th>`:`<th style="width:57px">${t('gradeOn20Lbl')}</th><th style="width:50px">${t('pointsHdrLbl')}</th>`}
+    <th style="width:95px">${t('appreciationHdrLbl')}</th></tr></thead>
    <tbody>${tableRows}
-   <tr class="trow"><td colspan="${term?'4':'3'}"><strong>MOYENNE GÉNÉRALE</strong></td>
+   <tr class="trow"><td colspan="${term?'4':'3'}"><strong>${t('generalAvgLbl')}</strong></td>
     <td style="text-align:center;font-size:14px;color:${color}"><strong>${stRank?stRank.avg.toFixed(2)+'/20':'-'}</strong></td>
     <td style="text-align:center">${dc.showRank&&stRank?'Rang '+stRank.rank+'/'+rankTotal:'-'}</td>
     <td style="text-align:center">${stRank?`<span style="background:${stRank.avg>=14?'#d1fae5':stRank.avg>=10?'#fef3c7':'#fee2e2'};padding:2px 6px;border-radius:4px;font-size:9.5px;font-weight:bold">${getMention(stRank.avg).l}</span>`:'-'}</td>
    </tr></tbody>
   </table>
-  ${dc.showClassStats&&(classAvg!==null)?`<table><thead><tr><th>Moy. classe/20</th><th>Maximum</th><th>Minimum</th>${dc.showRank?'<th>Rang</th>':''}<th>Mention</th>${dc.showDecision?'<th>Decision</th>':''}</tr></thead>
+  ${dc.showClassStats&&(classAvg!==null)?`<table><thead><tr><th>${t('classAvgOn20Lbl')}</th><th>${t('maximumLbl')}</th><th>${t('minimumLbl')}</th>${dc.showRank?'<th>'+t('rankLbl')+'</th>':''}<th>${t('mentionLbl')}</th>${dc.showDecision?'<th>'+t('decisionLbl')+'</th>':''}</tr></thead>
   <tbody><tr class="strow" style="text-align:center">
    <td>${classAvg.toFixed(2)}</td><td>${maxAvg!==null?maxAvg.toFixed(2):'-'}</td><td>${minAvg!==null?minAvg.toFixed(2):'-'}</td>
    ${dc.showRank?`<td><strong>${stRank?stRank.rank+'/'+rankTotal:'-'}</strong></td>`:''}
    <td><strong>${mention.l}</strong></td>
    ${dc.showDecision?`<td><strong style="color:${stRank&&stRank.avg>=10?'#059669':'#dc2626'}">${stRank&&stRank.avg>=10?t('admitted'):t('repeated')}</strong></td>`:''}
   </tr></tbody></table>`:''}
-  ${dc.showAbsences?`<table><thead><tr><th colspan="3">ABSENCES - ${esc(periodLabel)}</th></tr></thead><tbody><tr style="background:#fff7ed"><td>Total : <strong>${absInfo.hours||0} h</strong></td><td>Justifiees : <strong>${absInfo.justified||0} h</strong></td><td>Non justifiees : <strong>${absInfo.unjustified||0} h</strong></td></tr></tbody></table>`:''}
-  ${dc.showObservations?`<div class="obs"><strong>Observations :</strong> ${esc(obs)}</div>`:''}
+  ${dc.showAbsences?`<table><thead><tr><th colspan="3">${t('absencesHdrLbl')} - ${esc(periodLabel)}</th></tr></thead><tbody><tr style="background:#fff7ed"><td>${t('totalColonLbl')} <strong>${absInfo.hours||0} h</strong></td><td>${t('justifiedColonLbl')} <strong>${absInfo.justified||0} h</strong></td><td>${t('unjustifiedColonLbl')} <strong>${absInfo.unjustified||0} h</strong></td></tr></tbody></table>`:''}
+  ${dc.showObservations?`<div class="obs"><strong>${t('observationsColonLbl')}</strong> ${esc(obs)}</div>`:''}
   <div class="sigs">
    <div class="sig"><div class="sline">${esc(dc.signTitle1||t('sigteacher'))}<br><em>${esc(classTeacher?.name||'')}</em></div></div>
    ${dc.showStamp?`<div style="text-align:center"><div style="font-size:8px;color:#aaa;margin-bottom:2px">Cachet</div><div class="stamp">Cachet</div></div>`:''}
@@ -2848,33 +2852,33 @@ function annualBulletinHTML(st,cls,sbs,school,stRank,rankings,allSts){
    <div>${school?.logo&&dc.showLogo?`<img class="blogo" src="${school.logo}">`:`<div class="blogo-ph">🏫</div>`}</div>
    <div class="bctrl"><div style="font-size:10px;color:#999">${t('company')}</div><div class="bschname" style="color:${color}">${esc(school?.name||'')}</div>
     <div style="font-size:10.5px;color:#666">${esc(school?.city||'')}</div>
-    <div class="bttl" style="color:${color}">${isEn?'Annual Report Card':'Bulletin Annuel de Synthèse'}</div>
+    <div class="bttl" style="color:${color}">${t('annualReportTtl')}</div>
     <div style="font-size:11px;color:#666">Annee ${t('year')} - ${esc(cls?.name||'')}</div></div>
    <div>${st.photo&&dc.showLogo?`<img class="st-photo" src="${st.photo}">`:`<div class="st-photo-ph">${st.gender==='F'?'👧':'👦'}</div>`}</div>
   </div>
   <div class="igrid">
-   ${dc.showMatricule?`<div class="ir"><span class="ib">Matricule :</span><strong>${esc(st.mat||'-')}</strong></div>`:''}
-   <div class="ir"><span class="ib">Nom & Prenom :</span><strong>${esc(st.firstName)} ${esc(st.name)}</strong></div>
-   <div class="ir"><span class="ib">Classe :</span><strong>${esc(cls?.name||'-')}</strong></div>
-   ${dc.showDOB?`<div class="ir"><span class="ib">Ne(e) le :</span>${fmtDate(st.dob)}</div>`:''}
-   ${dc.showGender?`<div class="ir"><span class="ib">Sexe :</span>${st.gender==='M'?'Masculin':'Feminin'}</div>`:''}
-   <div class="ir"><span class="ib">Redoublant :</span>${st.repeating?'Oui':'Non'}</div>
-   ${dc.showClassTeacher&&classTeacher?`<div class="ir"><span class="ib">Prof. titulaire :</span>${esc(classTeacher.name)}</div>`:''}
+   ${dc.showMatricule?`<div class="ir"><span class="ib">${t('mat')} :</span><strong>${esc(st.mat||'-')}</strong></div>`:''}
+   <div class="ir"><span class="ib">${t('nameFullLbl')} :</span><strong>${esc(st.firstName)} ${esc(st.name)}</strong></div>
+   <div class="ir"><span class="ib">${t('classCol')} :</span><strong>${esc(cls?.name||'-')}</strong></div>
+   ${dc.showDOB?`<div class="ir"><span class="ib">${t('bornOnLbl')} :</span>${fmtDate(st.dob)}</div>`:''}
+   ${dc.showGender?`<div class="ir"><span class="ib">${t('gender')} :</span>${st.gender==='M'?t('male'):t('female')}</div>`:''}
+   <div class="ir"><span class="ib">${t('repeatingLbl')} :</span>${st.repeating?t('yesLbl'):t('noLbl')}</div>
+   ${dc.showClassTeacher&&classTeacher?`<div class="ir"><span class="ib">${t('titularTeacher')} :</span>${esc(classTeacher.name)}</div>`:''}
   </div>
-  <table><thead><tr><th class="thl" style="min-width:120px">Matière / Enseignant</th><th style="width:38px">Coef.</th><th style="width:57px">T1/20</th><th style="width:57px">T2/20</th><th style="width:57px">T3/20</th><th style="width:65px">Moy. Ann.</th><th style="width:100px">Appreciation</th></tr></thead>
+  <table><thead><tr><th class="thl" style="min-width:120px">${t('subjTeacherHdrLbl')}</th><th style="width:38px">${t('coefCol')}</th><th style="width:57px">${t('t1Slash')}</th><th style="width:57px">${t('t2Slash')}</th><th style="width:57px">${t('t3Slash')}</th><th style="width:65px">${t('annualAvgHdr')}</th><th style="width:100px">${t('appreciationHdrLbl')}</th></tr></thead>
   <tbody>${tableRows}
-  <tr class="trow"><td colspan="2"><strong>MOYENNES GÉNÉRALES</strong></td>
+  <tr class="trow"><td colspan="2"><strong>${t('generalAvgsLbl')}</strong></td>
    ${termAvgs.map(a=>`<td style="text-align:center;font-weight:bold">${a!==null?a.toFixed(2):'-'}</td>`).join('')}
    <td style="text-align:center;font-size:14px;color:${color};font-weight:bold">${annAvg!==null?annAvg.toFixed(2):'-'}</td>
    <td style="text-align:center">${annAvg!==null?getMention(annAvg).l:'-'}</td>
   </tr></tbody></table>
   <div style="display:flex;gap:9px;margin:8px 0;font-size:11px">
-   <div style="flex:1;background:#f0fdf4;border:1px solid #bbf7d0;padding:7px;border-radius:7px;text-align:center"><strong>Moy. annuelle</strong><br><span style="font-size:16px;font-weight:bold;color:${color}">${annAvg!==null?annAvg.toFixed(2)+'/20':'-'}</span></div>
-   <div style="flex:1;background:#fffbeb;border:1px solid #fde68a;padding:7px;border-radius:7px;text-align:center"><strong>Rang annuel</strong><br><span style="font-size:16px;font-weight:bold;color:${color}">${stRank?stRank.rank+'/'+rankings.length:'-'}</span></div>
-   <div style="flex:1;background:#eff6ff;border:1px solid #bfdbfe;padding:7px;border-radius:7px;text-align:center"><strong>Mention</strong><br><span style="font-size:13px;font-weight:bold">${annAvg!==null?getMention(annAvg).l:'-'}</span></div>
-   ${dc.showDecision?`<div style="flex:1;background:#f0fdf4;border:1px solid #bbf7d0;padding:7px;border-radius:7px;text-align:center"><strong>Decision</strong><br><span style="font-size:12px;font-weight:bold;color:${annAvg!==null?(annAvg>=10?'#059669':'#dc2626'):'inherit'}">${annAvg!==null?(annAvg>=10?t('admitted'):t('repeated')):'-'}</span></div>`:''}
+   <div style="flex:1;background:#f0fdf4;border:1px solid #bbf7d0;padding:7px;border-radius:7px;text-align:center"><strong>${t('annualAvgBoxLbl')}</strong><br><span style="font-size:16px;font-weight:bold;color:${color}">${annAvg!==null?annAvg.toFixed(2)+'/20':'-'}</span></div>
+   <div style="flex:1;background:#fffbeb;border:1px solid #fde68a;padding:7px;border-radius:7px;text-align:center"><strong>${t('annualRankBoxLbl')}</strong><br><span style="font-size:16px;font-weight:bold;color:${color}">${stRank?stRank.rank+'/'+rankings.length:'-'}</span></div>
+   <div style="flex:1;background:#eff6ff;border:1px solid #bfdbfe;padding:7px;border-radius:7px;text-align:center"><strong>${t('mentionBoxLbl')}</strong><br><span style="font-size:13px;font-weight:bold">${annAvg!==null?getMention(annAvg).l:'-'}</span></div>
+   ${dc.showDecision?`<div style="flex:1;background:#f0fdf4;border:1px solid #bbf7d0;padding:7px;border-radius:7px;text-align:center"><strong>${t('decisionBoxLbl')}</strong><br><span style="font-size:12px;font-weight:bold;color:${annAvg!==null?(annAvg>=10?'#059669':'#dc2626'):'inherit'}">${annAvg!==null?(annAvg>=10?t('admitted'):t('repeated')):'-'}</span></div>`:''}
   </div>
-  ${dc.showObservations?`<div class="obs"><strong>Observations :</strong> ${annAvg!==null?(annAvg>=16?'Élève brillant(e). Felicitations !':annAvg>=14?'Très bons resultats annuels.':annAvg>=12?'Bons resultats. Passage en classe superieure.':annAvg>=10?'Resultats satisfaisants.':'Resultats insuffisants. Decision du conseil de classe.'):'-'}</div>`:''}
+  ${dc.showObservations?`<div class="obs"><strong>${t('observationsColonLbl')}</strong> ${annAvg!==null?(annAvg>=16?t('annualObs16'):annAvg>=14?t('annualObs14'):annAvg>=12?t('annualObs12'):annAvg>=10?t('annualObs10'):t('annualObsFail')):'-'}</div>`:''}
   <div class="sigs">
    <div class="sig"><div class="sline">${esc(dc.signTitle1||t('sigteacher'))}<br><em>${esc(classTeacher?.name||'')}</em></div></div>
    ${dc.showStamp?`<div style="text-align:center"><div class="stamp">Cachet</div></div>`:''}
@@ -2919,19 +2923,19 @@ function buildSynContent(school,cls,dc){
  const avg=rankings.reduce((s,r)=>s+r.avg,0)/rankings.length;
  const maxA=rankings[0]?.avg??0;const minA=rankings[rankings.length-1]?.avg??0;
  const label=_synMode==='seq'?seqLbl(_synPeriod):_synMode==='term'?termLbl(_synPeriod):'Bilan annuel';
- const dist=[{l:'Excellent ≥16',n:rankings.filter(r=>r.avg>=16).length,c:'#059669'},{l:'Très Bien 14-16',n:rankings.filter(r=>r.avg>=14&&r.avg<16).length,c:'#2563eb'},{l:'Bien 12-14',n:rankings.filter(r=>r.avg>=12&&r.avg<14).length,c:'#7c3aed'},{l:'Assez Bien 10-12',n:rankings.filter(r=>r.avg>=10&&r.avg<12).length,c:'#d97706'},{l:'Insuffisant <10',n:rankings.filter(r=>r.avg<10).length,c:'#dc2626'}];
+ const dist=[{l:t('excellentGeLbl'),n:rankings.filter(r=>r.avg>=16).length,c:'#059669'},{l:t('veryGood1416Lbl'),n:rankings.filter(r=>r.avg>=14&&r.avg<16).length,c:'#2563eb'},{l:t('good1214Lbl'),n:rankings.filter(r=>r.avg>=12&&r.avg<14).length,c:'#7c3aed'},{l:t('fairgood1012Lbl'),n:rankings.filter(r=>r.avg>=10&&r.avg<12).length,c:'#d97706'},{l:t('insuffLt10Lbl'),n:rankings.filter(r=>r.avg<10).length,c:'#dc2626'}];
  return`<div style="font-size:14px;font-weight:800;color:var(--navy);margin-bottom:11px">📊 ${esc(clsObj?.name||'')} - ${label}</div>
  <div class="srow">
-  ${sb('📊',total,'Total elèves','#eff6ff','#2563eb')}${sb('📝',notees,'Notes','#fdf4ff','#9333ea')}${sb('✅',admitted,'Admis (≥10)','#f0fdf4','#16a34a')}${sb('🏆',honor,'Honneur (≥12)','#fffbeb','#d97706')}${sb('❌',rankings.filter(r=>r.avg<10).length,'Insuff. (<10)','#fef2f2','#dc2626')}${sb('📉',avg.toFixed(2),'Moy. classe /20','#fff7ed','#c2410c')}
+  ${sb('📊',total,t('totalStudentsLbl'),'#eff6ff','#2563eb')}${sb('📝',notees,t('grades'),'#fdf4ff','#9333ea')}${sb('✅',admitted,t('admittedGeLbl'),'#f0fdf4','#16a34a')}${sb('🏆',honor,t('honorGeLbl'),'#fffbeb','#d97706')}${sb('❌',rankings.filter(r=>r.avg<10).length,t('insuffLtLbl'),'#fef2f2','#dc2626')}${sb('📉',avg.toFixed(2),t('classAvgSlashLbl'),'#fff7ed','#c2410c')}
  </div>
- ${dc.synShowDist!==false?`<div class="card"><div class="ch"><span class="ct2">📊 Distribution des mentions</span></div><div class="cb">
+ ${dc.synShowDist!==false?`<div class="card"><div class="ch"><span class="ct2">${t('distMentionsLbl')}</span></div><div class="cb">
   ${dist.map(d=>`<div class="dist-bar"><div class="dist-label" style="font-size:12.5px">${d.l}</div><div class="dist-track"><div class="dist-fill" style="width:${notees?Math.round(d.n/notees*100):0}%;background:${d.c}">${d.n>0?Math.round(d.n/notees*100)+'%':''}</div></div><div class="dist-n">${d.n}</div></div>`).join('')}
  </div></div>`:''}
- ${dc.synShowStats!==false?`<div class="card"><div class="ch"><span class="ct2">📈 Statistiques cles</span></div><div class="cb">
-  ${[['Moyenne classe',avg.toFixed(2)+'/20'],['Note maximale',maxA.toFixed(2)+'/20'],['Note minimale',minA.toFixed(2)+'/20'],['Taux de reussite',notees?Math.round(admitted/notees*100)+'%':'-'],['Taux d\'honneur',notees?Math.round(honor/notees*100)+'%':'-'],['Écart max-min',(maxA-minA).toFixed(2)]].map(([l,v])=>`<div style="display:flex;justify-content:space-between;padding:6px 10px;background:#f8fafc;border-radius:7px;margin-bottom:5px;font-size:13px"><span>${l}</span><strong>${v}</strong></div>`).join('')}
+ ${dc.synShowStats!==false?`<div class="card"><div class="ch"><span class="ct2">${t('keyStatsLbl')}</span></div><div class="cb">
+  ${[[t('classAvgFullLbl'),avg.toFixed(2)+'/20'],[t('maxNoteLbl'),maxA.toFixed(2)+'/20'],[t('minNoteLbl'),minA.toFixed(2)+'/20'],[t('passRateLbl'),notees?Math.round(admitted/notees*100)+'%':'-'],[t('honorRateLbl'),notees?Math.round(honor/notees*100)+'%':'-'],[t('maxMinGapLbl'),(maxA-minA).toFixed(2)]].map(([l,v])=>`<div style="display:flex;justify-content:space-between;padding:6px 10px;background:#f8fafc;border-radius:7px;margin-bottom:5px;font-size:13px"><span>${l}</span><strong>${v}</strong></div>`).join('')}
  </div></div>`:''}
- ${dc.synShowRanking!==false?`<div class="card"><div class="ch"><span class="ct2">🏅 Classement complet - ${notees} elèves</span></div><div class="cb"><div class="tw"><table>
-  <thead><tr><th style="text-align:center">Rang</th><th>Nom & Prenom</th><th style="text-align:center">Moy./20</th><th>Mention</th><th>Statut</th></tr></thead>
+ ${dc.synShowRanking!==false?`<div class="card"><div class="ch"><span class="ct2">${t('fullRankingLbl')} - ${notees} ${t('studentsCountLbl')}</span></div><div class="cb"><div class="tw"><table>
+  <thead><tr><th style="text-align:center">${t('rankLbl')}</th><th>${t('fullnameCol')}</th><th style="text-align:center">${t('avgOn20Lbl')}</th><th>${t('mentionLbl')}</th><th>${t('statusLbl')}</th></tr></thead>
   <tbody>${rankings.map(s=>{const ri=s.rank===1?'🥇':s.rank===2?'🥈':s.rank===3?'🥉':'#'+s.rank;return`<tr><td style="text-align:center;font-size:15px">${ri}</td><td><strong>${esc(s.firstName)} ${esc(s.name)}</strong></td>
    <td style="text-align:center"><span class="gp ${gpC(s.avg)}">${s.avg.toFixed(2)}/20</span></td>
    <td>${bd(getMention(s.avg).l,getMention(s.avg).c)}</td>
@@ -3173,28 +3177,28 @@ function buildNotesTableHTML(cid,pd,sort,preview){
  const admitted=classAvgs.filter(a=>a>=10).length;
  const honor=classAvgs.filter(a=>a>=12).length;
  const statsRow=`<tr style="background:#e8f4e8;font-weight:700">
-  <td colspan="${2+(showMat?1:0)+(showGndr?1:0)+(showRank?1:0)}" style="text-align:right;font-size:11.5px;padding:5px 8px">📊 Statistiques classe :</td>
+  <td colspan="${2+(showMat?1:0)+(showGndr?1:0)+(showRank?1:0)}" style="text-align:right;font-size:11.5px;padding:5px 8px">${t('statsClassLbl')}</td>
   ${selSbs.map(sb=>seqCols.map(()=>`<td></td>`).join('')).join('')}
   ${showAvg?`<td style="text-align:center;font-size:13px;color:${color}">${clsAvg!==null?clsAvg.toFixed(2):'-'}</td>`:''}
   ${showObs?`<td></td>`:''}
  </tr>
  <tr style="background:#d1fae5;font-size:11.5px">
   <td colspan="${2+(showMat?1:0)+(showGndr?1:0)+(showRank?1:0)+(showAvg?1:0)+(showObs?1:0)+selSbs.length*seqCols.length}" style="padding:5px 10px">
-   Admis (≥10) : <strong>${admitted}/${classAvgs.length}</strong> | Honneur (≥12) : <strong>${honor}</strong> | Taux reussite : <strong>${classAvgs.length?Math.round(admitted/classAvgs.length*100)+'%':'-'}</strong> | Max : <strong>${rankings[0]?.avg?.toFixed(2)||'-'}</strong> | Min : <strong>${rankings[rankings.length-1]?.avg?.toFixed(2)||'-'}</strong>
+   ${t('passedSlashLbl')} <strong>${admitted}/${classAvgs.length}</strong> | ${t('honorSlashLbl')} <strong>${honor}</strong> | ${t('passRateSlashLbl')} <strong>${classAvgs.length?Math.round(admitted/classAvgs.length*100)+'%':'-'}</strong> | ${t('maxColonLbl')} <strong>${rankings[0]?.avg?.toFixed(2)||'-'}</strong> | ${t('minColonLbl')} <strong>${rankings[rankings.length-1]?.avg?.toFixed(2)||'-'}</strong>
   </td>
  </tr>`;
- const html=`<div class="card"><div class="ch"><span class="ct2">📝 ${esc(cls?.name||'')} - ${pdLabel} - ${sts.length} elèves</span></div>
+ const html=`<div class="card"><div class="ch"><span class="ct2">📝 ${esc(cls?.name||'')} - ${pdLabel} - ${sts.length} ${t('studentsCountLbl')}</span></div>
  <div class="cb"><div class="tw"><table style="font-size:12px">
   <thead>
    <tr style="background:${color}!important">
-    <th rowspan="2" style="background:${color}!important;color:#fff!important;width:30px">N°</th>
-    ${showMat?`<th rowspan="2" style="background:${color}!important;color:#fff!important;white-space:nowrap">Mat.</th>`:''}
-    <th rowspan="2" style="background:${color}!important;color:#fff!important;min-width:130px;text-align:left">Nom & Prenom</th>
-    ${showGndr?`<th rowspan="2" style="background:${color}!important;color:#fff!important;width:30px">G.</th>`:''}
-    ${showRank?`<th rowspan="2" style="background:${color}!important;color:#fff!important;width:38px">Rang</th>`:''}
+    <th rowspan="2" style="background:${color}!important;color:#fff!important;width:30px">${t('numColLbl')}</th>
+    ${showMat?`<th rowspan="2" style="background:${color}!important;color:#fff!important;white-space:nowrap">${t('matCol')}</th>`:''}
+    <th rowspan="2" style="background:${color}!important;color:#fff!important;min-width:130px;text-align:left">${t('fullnameCol')}</th>
+    ${showGndr?`<th rowspan="2" style="background:${color}!important;color:#fff!important;width:30px">${t('genderCol')}</th>`:''}
+    ${showRank?`<th rowspan="2" style="background:${color}!important;color:#fff!important;width:38px">${t('rankLbl')}</th>`:''}
     ${headerCols}
-    ${showAvg?`<th rowspan="2" style="background:${color}!important;color:#fff!important;width:55px">Moy.gen.</th>`:''}
-    ${showObs?`<th rowspan="2" style="background:${color}!important;color:#fff!important;min-width:80px">Obs.</th>`:''}
+    ${showAvg?`<th rowspan="2" style="background:${color}!important;color:#fff!important;width:55px">${t('avgGenLbl')}</th>`:''}
+    ${showObs?`<th rowspan="2" style="background:${color}!important;color:#fff!important;min-width:80px">${t('observationsLbl')}</th>`:''}
    </tr>
    <tr style="background:#e8eeff!important">${subHeaderCols}</tr>
   </thead>
@@ -3226,7 +3230,7 @@ function printNotesTable(){
  <div style="text-align:center;margin-bottom:12px;border-bottom:2px solid ${color};padding-bottom:8px">
   ${school?.logo&&dc.showLogo?`<img src="${school.logo}" style="width:35px;height:35px;object-fit:contain;vertical-align:middle;margin-right:8px">`:''}
   <strong style="font-size:14px;color:${color}">${esc(school?.name||'')}</strong><br>
-  <span style="font-size:12px">LISTE DE NOTES - ${esc(cls?.name||'')} - ${pdLabel} - ${t('year')}</span>
+  <span style="font-size:12px">${t('notesListTitle')} - ${esc(cls?.name||'')} - ${pdLabel} - ${t('year')}</span>
  </div>
  ${tableHTML}
  ${printFooter()}<script>window.onload=()=>setTimeout(()=>window.print(),300)<\/script></body></html>`);
@@ -3245,18 +3249,18 @@ function printStudentList(){
  else sts.sort((a,b)=>a.name.localeCompare(b.name));
  const clsName=cid?className(cid):'Tous les elèves';const dc=getDocCfg(school);
  const boys=sts.filter(s=>s.gender==='M').length,girls=sts.filter(s=>s.gender==='F').length;
- const colDefs={mat:{h:'Matricule',v:s=>`<code style="font-size:9.5px">${esc(s.mat)}</code>`},name:{h:'Nom & Prenom',v:s=>`<strong>${esc(s.firstName)} ${esc(s.name)}</strong>`},gender:{h:'Sexe',v:s=>s.gender==='M'?'M':'F'},class:{h:'Classe',v:s=>esc(className(s.classId))},dob:{h:'Naissance',v:s=>esc(s.dob||'-')},pob:{h:'Lieu naiss.',v:s=>esc(s.pob||'-')},parent:{h:'Parent/Tuteur',v:s=>esc(s.parent||'-')},phone:{h:'Telephone',v:s=>esc(s.phone||'-')},address:{h:'Adresse',v:s=>esc(s.address||'-')},enrolled:{h:'Date inscr.',v:s=>esc(s.enrolled||'-')}};
+ const colDefs={mat:{h:t('matriculeCol'),v:s=>`<code style="font-size:9.5px">${esc(s.mat)}</code>`},name:{h:t('fullnameCol'),v:s=>`<strong>${esc(s.firstName)} ${esc(s.name)}</strong>`},gender:{h:t('sexCol'),v:s=>s.gender==='M'?'M':'F'},class:{h:t('classCol'),v:s=>esc(className(s.classId))},dob:{h:t('birthDateLbl'),v:s=>esc(s.dob||'-')},pob:{h:t('pobCol'),v:s=>esc(s.pob||'-')},parent:{h:t('parentCol'),v:s=>esc(s.parent||'-')},phone:{h:t('phoneCol'),v:s=>esc(s.phone||'-')},address:{h:t('addressCol'),v:s=>esc(s.address||'-')},enrolled:{h:t('enrolledCol'),v:s=>esc(s.enrolled||'-')}};
  const usedCols=selCols.filter(k=>colDefs[k]);
  const rows=sts.map((s,i)=>`<tr style="${i%2?'background:#f9fafb':''}"><td>${i+1}</td>${usedCols.map(k=>`<td>${colDefs[k].v(s)}</td>`).join('')}</tr>`).join('');
  const w=window.open('','_blank');
- w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Liste</title><style>*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}body{font-family:sans-serif;font-size:11px;margin:0;padding:12px}table{width:100%;border-collapse:collapse}th{background:#1a3a6c!important;color:#fff!important;padding:6px 7px;font-size:10px;border:1px solid #ccc;text-align:left}td{border:1px solid #ddd;padding:4px 6px}@media print{@page{size:A4;margin:.8cm}}</style></head><body>
+ w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${t('listOfStudentsTitle')}</title><style>*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}body{font-family:sans-serif;font-size:11px;margin:0;padding:12px}table{width:100%;border-collapse:collapse}th{background:#1a3a6c!important;color:#fff!important;padding:6px 7px;font-size:10px;border:1px solid #ccc;text-align:left}td{border:1px solid #ddd;padding:4px 6px}@media print{@page{size:A4;margin:.8cm}}</style></head><body>
  <div style="text-align:center;margin-bottom:12px;border-bottom:2px solid #1a3a6c;padding-bottom:9px">
   ${school?.logo&&dc.showLogo?`<img src="${school.logo}" style="width:40px;height:40px;object-fit:contain;margin-bottom:4px"><br>`:''}
   <div style="font-size:14.5px;font-weight:bold;color:#1a3a6c">${esc(school?.name||'')}</div>
-  <div>LISTE DES ÉLÈVES - ${esc(clsName)} - ${t('year')}</div>
-  <div style="font-size:11px;margin-top:4px">Total : <strong>${sts.length}</strong> | Garçons : <strong>${boys}</strong> | Filles : <strong>${girls}</strong></div>
+  <div>${t('listOfStudentsTitle')} - ${esc(clsName)} - ${t('year')}</div>
+  <div style="font-size:11px;margin-top:4px">${t('totalCountLbl')} <strong>${sts.length}</strong> | ${t('boysCountLbl')} <strong>${boys}</strong> | ${t('girlsCountLbl')} <strong>${girls}</strong></div>
  </div>
- <table><thead><tr><th>N°</th>${usedCols.map(k=>`<th>${colDefs[k].h}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table>
+ <table><thead><tr><th>${t('numColLbl')}</th>${usedCols.map(k=>`<th>${colDefs[k].h}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table>
  ${printFooter()}<script>window.onload=()=>setTimeout(()=>window.print(),300)<\/script></body></html>`);
  w.document.close();
 }
@@ -3332,18 +3336,18 @@ function openComposeModal(){
  if(CU.role==='parent'){recipOpts=DB.users.filter(u=>(u.role==='secretary'||u.role==='principal')&&u.schoolId===school?.id).map(u=>`<option value="${u.id}">${esc(u.name)} (${t(u.role)})</option>`).join('');}
  else if(CU.role==='teacher'){const pr=DB.users.find(u=>u.id===school?.principalId);const sec=DB.users.filter(u=>u.role==='secretary'&&u.schoolId===school?.id);[pr,...sec].filter(Boolean).forEach(u=>{recipOpts+=`<option value="${u.id}">${esc(u.name)} (${t(u.role)})</option>`;});}
  else{recipOpts=DB.users.filter(u=>u.schoolId===school?.id&&u.id!==CU.id).map(u=>`<option value="${u.id}">${esc(u.name)} (${t(u.role)})</option>`).join('');}
- showModal('✏️ Nouveau message',`
-  <div class="fg"><label class="lab">Destinataire *</label><select class="fc" id="cm-to"><option value="">--</option>${recipOpts}</select></div>
-  <div class="fg"><label class="lab">Objet *</label><input class="fc" id="cm-su" placeholder="Objet du message"></div>
-  <div class="fg"><label class="lab">Message *</label><textarea class="fc" id="cm-bo" rows="5" placeholder="Votre message..."></textarea></div>
- `,`<button class="btn bo" onclick="closeModal()">${t('cancel')}</button><button class="btn bp" onclick="sendMsg()">📤 Envoyer</button>`,'mlg');
+ showModal(t('newMsgModalTtl'),`
+  <div class="fg"><label class="lab">${t('recipientLbl')} *</label><select class="fc" id="cm-to"><option value="">${t('noneDashOpt')}</option>${recipOpts}</select></div>
+  <div class="fg"><label class="lab">${t('subjectLbl')} *</label><input class="fc" id="cm-su" placeholder="${t('subjectPh')}"></div>
+  <div class="fg"><label class="lab">${t('messageLbl')} *</label><textarea class="fc" id="cm-bo" rows="5" placeholder="${t('messagePh')}"></textarea></div>
+ `,`<button class="btn bo" onclick="closeModal()">${t('cancel')}</button><button class="btn bp" onclick="sendMsg()">${t('sendBtn')}</button>`,'mlg');
 }
 function openReplyModal(id){
  const m=DB.messages.find(x=>x.id===id);if(!m)return;const fu=DB.users.find(u=>u.id===m.from);
- showModal('↩ Repondre',`
+ showModal(t('replyModalTtl'),`
   <div style="background:#f8fafc;border-radius:8px;padding:9px 12px;font-size:12px;color:var(--muted);margin-bottom:11px"><strong>RE:</strong> ${esc(m.subject)} → ${esc(fu?.name||'-')}</div>
   <div class="fg"><label class="lab">Message *</label><textarea class="fc" id="rp-bo" rows="5"></textarea></div>
- `,`<button class="btn bo" onclick="closeModal()">${t('cancel')}</button><button class="btn bp" onclick="sendReply('${id}')">📤 Envoyer</button>`,'mlg');
+ `,`<button class="btn bo" onclick="closeModal()">${t('cancel')}</button><button class="btn bp" onclick="sendReply('${id}')">${t('sendBtn')}</button>`,'mlg');
 }
 async function sendMsg(){
  const to=document.getElementById('cm-to')?.value,sub=sanitize(document.getElementById('cm-su')?.value||''),body=sanitize(document.getElementById('cm-bo')?.value||'');
