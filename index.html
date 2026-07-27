@@ -297,7 +297,7 @@ select.fc{cursor:pointer}textarea.fc{resize:vertical;min-height:72px}
    <div class="pg" id="pg-passes"></div>
    <div class="pg" id="pg-sms"></div>
   </div>
-  <footer class="ftr no-print">SmartSchool v6 — Solution Tech Inter | contact@solutiontech.cm | © 2025–2026</footer>
+  <footer class="ftr no-print">SmartSchool — Solution Tech Inter | contact@solutiontech.cm | © 2026–2027</footer>
  </div>
 </div>
 
@@ -694,6 +694,7 @@ en:{
  printListNotesBtn:'🖨 Print list with grades',selectClassPreview:'Select a class for the preview.',
  unreadSuffix:'unread',avgOn20Lbl:'Avg./20',mentionLbl:'Grade',statusLbl:'Status',
  bulletinSingular:'Report Card',distinctionLbl:'Distinction',studentIndivLbl:'🎒 Student (individual)',
+ wholeSchoolDash:'-- Whole School --',allClassesDash2:'-- All Classes --',
  totalLbl:'Total',justifLbl:'Just.',nonJustLbl:'Unjust.',noPassesEmpty:'No pass issued',
  absencesModalTtl:'⚠️ Absences',totalHoursLbl:'Total hours',justifiedHLbl:'Justified (h)',
  unjustifiedHLbl:'Unjustified (h)',reasonNoteLbl:'Reason / Note',seqFieldLbl:'Sequence',noneDashOpt:'--',
@@ -1786,11 +1787,11 @@ function rStats(){
   ${sb('🏫',DB.schools.length,t('schools'),'#eff6ff','#2563eb')}
   ${sb('🎒',DB.students.length,t('students'),'#f0fdf4','#16a34a')}
   ${sb('👩‍🏫',DB.users.filter(u=>u.role==='teacher').length,t('teachers'),'#fdf4ff','#9333ea')}
-  ${sb('📚',DB.classes.length,'Classes','#fffbeb','#d97706')}
-  ${sb('👤',DB.users.filter(u=>u.role==='parent').length,'Parents','#f0fdfa','#0891b2')}
-  ${sb('📝',DB.grades.length,'Notes saisies','#fff1f2','#dc2626')}
+  ${sb('📚',DB.classes.length,t('classes'),'#fffbeb','#d97706')}
+  ${sb('👤',DB.users.filter(u=>u.role==='parent').length,t('parentRole'),'#f0fdfa','#0891b2')}
+  ${sb('📝',DB.grades.length,t('grades'),'#fff1f2','#dc2626')}
  </div>
- <div class="card"><div class="ch"><span class="ct2">🏫 Établissements - Vue consolidee</span><button class="btn bgo bsm" onclick="showView('synthesis')">📈 Voir synthèses →</button></div><div class="cb"><div class="tw"><table>
+ <div class="card"><div class="ch"><span class="ct2">🏫 ${t('schools')} - ${lang==='en'?'Consolidated View':lang==='es'?'Vista consolidada':'Vue consolidee'}</span><button class="btn bgo bsm" onclick="showView('synthesis')">📈 ${t('synthesis')} →</button></div><div class="cb"><div class="tw"><table>
   <thead><tr><th>${t('fullnameCol')}</th><th>Type</th><th>Sys.</th><th>Ville</th><th>${t('students')}</th><th>${t('classes')}</th><th>Ens.</th><th>${t('actionsCol')}</th></tr></thead>
   <tbody>${DB.schools.map(s=>{const sts=DB.students.filter(x=>x.schoolId===s.id);const tes=DB.users.filter(u=>u.role==='teacher'&&u.schoolId===s.id);const cls=clsOf(s.id);
    return`<tr>
@@ -1836,8 +1837,8 @@ function openSchoolModal(id){
  const s=id?DB.schools.find(x=>x.id===id):null;
  const regs=['Adamaoua','Centre','Est','Extreme-Nord','Littoral','Nord','Nord-Ouest','Ouest','Sud','Sud-Ouest'];
  const prs=DB.users.filter(u=>u.role==='principal');
- showModal(s?'✏️ Modifier etablissement':'🏫 Ajouter etablissement',`
-  <div class="fr"><div class="fg"><label class="lab">Nom *</label><input class="fc" id="sm-n" value="${esc(s?.name||'')}"></div>
+ showModal(s?'✏️ '+t('school'):'🏫 '+t('addBtn')+' '+t('school'),`
+  <div class="fr"><div class="fg"><label class="lab">${t('fullNameLbl')} *</label><input class="fc" id="sm-n" value="${esc(s?.name||'')}"></div>
   <div class="fg"><label class="lab">Type</label><select class="fc" id="sm-t">
    <option value="primaire" ${s?.type==='primaire'?'selected':''}>Primaire</option>
    <option value="college" ${s?.type==='college'?'selected':''}>Collège (general)</option>
@@ -1845,14 +1846,14 @@ function openSchoolModal(id){
    <option value="college_tech" ${s?.type==='college_tech'?'selected':''}>Collège Technique</option>
    <option value="lycee_tech" ${s?.type==='lycee_tech'?'selected':''}>Lycee Technique</option>
   </select></div></div>
-  <div class="fr"><div class="fg"><label class="lab">Sous-système</label><select class="fc" id="sm-ss"><option value="fr" ${s?.subsystem!=='en'?'selected':''}>🇫🇷 Francophone</option><option value="en" ${s?.subsystem==='en'?'selected':''}>🇬🇧 Anglophone</option></select></div>
-  <div class="fg"><label class="lab">Ville *</label><input class="fc" id="sm-ci" value="${esc(s?.city||'')}"></div>
-<div class="fg"><label class="lab">Code matricule (ex: COL)</label><input class="fc" id="sm-cod" maxlength="10" value="${esc(s?.code||'')}" placeholder="3-4 lettres"></div></div>
-  <div class="fr"><div class="fg"><label class="lab">Region</label><select class="fc" id="sm-re">${regs.map(r=>`<option ${s?.region===r?'selected':''}>${r}</option>`).join('')}</select></div>
-  <div class="fg"><label class="lab">Code d'accès</label><div style="display:flex;gap:5px"><input class="fc" id="sm-cd" value="${esc(s?.accessCode||'')}" style="flex:1"><button class="btn bo bsm" onclick="document.getElementById('sm-cd').value=genCode()">🔄</button></div></div></div>
-  <div class="fr"><div class="fg"><label class="lab">Chef d'etablissement</label><select class="fc" id="sm-pr"><option value="">--</option>${prs.map(p=>`<option value="${p.id}" ${s?.principalId===p.id?'selected':''}>${esc(p.name)}</option>`).join('')}</select></div>
-  <div class="fg"><label class="lab">Titre signataire</label><input class="fc" id="sm-sg" value="${esc(s?.docConfig?.signTitle2||'Le Directeur')}"></div></div>
-  <div class="fg"><label class="lab">En-tete personnalise (bulletins)</label><textarea class="fc" id="sm-hd" rows="2">${esc(s?.docConfig?.customHeader||'')}</textarea></div>
+  <div class="fr"><div class="fg"><label class="lab">${lang==='en'?'Subsystem':lang==='es'?'Subsistema':'Sous-système'}</label><select class="fc" id="sm-ss"><option value="fr" ${s?.subsystem!=='en'?'selected':''}>🇫🇷 ${lang==='en'?'Francophone':lang==='es'?'Francófono':'Francophone'}</option><option value="en" ${s?.subsystem==='en'?'selected':''}>🇬🇧 ${lang==='en'?'Anglophone':lang==='es'?'Anglófono':'Anglophone'}</option></select></div>
+  <div class="fg"><label class="lab">${t('city')} *</label><input class="fc" id="sm-ci" value="${esc(s?.city||'')}"></div>
+<div class="fg"><label class="lab">${lang==='en'?'Registration Code (e.g. COL)':lang==='es'?'Código de matrícula (ej: COL)':'Code matricule (ex: COL)'}</label><input class="fc" id="sm-cod" maxlength="10" value="${esc(s?.code||'')}" placeholder="3-4 ${lang==='en'?'letters':lang==='es'?'letras':'lettres'}"></div></div>
+  <div class="fr"><div class="fg"><label class="lab">${t('region')}</label><select class="fc" id="sm-re">${regs.map(r=>`<option ${s?.region===r?'selected':''}>${r}</option>`).join('')}</select></div>
+  <div class="fg"><label class="lab">${t('code')}</label><div style="display:flex;gap:5px"><input class="fc" id="sm-cd" value="${esc(s?.accessCode||'')}" style="flex:1"><button class="btn bo bsm" onclick="document.getElementById('sm-cd').value=genCode()">🔄</button></div></div></div>
+  <div class="fr"><div class="fg"><label class="lab">${t('principal')}</label><select class="fc" id="sm-pr"><option value="">${t('noneDashOpt')}</option>${prs.map(p=>`<option value="${p.id}" ${s?.principalId===p.id?'selected':''}>${esc(p.name)}</option>`).join('')}</select></div>
+  <div class="fg"><label class="lab">${t('dcSignTitle2')}</label><input class="fc" id="sm-sg" value="${esc(s?.docConfig?.signTitle2||t('sigprincipal'))}"></div></div>
+  <div class="fg"><label class="lab">${t('dcCustomHeader')} (${t('bulletin')})</label><textarea class="fc" id="sm-hd" rows="2">${esc(s?.docConfig?.customHeader||'')}</textarea></div>
  `,`<button class="btn bo" onclick="closeModal()">${t('cancel')}</button><button class="btn bp" onclick="saveSchool('${id||''}')">💾 ${t('save')}</button>`,'mlg');
 }
 async function saveSchool(id){
@@ -1898,11 +1899,11 @@ async function saveLogo(sid){const img=document.getElementById('logo-b64');if(!i
 /* ===== ADMIN USERS ===== */
 function rUsers(){
  const el=document.getElementById('pg-users');
- el.innerHTML=`<div class="ph"><h2>👥 ${t('users')}</h2><p>${DB.users.length} comptes</p><button class="btn bp" onclick="openUserModal()">+ Nouveau</button></div>
+ el.innerHTML=`<div class="ph"><h2>👥 ${t('users')}</h2><p>${DB.users.length} ${lang==='en'?'accounts':lang==='es'?'cuentas':'comptes'}</p><button class="btn bp" onclick="openUserModal()">${t('addBtn')}</button></div>
  <div class="card"><div class="ch" style="flex-wrap:wrap;gap:8px">
   <div class="sw"><span>🔍</span><input id="usr-q" placeholder="${t('search')}" oninput="fUsers()"></div>
-  <select class="fc" id="usr-rf" style="max-width:170px" onchange="fUsers()"><option value="">Tous rôles</option>${['admin','principal','teacher','secretary','surveillant','parent'].map(r=>`<option value="${r}">${t(r)}</option>`).join('')}</select>
-  <select class="fc" id="usr-sc" style="max-width:220px" onchange="fUsers()"><option value="">Tous etablissements</option>${DB.schools.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('')}</select>
+  <select class="fc" id="usr-rf" style="max-width:170px" onchange="fUsers()"><option value="">${lang==='en'?'All roles':lang==='es'?'Todos los roles':'Tous rôles'}</option>${['admin','principal','teacher','secretary','surveillant','parent'].map(r=>`<option value="${r}">${t(r)}</option>`).join('')}</select>
+  <select class="fc" id="usr-sc" style="max-width:220px" onchange="fUsers()"><option value="">${lang==='en'?'All Schools':lang==='es'?'Todas las instituciones':'Tous etablissements'}</option>${DB.schools.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('')}</select>
  </div><div class="cb"><div class="tw"><table>
   <thead><tr><th>${t('fullnameCol')}</th><th>Email</th><th>${t('role')}</th><th>${t('school')}</th><th>Code</th><th>Validite</th><th>${t('actionsCol')}</th></tr></thead>
   <tbody id="usr-tb">${renderUserRows(DB.users)}</tbody>
@@ -2073,7 +2074,7 @@ function rStudents(){
  if(q)studs=studs.filter(s=>(s.name+' '+s.firstName+' '+s.mat).toLowerCase().includes(q));
  el.innerHTML=`<div class="ph"><h2>🎒 ${t('students')}</h2><p>${studs.length} ${t('studentsCountLbl')}</p>${hasPerm('add_students')?`<button class="btn bp" onclick="openStudentModal()">${t('enrollBtn')}</button>`:''}</div>
  <div class="card"><div class="ch" style="flex-wrap:wrap;gap:8px">
-  ${isAdmin?`<select class="fc" style="max-width:250px" id="st-sch" onchange="rStudents()"><option value="all">Tous etablissements</option>${allSch.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('')}</select>`:''}
+  ${isAdmin?`<select class="fc" style="max-width:250px" id="st-sch" onchange="rStudents()"><option value="all">${lang==='en'?'All Schools':lang==='es'?'Todas las instituciones':'Tous etablissements'}</option>${allSch.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('')}</select>`:''}
   <div class="sw"><span>🔍</span><input id="st-q" placeholder="${t('search')}" oninput="rStudents()"></div>
  </div><div class="cb"><div class="tw"><table>
   <thead><tr><th>${t('matCol')}</th><th>${t('fullnameCol')}</th><th>${t('genderCol')}</th><th>${t('classCol')}</th>${isAdmin?`<th>${t('school')}</th>`:''}<th>${t('dobCol')}</th><th>${t('parentCol')}</th><th>${t('phoneCol')}</th><th>${t('actionsCol')}</th></tr></thead>
@@ -2440,7 +2441,7 @@ function rHonor(){
  <div style="display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px">
   <select class="fc" style="max-width:230px" id="hr-cl" onchange="_hrClass=this.value;rHonor2()"><option value="">${t('selectClassDash')}</option>${cls.map(c=>`<option value="${c.id}" ${_hrClass===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select>
   <select class="fc" style="max-width:210px" id="hr-tr" onchange="_hrTerm=this.value;rHonor2()">${['1','2','3'].map(x=>`<option value="${x}" ${_hrTerm===x?'selected':''}>${termLbl(x)}</option>`).join('')}</select>
-  ${_hrClass?`<button class="btn bgo" onclick="printHonor()">🖨 Imprimer tableau</button>`:''}
+  ${_hrClass?`<button class="btn bgo" onclick="printHonor()">${t('printBtn')}</button>`:''}
  </div>
  <div id="hr-area">${_hrClass?buildHonorList():''}</div>`;
 }
@@ -2829,7 +2830,7 @@ function rBulletins(){
  const el=document.getElementById('pg-bulletins');
  const isAdmin=CU.role==='admin';
  // Admin can choose any school
- const schoolOpts=isAdmin?`<div style="flex:1;min-width:200px"><label class="lab">🏫 Établissement</label><select class="fc" id="bl-sc" onchange="onBlSchChange()">${DB.schools.map(s=>`<option value="${s.id}" ${_blSch===s.id?'selected':''}>${esc(s.name)}</option>`).join('')}</select></div>`:'';
+ const schoolOpts=isAdmin?`<div style="flex:1;min-width:200px"><label class="lab">🏫 ${t('school')}</label><select class="fc" id="bl-sc" onchange="onBlSchChange()">${DB.schools.map(s=>`<option value="${s.id}" ${_blSch===s.id?'selected':''}>${esc(s.name)}</option>`).join('')}</select></div>`:'';
  if(isAdmin&&!_blSch)_blSch=DB.schools[0]?.id||'';
  const school=isAdmin?DB.schools.find(s=>s.id===_blSch):schoolOf();
  const cls=isAdmin?clsOf(_blSch):clsOf(school?.id||'');
@@ -2838,8 +2839,8 @@ function rBulletins(){
  <div class="card" style="margin-bottom:14px"><div class="cb">
   <div style="display:flex;gap:9px;flex-wrap:wrap;margin-bottom:11px">
    ${schoolOpts}
-   <div style="flex:1;min-width:170px"><label class="lab">📚 Classe</label>
-    <select class="fc" id="bl-c" onchange="_blClass=this.value;_blSt='';rBulletins()"><option value="">--</option>${cls.map(c=>`<option value="${c.id}" ${_blClass===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select></div>
+   <div style="flex:1;min-width:170px"><label class="lab">📚 ${t('classCol')}</label>
+    <select class="fc" id="bl-c" onchange="_blClass=this.value;_blSt='';rBulletins()"><option value="">${t('selectClassDash')}</option>${cls.map(c=>`<option value="${c.id}" ${_blClass===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select></div>
    <div style="flex:1;min-width:150px"><label class="lab">📅 Type</label>
     <select class="fc" id="bl-m" onchange="_blMode=this.value;rBulletins()">
      <option value="seq" ${_blMode==='seq'?'selected':''}>${t('bySeq')}</option>
@@ -3078,7 +3079,7 @@ function rSynthesis(){
  const cls=clsOf(school.id);
  const dc=getDocCfg(school);
  el.innerHTML=`<div class="ph"><h2>📈 ${t('synthesis')}</h2>${hasPerm('print_synthesis')?`<button class="btn bgo" onclick="printSynthesis()">${t('printSynthBtn')}</button>`:''}</div>
- ${isAdmin?`<div style="margin-bottom:13px"><label class="lab">🏫 Établissement</label><select class="fc" style="max-width:280px" onchange="_synSch=this.value;_synClass='';rSynthesis()">${DB.schools.map(s=>`<option value="${s.id}" ${_synSch===s.id?'selected':''}>${esc(s.name)}</option>`).join('')}</select></div>`:''}
+ ${isAdmin?`<div style="margin-bottom:13px"><label class="lab">🏫 ${t('school')}</label><select class="fc" style="max-width:280px" onchange="_synSch=this.value;_synClass='';rSynthesis()">${DB.schools.map(s=>`<option value="${s.id}" ${_synSch===s.id?'selected':''}>${esc(s.name)}</option>`).join('')}</select></div>`:''}
  <div class="tabs">
   <button class="tab ${_synMode==='seq'?'on':''}" onclick="_synMode='seq';rSynthesis()">${t('bySeq')}</button>
   <button class="tab ${_synMode==='term'?'on':''}" onclick="_synMode='term';rSynthesis()">${t('byTerm')}</button>
@@ -3086,7 +3087,7 @@ function rSynthesis(){
   <button class="tab ${_synMode==='school'?'on':''}" onclick="_synMode='school';rSynthesis()">${t('wholeSchool')}</button>
  </div>
  ${_synMode!=='school'?`<div style="display:flex;gap:9px;margin-bottom:14px;flex-wrap:wrap">
-  <select class="fc" style="max-width:240px" id="syn-c" onchange="_synClass=this.value;rSyn2()"><option value="">-- Classe --</option>${cls.map(c=>`<option value="${c.id}" ${_synClass===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select>
+  <select class="fc" style="max-width:240px" id="syn-c" onchange="_synClass=this.value;rSyn2()"><option value="">${t('selectClassDash')}</option>${cls.map(c=>`<option value="${c.id}" ${_synClass===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select>
   ${_synMode==='seq'?`<select class="fc" style="max-width:200px" id="syn-p" onchange="_synPeriod=this.value;rSyn2()">${SEQ_DEFS.map(s=>`<option value="${s.id}" ${_synPeriod===s.id?'selected':''}>${s.lbl}</option>`).join('')}</select>`:''}
   ${_synMode==='term'?`<select class="fc" style="max-width:200px" id="syn-p" onchange="_synPeriod=this.value;rSyn2()">${['1','2','3'].map(x=>`<option value="${x}" ${_synPeriod===x?'selected':''}>${termLbl(x)}</option>`).join('')}</select>`:''}
  </div>`:''}
@@ -3095,7 +3096,7 @@ function rSynthesis(){
 function rSyn2(){_synClass=document.getElementById('syn-c')?.value||_synClass;_synPeriod=document.getElementById('syn-p')?.value||_synPeriod;const isAdmin=CU.role==='admin';const school=isAdmin?DB.schools.find(s=>s.id===_synSch):schoolOf();const cls=clsOf(school?.id||'');const dc=getDocCfg(school);document.getElementById('syn-area').innerHTML=buildSynContent(school,cls,dc);}
 function buildSynContent(school,cls,dc){
  if(_synMode==='school')return buildSchoolSynthesis(school,cls,dc);
- if(!_synClass)return`<div class="ali ali-i">ℹ️ Selectionnez une classe.</div>`;
+ if(!_synClass)return`<div class="ali ali-i">${t('selectClassOpt')}</div>`;
  const sbs=sbOf(_synClass);const clsObj=DB.classes.find(c=>c.id===_synClass);
  const rankings=_synMode==='seq'?rankBySeq(_synClass,_synPeriod):_synMode==='term'?rankByTerm(_synClass,_synPeriod):rankAnnual(_synClass);
  if(!rankings.length)return`<div class="ali ali-i">Aucune note pour cette periode.</div>`;
@@ -3133,10 +3134,10 @@ function buildSchoolSynthesis(school,cls,dc){
  const sAvg=allAvgs.length?(allAvgs.reduce((s,a)=>s+a,0)/allAvgs.length):null;
  const sAdm=allAvgs.filter(a=>a>=10).length;
  return`<div class="srow" style="margin-bottom:13px">
-  ${sb('🏫',cls.length,'Classes','#eff6ff','#2563eb')}${sb('🎒',allSts.length,'Total elèves','#f0fdf4','#16a34a')}${sb('📉',sAvg!==null?sAvg.toFixed(2):'-','Moy. etablissement','#fffbeb','#d97706')}${sb('✅',allAvgs.length?Math.round(sAdm/allAvgs.length*100)+'%':'-','Taux de reussite','#f0fdfa','#0891b2')}
+  ${sb('🏫',cls.length,t('classes'),'#eff6ff','#2563eb')}${sb('🎒',allSts.length,t('totalStudentsLbl'),'#f0fdf4','#16a34a')}${sb('📉',sAvg!==null?sAvg.toFixed(2):'-',lang==='en'?'School Average':lang==='es'?'Promedio institución':'Moy. etablissement','#fffbeb','#d97706')}${sb('✅',allAvgs.length?Math.round(sAdm/allAvgs.length*100)+'%':'-',t('passRateLbl'),'#f0fdfa','#0891b2')}
  </div>
- <div class="card"><div class="ch"><span class="ct2">🏫 ${esc(school.name)} - Bilan par classe</span></div><div class="cb"><div class="tw"><table>
-  <thead><tr><th>Classe</th><th>Niveau</th><th>Effectif</th><th>Notes</th><th>Moy. classe</th><th>Admis</th><th>Honneur</th><th>Taux reussite</th></tr></thead>
+ <div class="card"><div class="ch"><span class="ct2">🏫 ${esc(school.name)} - ${lang==='en'?'Report by Class':lang==='es'?'Balance por clase':'Bilan par classe'}</span></div><div class="cb"><div class="tw"><table>
+  <thead><tr><th>${t('classCol')}</th><th>${t('levelCol')}</th><th>${t('enrollmentCountLbl')}</th><th>${t('grades')}</th><th>${t('classAvgOn20Lbl')}</th><th>${t('admitted')}</th><th>${lang==='en'?'Honor':lang==='es'?'Honor':'Honneur'}</th><th>${t('passRateLbl')}</th></tr></thead>
   <tbody>${rows||`<tr><td colspan="8">${empty()}</td></tr>`}</tbody>
  </table></div></div></div>`;
 }
@@ -3193,7 +3194,7 @@ function rStudentList(){
  const allCols=[{k:'mat',l:t('matriculeCol')},{k:'name',l:t('fullnameCol')},{k:'gender',l:t('sexCol')},{k:'class',l:t('classCol')},{k:'dob',l:t('dobCol')},{k:'pob',l:t('pobCol')},{k:'parent',l:t('parentCol')},{k:'phone',l:t('phoneCol')},{k:'address',l:t('addressCol')},{k:'enrolled',l:t('enrolledCol')}];
  const defCols=dc.listColumns||['mat','name','gender','class','dob','parent'];
  el.innerHTML=`<div class="ph"><h2>📄 ${t('studentlist')}</h2></div>
- ${isAdmin?`<div style="margin-bottom:13px"><label class="lab">🏫 Établissement</label><select class="fc" style="max-width:280px" onchange="_synSch=this.value;rStudentList()">${DB.schools.map(s=>`<option value="${s.id}" ${_synSch===s.id?'selected':''}>${esc(s.name)}</option>`).join('')}</select></div>`:''}
+ ${isAdmin?`<div style="margin-bottom:13px"><label class="lab">🏫 ${t('school')}</label><select class="fc" style="max-width:280px" onchange="_synSch=this.value;rStudentList()">${DB.schools.map(s=>`<option value="${s.id}" ${_synSch===s.id?'selected':''}>${esc(s.name)}</option>`).join('')}</select></div>`:''}
  <div class="tabs">
   <button class="tab ${document.getElementById('pg-studentlist')?.dataset.tab!=='notes'?'on':''}" id="sltab-std" onclick="setSlTab('std')">${t('stdListTab')}</button>
   <button class="tab" id="sltab-notes" onclick="setSlTab('notes')">${t('notesListTab')}</button>
@@ -3450,14 +3451,14 @@ function rProgression(){
  const el=document.getElementById('pg-progression');
  const mySubs=DB.subjects.filter(s=>s.teacherId===CU.id);
  const progs=DB.progression.filter(p=>p.teacherId===CU.id);
- el.innerHTML=`<div class="ph"><h2>📐 ${t('progression')}</h2><button class="btn bp" onclick="openProgModal()">+ Saisir</button></div>
- <div class="card"><div class="ch"><span class="ct2">📚 Mes progressions</span></div><div class="cb"><div class="tw"><table>
-  <thead><tr><th>Classe</th><th>Matière</th><th>Sequence</th><th>Prevus</th><th>Effectues</th><th>Couverture</th><th>Notes</th><th>Actions</th></tr></thead>
+ el.innerHTML=`<div class="ph"><h2>📐 ${t('progression')}</h2><button class="btn bp" onclick="openProgModal()">${lang==='en'?'+ Enter':lang==='es'?'+ Ingresar':'+ Saisir'}</button></div>
+ <div class="card"><div class="ch"><span class="ct2">📚 ${lang==='en'?'My Progressions':lang==='es'?'Mis progresiones':'Mes progressions'}</span></div><div class="cb"><div class="tw"><table>
+  <thead><tr><th>${t('classCol')}</th><th>${t('subjects')}</th><th>${t('bySeq').replace('By ','').replace('Par ','').replace('Por ','')||'Sequence'}</th><th>${lang==='en'?'Planned':lang==='es'?'Previsto':'Prevus'}</th><th>${lang==='en'?'Done':lang==='es'?'Realizado':'Effectues'}</th><th>${lang==='en'?'Coverage':lang==='es'?'Cobertura':'Couverture'}</th><th>${t('observationsLbl')}</th><th>${t('actionsCol')}</th></tr></thead>
   <tbody>${progs.length?progs.map(p=>{const sb2=mySubs.find(s=>s.id===p.subjectId);const cls=DB.classes.find(c=>c.id===p.classId);const cov=p.planned>0?Math.min(100,Math.round(p.done/p.planned*100)):0;const covColor=cov>=90?'#16a34a':cov>=60?'#d97706':'#dc2626';return`<tr><td>${bd(esc(cls?.name||'-'),'bnavy')}</td><td><strong>${esc(sb2?.name||'-')}</strong></td><td>${bd(seqLbl(p.seq),'bgold')}</td><td style="text-align:center">${p.planned}</td><td style="text-align:center">${p.done}</td>
    <td><div style="min-width:85px"><div style="font-size:12px;font-weight:700">${cov}%</div><div class="pbar"><div class="pbf" style="width:${cov}%;background:${covColor}"></div></div></div></td>
    <td style="font-size:12px;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.notes||'-')}</td>
    <td><div style="display:flex;gap:3px"><button class="btn bo bsm" onclick="openProgModal('${p.id}')">✏️</button><button class="btn br bsm" onclick="askDel('Supprimer ?',async()=>{if(await apiDelete('/progression/${p.id}')){DB.progression=DB.progression.filter(x=>x.id!=='${p.id}');rProgression();}})">🗑</button></div></td>
-  </tr>`;}).join(''):`<tr><td colspan="8">${empty('Aucune progression saisie')}</td></tr>`}</tbody>
+  </tr>`;}).join(''):`<tr><td colspan="8">${empty(lang==='en'?'No progression entered':lang==='es'?'Ninguna progresión registrada':'Aucune progression saisie')}</td></tr>`}</tbody>
  </table></div></div></div>`;
 }
 function openProgModal(id){
@@ -3626,7 +3627,7 @@ function rSMS(){
  const logs=DB.smsLogs||[];
  el.innerHTML=`<div class="ph"><h2>📱 ${t('sms')}</h2><p>${t('smsNotif')}</p></div>
  <div class="card" style="margin-bottom:14px"><div class="ch"><span class="ct2">${t('sendNotifTitle')}</span></div><div class="cb">
-  ${isAdmin?`<div class="fg"><label class="lab">Établissement</label><select class="fc" id="sms-sc" style="max-width:280px" onchange="reloadSmsClasses()">${schools.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('')}</select></div>`:''}
+  ${isAdmin?`<div class="fg"><label class="lab">${t('school')}</label><select class="fc" id="sms-sc" style="max-width:280px" onchange="reloadSmsClasses()">${schools.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('')}</select></div>`:''}
   <div class="fr"><div class="fg"><label class="lab">${t('classCol')}</label><select class="fc" id="sms-cl" onchange="reloadSmsSts()"><option value="">${t('allClassesDash2')}</option>${(isAdmin?clsOf(schools[0]?.id||''):clsOf(schoolOf()?.id||'')).map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select></div>
   <div class="fg"><label class="lab">${t('msgTypeLbl')}</label><select class="fc" id="sms-tp" onchange="buildSmsPreview()">
    <option value="notes">${t('resultsRankOpt')}</option>
