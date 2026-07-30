@@ -263,7 +263,7 @@ select.fc{cursor:pointer}textarea.fc{resize:vertical;min-height:72px}
   <div id="nav-ct" style="flex:1;padding-bottom:8px"></div>
   <div class="sb-bot">
    <div class="sb-lang"><button id="sb-fr" class="on" onclick="setLang('fr')">FR</button><button id="sb-en" onclick="setLang('en')">EN</button><button id="sb-es" onclick="setLang('es')">ES</button></div>
-   <div style="font-size:9.5px;color:rgba(255,255,255,.18);text-align:center;margin-top:4px">SmartSchool v6.0 — 2025–2026</div>
+   <div style="font-size:9.5px;color:rgba(255,255,255,.18);text-align:center;margin-top:4px">SmartSchool— 2026–2027</div>
   </div>
  </nav>
  <div class="main">
@@ -1700,6 +1700,8 @@ async function doLogin(){
   document.getElementById('uname').textContent=CU.name;
   const roleMap={admin:t('admin'),principal:t('principal'),teacher:t('teacher'),secretary:t('secretary'),surveillant:t('surveillant'),parent:t('parentRole')};
   document.getElementById('urole').textContent=roleMap[CU.role]||CU.role;
+  const _loginSchool=schoolOf();
+  document.title=_loginSchool?`${_loginSchool.name} — SmartSchool`:'SmartSchool — Solution Tech Inter';
   buildNav();
   if(CU.role==='admin')showView('stats');
   else if(CU.role==='parent')showView('parent');
@@ -3725,6 +3727,22 @@ async function sendSmsNotif(){
 }
 
 /* ===== INIT ===== */
+async function applySchoolFromUrl(){
+ const slug=window.location.pathname.replace(/^\/+|\/+$/g,'');
+ if(!slug)return;
+ try{
+  const res=await fetch(API_BASE+'/public/school/'+encodeURIComponent(slug));
+  if(!res.ok)return;
+  const data=await res.json();
+  document.title=data.name+' — SmartSchool';
+  const co=document.querySelector('.ll-co');
+  if(co)co.textContent=data.name;
+  if(data.logo){
+   const brand=document.querySelector('.ll-brand');
+   if(brand)brand.insertAdjacentHTML('beforebegin',`<img src="${data.logo}" style="width:48px;height:48px;object-fit:contain;margin-bottom:10px">`);
+  }
+ }catch(e){ /* silencieux : reste sur l'ecran generique si echec */ }
+}
 window.addEventListener('DOMContentLoaded',()=>{
  // Check for saved token (auto-reconnect)
  const savedToken = localStorage.getItem('ss_token');
@@ -3733,6 +3751,10 @@ window.addEventListener('DOMContentLoaded',()=>{
  document.getElementById('inp-pw').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
  document.getElementById('inp-em').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('inp-pw').focus();});
  setLang('fr');
+ window.addEventListener('DOMContentLoaded',()=>{
+ applySchoolFromUrl();
+ // Check for saved token (auto-reconnect)
+ const savedToken = localStorage.getItem('ss_token');
  // Show app version
  console.log('%cSmartSchool - Production Mode','color:#1a3a6c;font-weight:bold;font-size:13px');
  console.log('%cAPI:', 'color:#059669;font-weight:bold', API_BASE);
