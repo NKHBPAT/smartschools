@@ -3727,22 +3727,6 @@ async function sendSmsNotif(){
 }
 
 /* ===== INIT ===== */
-async function applySchoolFromUrl(){
- const slug=window.location.pathname.replace(/^\/+|\/+$/g,'');
- if(!slug)return;
- try{
-  const res=await fetch(API_BASE+'/public/school/'+encodeURIComponent(slug));
-  if(!res.ok)return;
-  const data=await res.json();
-  document.title=data.name+' — SmartSchool';
-  const co=document.querySelector('.ll-co');
-  if(co)co.textContent=data.name;
-  if(data.logo){
-   const brand=document.querySelector('.ll-brand');
-   if(brand)brand.insertAdjacentHTML('beforebegin',`<img src="${data.logo}" style="width:48px;height:48px;object-fit:contain;margin-bottom:10px">`);
-  }
- }catch(e){ /* silencieux : reste sur l'ecran generique si echec */ }
-}
 window.addEventListener('DOMContentLoaded',()=>{
  // Check for saved token (auto-reconnect)
  const savedToken = localStorage.getItem('ss_token');
@@ -3751,10 +3735,6 @@ window.addEventListener('DOMContentLoaded',()=>{
  document.getElementById('inp-pw').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
  document.getElementById('inp-em').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('inp-pw').focus();});
  setLang('fr');
- window.addEventListener('DOMContentLoaded',()=>{
- applySchoolFromUrl();
- // Check for saved token (auto-reconnect)
- const savedToken = localStorage.getItem('ss_token');
  // Show app version
  console.log('%cSmartSchool - Production Mode','color:#1a3a6c;font-weight:bold;font-size:13px');
  console.log('%cAPI:', 'color:#059669;font-weight:bold', API_BASE);
