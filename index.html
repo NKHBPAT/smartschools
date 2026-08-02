@@ -401,7 +401,7 @@ const mapSubject = s => !s ? null : ({ id:s.id, name:s.name, coef:s.coef, classI
 const mapGrade  = g => !g ? null : ({ id:g.id, stId:g.student_id, sbId:g.subject_id, seq:g.seq, val:parseFloat(g.value) });
 const mapTT     = t => !t ? null : ({ id:t.id, classId:t.class_id, subjectId:t.subject_id, teacherId:t.teacher_id, day:t.day, start:(t.start_time||'').slice(0,5), end:(t.end_time||'').slice(0,5) });
 const mapAbs    = a => !a ? null : ({ id:a.id, studentId:a.student_id, seq:a.seq, hours:+a.hours, justified:+a.justified, unjustified:+a.unjustified, note:a.note, schoolId:a.school_id });
-const mapPass   = p => !p ? null : ({ id:p.id, studentId:p.student_id, type:p.type, reason:p.reason, date:p.pass_date?.slice?.(0,10)||p.pass_date, timeOut:(p.time_out||'').slice(0,5), timeIn:(p.time_in||'').slice(0,5), authorizedBy:p.authorized_by, schoolId:p.school_id });
+const mapPass   = p => !p ? null : ({ id:p.id, studentId:p.student_id, type:p.type, reason:p.reason, date:p.pass_date?.slice?.(0,10)||p.pass_date, timeOut:(p.time_out||'').slice(0,5), timeIn:(p.time_in||'').slice(0,5), authorizedBy:p.authorized_by, authorizedName:p.authorized_name||'', schoolId:p.school_id });
 const mapProg   = p => !p ? null : ({ id:p.id, teacherId:p.teacher_id, subjectId:p.subject_id, classId:p.class_id, seq:p.seq, planned:+p.planned, done:+p.done, notes:p.notes||'' });
 const mapMsg    = m => !m ? null : ({ id:m.id, from:m.from_user_id, to:m.to_user_id, subject:m.subject, body:m.body, read:m.is_read, replyTo:m.reply_to, date:m.created_at, schoolId:m.school_id });
 const mapSms    = l => !l ? null : ({ id:l.id, from:l.from_user_id, toParentId:l.to_parent_id, studentId:l.student_id, message:l.message, status:l.status, sentAt:l.sent_at });
@@ -2721,7 +2721,7 @@ function rPasses(){
    <td>${bd(esc(className(st?.classId||'')),'bnavy')}</td>
    <td>${fmtDate(p.date)}</td><td>${esc(p.timeOut||'-')}</td><td>${esc(p.timeIn||'-')}</td>
    <td style="font-size:12.5px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(p.reason)}">${esc(p.reason||'-')}</td>
-   <td style="font-size:12.5px">${esc(userName(p.authorizedBy))}</td>
+   <td style="font-size:12.5px">${esc(p.authorizedName||userName(p.authorizedBy))}</td>
    <td><div style="display:flex;gap:3px">
     <button class="btn bo bsm" onclick="openPassModal('${p.type}','${p.id}')">✏️</button>
     <button class="btn btl bsm" onclick="printPass('${p.id}')">🖨</button>
@@ -2743,13 +2743,15 @@ function openPassModal(type,id){
   <div class="fg"><label class="lab">Heure de ${actualType==='sortie'?'sortie':'l\'entree'}</label><input class="fc" id="pm-to" type="time" value="${p?.timeOut||new Date().toTimeString().slice(0,5)}"></div></div>
   <div class="fg"><label class="lab">Heure de ${actualType==='sortie'?'retour prevu':'sortie prevue'}</label><input class="fc" id="pm-ti" type="time" value="${p?.timeIn||''}"></div>
   <div class="fg"><label class="lab">Motif / Raison *</label><textarea class="fc" id="pm-re" rows="2" placeholder="Ex: Consultation medicale, Ceremonie familiale...">${esc(p?.reason||'')}</textarea></div>
+  <div class="fg"><label class="lab">${t('svgTitleLbl')} - Nom</label><input class="fc" id="pm-an" value="${esc(p?.authorizedName||'')}" placeholder="Nom du surveillant general"></div>
  `,`<button class="btn bo" onclick="closeModal()">${t('cancel')}</button><button class="btn bp" onclick="savePass('${actualType}','${id||''}')">💾 ${t('save')}</button>`);
 }
 function reloadPassSts(cid){const sel=document.getElementById('pm-st');if(sel)sel.innerHTML=`<option value="">--</option>`+stOf(cid).map(s=>`<option value="${s.id}">${esc(s.firstName+' '+s.name)}</option>`).join('');}
 async function savePass(type,id){
  const stId=document.getElementById('pm-st')?.value;const reason=sanitize(document.getElementById('pm-re')?.value||'');
  if(!stId||!reason){alert('Élève et motif requis');return;}
- const body={student_id:stId,type,reason,pass_date:document.getElementById('pm-dt')?.value,time_out:document.getElementById('pm-to')?.value,time_in:document.getElementById('pm-ti')?.value||null};
+ const authName=sanitize(document.getElementById('pm-an')?.value||'');
+ const body={student_id:stId,type,reason,pass_date:document.getElementById('pm-dt')?.value,time_out:document.getElementById('pm-to')?.value,time_in:document.getElementById('pm-ti')?.value||null,authorized_name:authName};
  let res;
  if(id){res=await apiPut('/passes/'+id,body);}else{res=await apiPost('/passes',body);}
  if(res){
@@ -2784,7 +2786,7 @@ function printPass(pid){
    <tr><td style="padding:4px 7px;font-weight:600;border:1px solid #ddd">${t('reasonCol')}</td><td style="padding:4px 7px;border:1px solid #ddd">${esc(p.reason||'-')}</td></tr>
   </table>
   <div style="margin-top:34px;font-size:10px;text-align:center">
-   <div>${esc(auth?.name||'-')}</div><div style="border-top:1px solid #333;margin-top:4px;padding-top:3px;max-width:160px;margin-left:auto;margin-right:auto">${t('svgTitleLbl')}</div>
+   <div>${esc(p.authorizedName||'')}</div><div style="border-top:1px solid #333;margin-top:4px;padding-top:3px;max-width:160px;margin-left:auto;margin-right:auto">${t('svgTitleLbl')}</div>
   </div>
  </div>`;
  const w=window.open('','_blank');
