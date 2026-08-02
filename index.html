@@ -496,6 +496,7 @@ fr:{
  noSmsEmpty:'📭 Aucun SMS envoye',certIndivBtn:'🖨 Certificat individuel',
  selectStudentDash:'-- Élève --',selectClassNoDash:'-- Selectionner une classe --',
  wholeSchoolDash:'-- Tout l\'etablissement --',allClassesDash2:'-- Toutes classes --',
+ svgTitleLbl:'Le Surveillant General',
  dcSchoolToConfig:'Établissement a configurer',dcSelectSchool:'Selectionnez un etablissement.',
  dcStudentInfo:'📄 Informations elève',dcBulletinContent:'📊 Contenu bulletin',
  dcColorsLabels:'🎨 Couleurs & Labels',dcGroupLabels:'🏷 Labels des groupes',
@@ -643,6 +644,7 @@ en:{
  noSmsEmpty:'📭 No SMS sent',certIndivBtn:'🖨 Individual Certificate',
  selectStudentDash:'-- Student --',selectClassNoDash:'-- Select a class --',
  wholeSchoolDash:'-- Whole school --',allClassesDash2:'-- All classes --',
+ svgTitleLbl:'The Head Prefect',
  dcSchoolToConfig:'School to configure',dcSelectSchool:'Select a school.',
  dcStudentInfo:'📄 Student Information',dcBulletinContent:'📊 Report Card Content',
  dcColorsLabels:'🎨 Colors & Labels',dcGroupLabels:'🏷 Group Labels',
@@ -790,6 +792,7 @@ es:{
  smsHistory:'📋 Historial SMS',smsDateCol:'Fecha',smsMsgCol:'Mensaje (vista previa)',smsStatusCol:'Estado',
  noSmsEmpty:'📭 Ningún SMS enviado',certIndivBtn:'🖨 Certificado individual',
  selectStudentDash:'-- Alumno --',selectClassNoDash:'-- Seleccionar una clase --',
+ svgTitleLbl:'El Vigilante General',
  dcSchoolToConfig:'Institución a configurar',dcSelectSchool:'Seleccione una institución.',
  dcStudentInfo:'📄 Información del alumno',dcBulletinContent:'📊 Contenido del boletín',
  dcColorsLabels:'🎨 Colores y Etiquetas',dcGroupLabels:'🏷 Etiquetas de grupos',
@@ -2771,10 +2774,9 @@ function printPass(pid){
    ${p.timeIn?`<tr><td style="padding:5px 8px;font-weight:600;border:1px solid #ddd">${t('returnHourLbl')}</td><td style="padding:5px 8px;border:1px solid #ddd"><strong>${esc(p.timeIn)}</strong></td></tr>`:''}
    <tr><td style="padding:5px 8px;font-weight:600;border:1px solid #ddd">${t('reasonCol')}</td><td style="padding:5px 8px;border:1px solid #ddd">${esc(p.reason||'-')}</td></tr>
   </table>
-  <div style="display:flex;justify-content:space-between;margin-top:18px;font-size:11px">
-   <div style="text-align:center"><div>${t('studentSigLbl')}</div><div style="border-top:1px solid #333;margin-top:30px;padding-top:4px">${t('signatureLbl')}</div></div>
+  <div style="display:flex;justify-content:center;margin-top:18px;font-size:11px">
    <div style="text-align:center">${dc.showStamp?`<div style="width:55px;height:55px;border:1px dashed #aaa;border-radius:50%;margin:0 auto 3px;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:9px">${lang==='en'?'Stamp':lang==='es'?'Sello':'Cachet'}</div>`:''}
-   <div>${esc(auth?.name||'-')}</div><div style="border-top:1px solid #333;margin-top:5px;padding-top:4px">${esc(dc.signTitle2||t('authorityLbl'))}</div></div>
+   <div>${esc(auth?.name||'-')}</div><div style="border-top:1px solid #333;margin-top:5px;padding-top:4px">${t('svgTitleLbl')}</div></div>
   </div>
   ${printFooter()}
  </div>
