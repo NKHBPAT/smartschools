@@ -2723,32 +2723,41 @@ function rPasses(){
    <td style="font-size:12.5px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(p.reason)}">${esc(p.reason||'-')}</td>
    <td style="font-size:12.5px">${esc(userName(p.authorizedBy))}</td>
    <td><div style="display:flex;gap:3px">
+    <button class="btn bo bsm" onclick="openPassModal('${p.type}','${p.id}')">✏️</button>
     <button class="btn btl bsm" onclick="printPass('${p.id}')">🖨</button>
     <button class="btn br bsm" onclick="askDel('Supprimer cette autorisation ?',async()=>{if(await apiDelete('/passes/${p.id}')){DB.passes=DB.passes.filter(x=>x.id!=='${p.id}');rPasses();}})">🗑</button>
    </div></td>
   </tr>`;}).join(''):`<tr><td colspan="8">${empty(t('noPassesEmpty'))}</td></tr>`}</tbody>
  </table></div></div></div>`;
 }
-function openPassModal(type){
+function openPassModal(type,id){
  const school=schoolOf();const cls=clsOf(school?.id||'');
- showModal(`${type==='sortie'?'➡️ Autorisation de sortie':'⬅️ Autorisation d\'entree'}`,`
-  <div class="fr"><div class="fg"><label class="lab">Classe</label><select class="fc" id="pm-cl" onchange="reloadPassSts(this.value)"><option value="">--</option>${cls.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select></div>
-  <div class="fg"><label class="lab">Élève *</label><select class="fc" id="pm-st"><option value="">--</option></select></div></div>
-  <div class="fr"><div class="fg"><label class="lab">Date *</label><input class="fc" id="pm-dt" type="date" value="${new Date().toISOString().slice(0,10)}"></div>
-  <div class="fg"><label class="lab">Heure de ${type==='sortie'?'sortie':'l\'entree'}</label><input class="fc" id="pm-to" type="time" value="${new Date().toTimeString().slice(0,5)}"></div></div>
-  <div class="fg"><label class="lab">Heure de ${type==='sortie'?'retour prevu':'sortie prevue'}</label><input class="fc" id="pm-ti" type="time"></div>
-  <div class="fg"><label class="lab">Motif / Raison *</label><textarea class="fc" id="pm-re" rows="2" placeholder="Ex: Consultation medicale, Ceremonie familiale..."></textarea></div>
- `,`<button class="btn bo" onclick="closeModal()">${t('cancel')}</button><button class="btn bp" onclick="savePass('${type}')">💾 Delivrer</button>`);
+ const p=id?DB.passes.find(x=>x.id===id):null;
+ const actualType=p?.type||type;
+ const st=p?DB.students.find(s=>s.id===p.studentId):null;
+ const selCid=st?.classId||'';
+ showModal(id?'✏️ '+(actualType==='sortie'?t('exitAuth'):t('entryAuth')):`${actualType==='sortie'?t('exitAuth'):t('entryAuth')}`,`
+  <div class="fr"><div class="fg"><label class="lab">Classe</label><select class="fc" id="pm-cl" onchange="reloadPassSts(this.value)"><option value="">--</option>${cls.map(c=>`<option value="${c.id}" ${selCid===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select></div>
+  <div class="fg"><label class="lab">Élève *</label><select class="fc" id="pm-st"><option value="">--</option>${selCid?stOf(selCid).map(s=>`<option value="${s.id}" ${p?.studentId===s.id?'selected':''}>${esc(s.firstName+' '+s.name)}</option>`).join(''):''}</select></div></div>
+  <div class="fr"><div class="fg"><label class="lab">Date *</label><input class="fc" id="pm-dt" type="date" value="${p?.date||new Date().toISOString().slice(0,10)}"></div>
+  <div class="fg"><label class="lab">Heure de ${actualType==='sortie'?'sortie':'l\'entree'}</label><input class="fc" id="pm-to" type="time" value="${p?.timeOut||new Date().toTimeString().slice(0,5)}"></div></div>
+  <div class="fg"><label class="lab">Heure de ${actualType==='sortie'?'retour prevu':'sortie prevue'}</label><input class="fc" id="pm-ti" type="time" value="${p?.timeIn||''}"></div>
+  <div class="fg"><label class="lab">Motif / Raison *</label><textarea class="fc" id="pm-re" rows="2" placeholder="Ex: Consultation medicale, Ceremonie familiale...">${esc(p?.reason||'')}</textarea></div>
+ `,`<button class="btn bo" onclick="closeModal()">${t('cancel')}</button><button class="btn bp" onclick="savePass('${actualType}','${id||''}')">💾 ${t('save')}</button>`);
 }
 function reloadPassSts(cid){const sel=document.getElementById('pm-st');if(sel)sel.innerHTML=`<option value="">--</option>`+stOf(cid).map(s=>`<option value="${s.id}">${esc(s.firstName+' '+s.name)}</option>`).join('');}
-async function savePass(type){
+async function savePass(type,id){
  const stId=document.getElementById('pm-st')?.value;const reason=sanitize(document.getElementById('pm-re')?.value||'');
  if(!stId||!reason){alert('Élève et motif requis');return;}
- const school=schoolOf();
  const body={student_id:stId,type,reason,pass_date:document.getElementById('pm-dt')?.value,time_out:document.getElementById('pm-to')?.value,time_in:document.getElementById('pm-ti')?.value||null};
- const res=await apiPost('/passes',body);
- if(res){DB.passes.push(mapPass(res));showToast('✅ Autorisation delivree','success');closeModal();rPasses();}
- else showToast('❌ Erreur lors de la creation','error');
+ let res;
+ if(id){res=await apiPut('/passes/'+id,body);}else{res=await apiPost('/passes',body);}
+ if(res){
+  const mapped=mapPass(res);
+  if(id){const i=DB.passes.findIndex(x=>x.id===id);if(i>=0)DB.passes[i]={...DB.passes[i],...mapped};showToast('✅ Autorisation modifiee','success');}
+  else{DB.passes.push(mapped);showToast('✅ Autorisation delivree','success');}
+  closeModal();rPasses();
+ } else showToast('❌ Erreur','error');
 }
 function printPass(pid){
  const p=DB.passes.find(x=>x.id===pid);if(!p)return;
@@ -2756,30 +2765,35 @@ function printPass(pid){
  const cls=DB.classes.find(c=>c.id===st?.classId);const auth=DB.users.find(u=>u.id===p.authorizedBy);
  const color=dc.bulletinColor||'#1a3a6c';
  const title=p.type==='sortie'?t('passTitle'):t('passIn');
- const w=window.open('','_blank');
- w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${title}</title><style>*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}body{font-family:'Times New Roman',serif;padding:20px}@media print{@page{size:A5;margin:.7cm}}</style></head><body>
- <div style="border:2px solid ${color};border-radius:10px;padding:18px;max-width:500px;margin:0 auto;position:relative">
-  <div style="position:absolute;inset:7px;border:1px dashed rgba(26,58,108,.2);border-radius:7px;pointer-events:none"></div>
-  <div style="text-align:center;border-bottom:1.5px solid ${color};padding-bottom:10px;margin-bottom:13px">
-   ${school?.logo&&dc.showLogo?`<img src="${school.logo}" style="width:40px;height:40px;object-fit:contain"><br>`:''}
-   <div style="font-size:13px;font-weight:bold;color:${color}">${esc(school?.name||'')}</div>
-   <div style="font-size:14px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;color:${color};margin-top:8px;border:1.5px solid ${color};padding:5px 15px;display:inline-block;border-radius:4px">${title}</div>
+ const copyLabel=lang==='en'?'Copy':lang==='es'?'Copia':'Exemplaire';
+ const buildCard=(n)=>`<div style="border:2px solid ${color};border-radius:10px;padding:16px;flex:1;position:relative">
+  <div style="position:absolute;inset:6px;border:1px dashed rgba(26,58,108,.2);border-radius:7px;pointer-events:none"></div>
+  <div style="text-align:right;font-size:9px;color:#999;margin-bottom:4px">${copyLabel} ${n}</div>
+  <div style="text-align:center;border-bottom:1.5px solid ${color};padding-bottom:8px;margin-bottom:10px">
+   ${school?.logo&&dc.showLogo?`<img src="${school.logo}" style="width:34px;height:34px;object-fit:contain"><br>`:''}
+   <div style="font-size:12px;font-weight:bold;color:${color}">${esc(school?.name||'')}</div>
+   <div style="font-size:13px;font-weight:bold;letter-spacing:1.5px;text-transform:uppercase;color:${color};margin-top:6px;border:1.5px solid ${color};padding:4px 12px;display:inline-block;border-radius:4px">${title}</div>
   </div>
-  <table style="width:100%;font-size:12px;border-collapse:collapse">
-   <tr><td style="padding:5px 8px;font-weight:600;width:40%;border:1px solid #ddd">${t('fullNameColLbl')}</td><td style="padding:5px 8px;border:1px solid #ddd"><strong>${esc(st?st.firstName+' '+st.name:'-')}</strong></td></tr>
-   <tr><td style="padding:5px 8px;font-weight:600;border:1px solid #ddd">${t('matriculeColLbl')}</td><td style="padding:5px 8px;border:1px solid #ddd">${esc(st?.mat||'-')}</td></tr>
-   <tr><td style="padding:5px 8px;font-weight:600;border:1px solid #ddd">${t('classColLbl')}</td><td style="padding:5px 8px;border:1px solid #ddd">${esc(cls?.name||'-')}</td></tr>
-   <tr><td style="padding:5px 8px;font-weight:600;border:1px solid #ddd">${t('dateColLbl')}</td><td style="padding:5px 8px;border:1px solid #ddd">${fmtDate(p.date)}</td></tr>
-   <tr><td style="padding:5px 8px;font-weight:600;border:1px solid #ddd">${p.type==='sortie'?t('exitHourLbl'):t('entryHourLbl')}</td><td style="padding:5px 8px;border:1px solid #ddd"><strong>${esc(p.timeOut||'-')}</strong></td></tr>
-   ${p.timeIn?`<tr><td style="padding:5px 8px;font-weight:600;border:1px solid #ddd">${t('returnHourLbl')}</td><td style="padding:5px 8px;border:1px solid #ddd"><strong>${esc(p.timeIn)}</strong></td></tr>`:''}
-   <tr><td style="padding:5px 8px;font-weight:600;border:1px solid #ddd">${t('reasonCol')}</td><td style="padding:5px 8px;border:1px solid #ddd">${esc(p.reason||'-')}</td></tr>
+  <table style="width:100%;font-size:11px;border-collapse:collapse">
+   <tr><td style="padding:4px 7px;font-weight:600;width:40%;border:1px solid #ddd">${t('fullNameColLbl')}</td><td style="padding:4px 7px;border:1px solid #ddd"><strong>${esc(st?st.firstName+' '+st.name:'-')}</strong></td></tr>
+   <tr><td style="padding:4px 7px;font-weight:600;border:1px solid #ddd">${t('matriculeColLbl')}</td><td style="padding:4px 7px;border:1px solid #ddd">${esc(st?.mat||'-')}</td></tr>
+   <tr><td style="padding:4px 7px;font-weight:600;border:1px solid #ddd">${t('classColLbl')}</td><td style="padding:4px 7px;border:1px solid #ddd">${esc(cls?.name||'-')}</td></tr>
+   <tr><td style="padding:4px 7px;font-weight:600;border:1px solid #ddd">${t('dateColLbl')}</td><td style="padding:4px 7px;border:1px solid #ddd">${fmtDate(p.date)}</td></tr>
+   <tr><td style="padding:4px 7px;font-weight:600;border:1px solid #ddd">${p.type==='sortie'?t('exitHourLbl'):t('entryHourLbl')}</td><td style="padding:4px 7px;border:1px solid #ddd"><strong>${esc(p.timeOut||'-')}</strong></td></tr>
+   ${p.timeIn?`<tr><td style="padding:4px 7px;font-weight:600;border:1px solid #ddd">${t('returnHourLbl')}</td><td style="padding:4px 7px;border:1px solid #ddd"><strong>${esc(p.timeIn)}</strong></td></tr>`:''}
+   <tr><td style="padding:4px 7px;font-weight:600;border:1px solid #ddd">${t('reasonCol')}</td><td style="padding:4px 7px;border:1px solid #ddd">${esc(p.reason||'-')}</td></tr>
   </table>
-  <div style="display:flex;justify-content:center;margin-top:18px;font-size:11px">
-   <div style="text-align:center">${dc.showStamp?`<div style="width:55px;height:55px;border:1px dashed #aaa;border-radius:50%;margin:0 auto 3px;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:9px">${lang==='en'?'Stamp':lang==='es'?'Sello':'Cachet'}</div>`:''}
-   <div>${esc(auth?.name||'-')}</div><div style="border-top:1px solid #333;margin-top:5px;padding-top:4px">${t('svgTitleLbl')}</div></div>
+  <div style="margin-top:34px;font-size:10px;text-align:center">
+   <div>${esc(auth?.name||'-')}</div><div style="border-top:1px solid #333;margin-top:4px;padding-top:3px;max-width:160px;margin-left:auto;margin-right:auto">${t('svgTitleLbl')}</div>
   </div>
-  ${printFooter()}
+ </div>`;
+ const w=window.open('','_blank');
+ w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${title}</title><style>*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}body{font-family:'Times New Roman',serif;padding:14px;margin:0}@media print{@page{size:A4 landscape;margin:.8cm}}</style></head><body>
+ <div style="display:flex;gap:16px;align-items:stretch">
+  ${buildCard(1)}
+  ${buildCard(2)}
  </div>
+ ${printFooter()}
  <script>window.onload=()=>setTimeout(()=>window.print(),300)<\/script></body></html>`);
  w.document.close();
 }
