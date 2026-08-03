@@ -204,6 +204,50 @@ select.fc{cursor:pointer}textarea.fc{resize:vertical;min-height:72px}
  .btn-lo{padding:8px 12px;font-size:12.5px;min-width:0}
 }
 @media(max-width:440px){.srow{grid-template-columns:1fr}.tabs .tab{font-size:12px;padding:6px 10px}}
+
+/* LANDING PAGE */
+#page-login{display:block;min-height:100vh;background:#f7f9fc;padding:0}
+.landing-nav{position:sticky;top:0;z-index:60;background:rgba(13,35,71,.97);backdrop-filter:blur(8px);padding:16px 28px;display:flex;align-items:center;justify-content:space-between}
+.landing-brand{font-family:'Cinzel',serif;color:#fff;font-size:21px;font-weight:900;letter-spacing:-.5px}
+.landing-brand em{color:var(--gold-lt);font-style:normal}
+.landing-nav-tag{color:rgba(255,255,255,.5);font-size:10.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-top:2px}
+.login-corner{position:fixed;top:82px;right:20px;width:290px;background:#fff;border-radius:16px;box-shadow:0 16px 48px rgba(13,35,71,.22);padding:22px;z-index:55;max-height:calc(100vh - 100px);overflow-y:auto}
+.login-corner .lf-ttl{font-size:17px;margin-bottom:2px}
+.login-corner .lf-sub{font-size:11.5px;margin-bottom:16px}
+.login-corner .fi{padding:10px 12px;font-size:13px;margin-bottom:11px}
+.login-corner .btn-login{padding:11px;font-size:13.5px}
+.login-corner .ll-langs{margin-top:12px;justify-content:center}
+.login-corner .ll-lb{padding:5px 13px;font-size:11px;border-color:var(--border);color:var(--muted);background:#f8fafc}
+.login-corner .ll-lb.active{background:var(--gold-lt);color:var(--navy-d);border-color:var(--gold-lt)}
+.landing-wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+.landing-hero{background:linear-gradient(155deg,var(--navy-d),var(--navy) 55%,var(--navy-l));color:#fff;padding:64px 0 84px}
+.landing-hero .landing-wrap{padding-right:28px}
+.landing-hero h1{font-family:'Cinzel',serif;font-size:clamp(26px,4vw,42px);line-height:1.15;max-width:640px;margin-bottom:18px}
+.landing-hero p{font-size:15px;line-height:1.75;color:rgba(255,255,255,.85);max-width:600px;margin-bottom:14px}
+.landing-hero .hero-strong{color:var(--gold-lt);font-weight:700}
+.landing-section{padding:56px 0}
+.landing-section h2{font-family:'Cinzel',serif;font-size:26px;color:var(--navy);margin-bottom:8px;text-align:center}
+.landing-section .sec-sub{text-align:center;color:var(--muted);font-size:14px;margin-bottom:36px;max-width:560px;margin-left:auto;margin-right:auto}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.feat-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:22px;box-shadow:var(--sh)}
+.feat-card .fic{font-size:26px;margin-bottom:10px}
+.feat-card h3{font-size:14.5px;color:var(--navy);font-weight:800;margin-bottom:6px}
+.feat-card p{font-size:12.5px;color:var(--muted);line-height:1.6}
+.landing-why{background:var(--gold-pale);padding:56px 0}
+.landing-why .landing-wrap{text-align:center;max-width:720px}
+.landing-why h2{font-family:'Cinzel',serif;font-size:24px;color:var(--navy);margin-bottom:16px}
+.landing-why p{font-size:14.5px;color:#5a4820;line-height:1.8}
+.landing-contact{background:var(--navy-d);color:#fff;padding:52px 0;text-align:center}
+.landing-contact h2{font-family:'Cinzel',serif;font-size:24px;margin-bottom:10px}
+.landing-contact p{color:rgba(255,255,255,.7);font-size:14px;margin-bottom:20px}
+.contact-row{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;font-size:14px}
+.contact-row a{color:var(--gold-lt);text-decoration:none;font-weight:700}
+.landing-footer{background:#0a1c3a;color:rgba(255,255,255,.5);text-align:center;padding:20px;font-size:12px}
+@media(max-width:900px){
+ .login-corner{position:static;width:100%;max-width:420px;margin:20px auto 0;box-shadow:none;border:1px solid var(--border)}
+ .landing-hero{padding-bottom:40px}
+}
+
 @media print{
  #sb-toggle,.sb,.tbar,.ftr,.no-print{display:none!important}
  .main{margin-left:0!important}.ct{padding:0!important}
@@ -216,41 +260,88 @@ select.fc{cursor:pointer}textarea.fc{resize:vertical;min-height:72px}
 <button id="sb-toggle" onclick="toggleSidebar()" aria-label="Menu">☰</button>
 <div class="sb-overlay" id="sb-overlay" onclick="toggleSidebar()"></div>
 
-<!-- LOGIN -->
+<!-- LANDING + LOGIN -->
 <main id="page-login" role="main">
- <div class="lcard">
-  <div class="ll">
-   <div class="ll-brand">Smart<em>School</em></div>
-   <div class="ll-co">Solution Tech Inter</div>
-   <p class="ll-tagline">Plateforme de gestion scolaire pour établissements d'enseignement primaires, secondaires general et techniques — Sous-systèmes francophone et anglophone.</p>
+
+ <nav class="landing-nav">
+  <div>
+   <div class="landing-brand">Smart<em>School</em></div>
+   <div class="landing-nav-tag">Solution Tech Inter</div>
+  </div>
+ </nav>
+
+ <div class="login-corner">
+  <form class="lform" onsubmit="doLogin();return false;" novalidate>
+   <h1 class="lf-ttl" id="lf-ttl">Connexion</h1>
+   <p class="lf-sub" id="lf-sub">Année scolaire 2026–2027</p>
+   <div id="lerr" class="lerr" style="display:none" role="alert"></div>
+   <label class="fl" id="lbl-em" for="inp-em">Email</label>
+   <input class="fi" type="email" id="inp-em" autocomplete="username" required>
+   <label class="fl" id="lbl-pw" for="inp-pw">Mot de passe</label>
+   <input class="fi" type="password" id="inp-pw" autocomplete="current-password" required>
+   <button class="btn-login" type="submit" id="btnl">Se connecter</button>
    <div class="ll-langs" role="group" aria-label="Langue">
     <button class="ll-lb active" onclick="setLang('fr')" aria-pressed="true">🇫🇷 FR</button>
     <button class="ll-lb" onclick="setLang('en')" aria-pressed="false">🇬🇧 EN</button>
     <button class="ll-lb" onclick="setLang('es')" aria-pressed="false">🇪🇸 ES</button>
    </div>
-  </div>
-  <div class="lr">
-   <form class="lform" onsubmit="doLogin();return false;" novalidate>
-    <h1 class="lf-ttl" id="lf-ttl">Connexion</h1>
-    <p class="lf-sub" id="lf-sub">Année scolaire 2026–2027</p>
-    <div id="lerr" class="lerr" style="display:none" role="alert"></div>
-    <label class="fl" id="lbl-em" for="inp-em">Email</label>
-    <input class="fi" type="email" id="inp-em" autocomplete="username" required>
-    <label class="fl" id="lbl-pw" for="inp-pw">Mot de passe</label>
-    <input class="fi" type="password" id="inp-pw" autocomplete="current-password" required>
-    <button class="btn-login" type="submit" id="btnl">Se connecter</button>
-    <div class="dsect" style="display:none">
-     <div class="dlbl" id="demo-lbl">Comptes de démonstration</div>
-     <div class="ditem" onclick="fillDemo('admin@smartschool.cm','Admin@2025')"><div><div class="drole" style="color:var(--red)">⚙️ Herman SmartSchool — Administrateur</div><div class="dcred">admin@smartschool.cm</div></div><span class="darr">→</span></div>
-     <div class="ditem" onclick="fillDemo('directeur@flambeaux.cm','Dir@2025')"><div><div class="drole" style="color:var(--navy)">🏫 Marie-Claire — École Primaire</div><div class="dcred">directeur@flambeaux.cm</div></div><span class="darr">→</span></div>
-     <div class="ditem" onclick="fillDemo('directeur@leclerc.cm','Dir@2025')"><div><div class="drole" style="color:var(--purple)">🏛 Dr. Ondoua — Lycée Leclerc</div><div class="dcred">directeur@leclerc.cm</div></div><span class="darr">→</span></div>
-     <div class="ditem" onclick="fillDemo('directeur@tech.cm','Dir@2025')"><div><div class="drole" style="color:var(--teal)">⚙️ Ing. Nkoa — Lycée Technique</div><div class="dcred">directeur@tech.cm</div></div><span class="darr">→</span></div>
-     <div class="ditem" onclick="fillDemo('directeur@bilingue.cm','Dir@2025')"><div><div class="drole" style="color:var(--orange)">🌐 Sophie Belibi — Lycée Bilingue</div><div class="dcred">directeur@bilingue.cm</div></div><span class="darr">→</span></div>
-     <div class="ditem" onclick="fillDemo('parent@flambeaux.cm','Par@2025')"><div><div class="drole" style="color:var(--green)">👨‍👩‍👧 Parent — Alice Biya</div><div class="dcred">parent@flambeaux.cm</div></div><span class="darr">→</span></div>
-    </div>
-   </form>
-  </div>
+   <div class="dsect" style="display:none">
+    <div class="dlbl" id="demo-lbl">Comptes de démonstration</div>
+    <div class="ditem" onclick="fillDemo('admin@smartschool.cm','Admin@2025')"><div><div class="drole" style="color:var(--red)">⚙️ Herman SmartSchool — Administrateur</div><div class="dcred">admin@smartschool.cm</div></div><span class="darr">→</span></div>
+    <div class="ditem" onclick="fillDemo('directeur@flambeaux.cm','Dir@2025')"><div><div class="drole" style="color:var(--navy)">🏫 Marie-Claire — École Primaire</div><div class="dcred">directeur@flambeaux.cm</div></div><span class="darr">→</span></div>
+    <div class="ditem" onclick="fillDemo('directeur@leclerc.cm','Dir@2025')"><div><div class="drole" style="color:var(--purple)">🏛 Dr. Ondoua — Lycée Leclerc</div><div class="dcred">directeur@leclerc.cm</div></div><span class="darr">→</span></div>
+    <div class="ditem" onclick="fillDemo('directeur@tech.cm','Dir@2025')"><div><div class="drole" style="color:var(--teal)">⚙️ Ing. Nkoa — Lycée Technique</div><div class="dcred">directeur@tech.cm</div></div><span class="darr">→</span></div>
+    <div class="ditem" onclick="fillDemo('directeur@bilingue.cm','Dir@2025')"><div><div class="drole" style="color:var(--orange)">🌐 Sophie Belibi — Lycée Bilingue</div><div class="dcred">directeur@bilingue.cm</div></div><span class="darr">→</span></div>
+    <div class="ditem" onclick="fillDemo('parent@flambeaux.cm','Par@2025')"><div><div class="drole" style="color:var(--green)">👨‍👩‍👧 Parent — Alice Biya</div><div class="dcred">parent@flambeaux.cm</div></div><span class="darr">→</span></div>
+   </div>
+  </form>
  </div>
+
+ <section class="landing-hero">
+  <div class="landing-wrap">
+   <h1>L'avenir de votre école <span class="hero-strong">commence aujourd'hui</span></h1>
+   <p>Chaque année, les établissements scolaires font face aux mêmes contraintes : dossiers administratifs qui s'accumulent, bulletins qui prennent des semaines à produire, parents en attente d'informations, enseignants qui consacrent un temps précieux à des tâches répétitives.</p>
+   <p><strong style="color:#fff">SmartSchool n'est pas un simple logiciel de gestion scolaire. C'est une nouvelle façon de diriger un établissement.</strong></p>
+   <p>Imaginez une école où les résultats sont publiés en quelques secondes, où les parents suivent la scolarité de leurs enfants en temps réel, où chaque décision s'appuie sur des données fiables, accessibles à tout moment.</p>
+  </div>
+ </section>
+
+ <section class="landing-section">
+  <div class="landing-wrap">
+   <h2>Ce que SmartSchool vous apporte</h2>
+   <p class="sec-sub">Une plateforme complète pour gérer votre établissement, du premier jour d'école au dernier bulletin.</p>
+   <div class="feat-grid">
+    <div class="feat-card"><div class="fic">✨</div><h3>Inscriptions & dossiers</h3><p>Gérez les inscriptions et les dossiers scolaires en toute simplicité, du dossier papier à la fiche numérique.</p></div>
+    <div class="feat-card"><div class="fic">📊</div><h3>Notes & bulletins</h3><p>Publiez notes, bulletins et relevés de résultats en quelques clics, avec calcul automatique des moyennes et rangs.</p></div>
+    <div class="feat-card"><div class="fic">👨‍🏫</div><h3>Organisation pédagogique</h3><p>Organisez classes, emplois du temps, matières et enseignants sur une seule plateforme centralisée.</p></div>
+    <div class="feat-card"><div class="fic">📱</div><h3>Communication instantanée</h3><p>Informez immédiatement les parents grâce aux notifications SMS et à la messagerie intégrée.</p></div>
+    <div class="feat-card"><div class="fic">🔒</div><h3>Sécurité des données</h3><p>Protégez les données de votre établissement sur une plateforme sécurisée et fiable.</p></div>
+    <div class="feat-card"><div class="fic">📈</div><h3>Tableaux de bord</h3><p>Suivez les performances de votre école grâce à des statistiques et synthèses claires et détaillées.</p></div>
+    <div class="feat-card"><div class="fic">☁️</div><h3>Accès partout</h3><p>Accédez à votre établissement où que vous soyez, depuis un ordinateur, une tablette ou un smartphone.</p></div>
+   </div>
+  </div>
+ </section>
+
+ <section class="landing-why">
+  <div class="landing-wrap">
+   <h2>Plus qu'une plateforme, un partenaire pour votre réussite</h2>
+   <p>Chez SmartSchool, nous croyons qu'un chef d'établissement ne devrait pas consacrer son énergie à la paperasse, mais à ce qui compte réellement : la qualité de l'enseignement et la réussite de ses élèves. C'est pourquoi nous avons conçu une plateforme intuitive, rapide et évolutive, adaptée aussi bien à une petite école qu'à un grand complexe scolaire.</p>
+  </div>
+ </section>
+
+ <section class="landing-contact">
+  <div class="landing-wrap">
+   <h2>Demandez votre démonstration dès aujourd'hui</h2>
+   <p>Offrez à votre établissement l'image d'une institution innovante et tournée vers l'avenir.</p>
+   <div class="contact-row">
+    <a href="tel:+237677947690">📞 +237 677 947 690 / 696 503 130</a>
+    <a href="mailto:hermanbruce50@gmail.com">📧 hermanbruce50@gmail.com</a>
+   </div>
+  </div>
+ </section>
+
+ <footer class="landing-footer">SmartSchool — La technologie au service de l'excellence éducative.</footer>
+
 </main>
 
 <!-- APP -->
