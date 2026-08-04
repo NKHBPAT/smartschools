@@ -319,7 +319,9 @@ select.fc{cursor:pointer}textarea.fc{resize:vertical;min-height:72px}
  <footer class="landing-footer">
   <div style="margin-bottom:10px;font-size:13px;color:rgba(255,255,255,.75)" id="landing-follow-lbl">Suivez-nous !</div>
   <div style="display:flex;justify-content:center;gap:14px;margin-bottom:14px">
-   <a href="https://www.facebook.com/profile.php?id=61586803858823&mibextid=wwXIfr&mibextid=wwXIfr" target="_blank" rel="noopener" style="color:var(--gold-lt);text-decoration:none;font-size:20px" aria-label="Facebook">📘</a>
+   <a href="https://www.facebook.com/profile.php?id=61586803858823&mibextid=wwXIfr&mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook" style="display:inline-flex">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="#f0c040"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.99 3.66 9.13 8.44 9.88v-6.99h-2.54V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99C18.34 21.13 22 16.99 22 12z"/></svg>
+   </a>
   </div>
   <div id="landing-copy-txt">SmartSchool — La technologie au service de l'excellence éducative.</div>
   <div style="margin-top:6px;font-size:11px;color:rgba(255,255,255,.4)">© <span id="landing-year"></span> SmartSchool — Solution Tech Inter. Tous droits reserves.</div>
@@ -2658,21 +2660,12 @@ function certHTML(st,school,cls){
    <div style="font-size:11.5px;color:#666;margin:3px 0">${esc(school?.city||'')}${school?.region?' - Region du '+esc(school.region):''}</div>
    <div style="font-size:16px;font-weight:bold;letter-spacing:2px;color:${color};margin-top:11px;text-transform:uppercase;border:1.5px solid ${color};padding:7px 20px;display:inline-block;border-radius:4px">${certTitle}</div>
   </div>
-  <p style="text-align:center;font-size:13px;margin-bottom:14px">${t('certSignedLbl')} <strong>${esc(principal?.name||dc.signTitle2||'')}</strong>, ${esc(dc.signTitle2||t('sigprincipal'))}${t('certThatLbl')}</p>
-  <table style="width:100%;border-collapse:collapse;margin-bottom:14px">
-   <tr><td style="width:35%;padding:6px 10px;font-weight:600;border:1px solid #ddd">${dc.showMatricule?t('mat'):t('certNumLbl')}</td><td style="padding:6px 10px;border:1px solid #ddd">${esc(st.mat||'-')}</td></tr>
-   <tr><td style="padding:6px 10px;font-weight:600;border:1px solid #ddd">${t('certLastName')}</td><td style="padding:6px 10px;border:1px solid #ddd"><strong>${esc(st.name)}</strong></td></tr>
-   <tr><td style="padding:6px 10px;font-weight:600;border:1px solid #ddd">${t('certFirstName')}</td><td style="padding:6px 10px;border:1px solid #ddd"><strong>${esc(st.firstName)}</strong></td></tr>
-   ${dc.showGender?`<tr><td style="padding:6px 10px;font-weight:600;border:1px solid #ddd">${t('gender')}</td><td style="padding:6px 10px;border:1px solid #ddd">${st.gender==='M'?t('male'):t('female')}</td></tr>`:''}
-   ${dc.showDOB?`<tr><td style="padding:6px 10px;font-weight:600;border:1px solid #ddd">${t('dob')}</td><td style="padding:6px 10px;border:1px solid #ddd">${fmtDate(st.dob)||'-'}</td></tr>`:''}
-   ${dc.showPOB?`<tr><td style="padding:6px 10px;font-weight:600;border:1px solid #ddd">${t('pob')}</td><td style="padding:6px 10px;border:1px solid #ddd">${esc(st.pob||'-')}</td></tr>`:''}
-   <tr><td style="padding:6px 10px;font-weight:600;border:1px solid #ddd">${t('classCol')}</td><td style="padding:6px 10px;border:1px solid #ddd"><strong>${esc(cls?.name||'-')}</strong></td></tr>
-   <tr><td style="padding:6px 10px;font-weight:600;border:1px solid #ddd">${t('schoolYear')}</td><td style="padding:6px 10px;border:1px solid #ddd">${t('year')}</td></tr>
-   ${dc.showParent?`<tr><td style="padding:6px 10px;font-weight:600;border:1px solid #ddd">${t('parentRole')}</td><td style="padding:6px 10px;border:1px solid #ddd">${esc(st.parent||'-')}</td></tr>`:''}
-   ${extraRows}
-  </table>
-  <p style="text-align:center;margin:14px 0;font-size:12.5px">${t('certEnrolledStmt')} <strong>${t('year')}</strong>.</p>
-  <p style="margin-bottom:16px;font-size:12px;color:#666">${t('certValidStmt')}</p>
+  <p style="text-align:center;font-size:13px;margin-bottom:16px">${t('certSignedLbl')} <strong>${esc(principal?.name||dc.signTitle2||'')}</strong>, ${esc(dc.signTitle2||t('sigprincipal'))}${t('certThatLbl')}</p>
+  <div style="text-align:justify;font-size:13.5px;line-height:2.1;padding:0 6px">
+   <p>${isEn?`The student `:`L'élève `}<strong>${esc(st.firstName)} ${esc(st.name)}</strong>${dc.showMatricule&&st.mat?(isEn?`, student ID <strong>${esc(st.mat)}</strong>,`:`, matricule n° <strong>${esc(st.mat)}</strong>,`):''}${dc.showGender?(isEn?` (${st.gender==='M'?'male':'female'})`:` (${st.gender==='M'?'sexe masculin':'sexe féminin'})`):''}${dc.showDOB&&st.dob?(isEn?`, born on ${fmtDate(st.dob)}`:`, né(e) le ${fmtDate(st.dob)}`):''}${dc.showPOB&&st.pob?(isEn?` in ${esc(st.pob)}`:` à ${esc(st.pob)}`):''}, ${isEn?`is duly enrolled in class <strong>${esc(cls?.name||'-')}</strong> at our institution for the <strong>${t('year')}</strong> school year`:`est régulièrement inscrit(e) en classe de <strong>${esc(cls?.name||'-')}</strong> au sein de notre établissement, pour l'année scolaire <strong>${t('year')}</strong>`}${dc.showParent&&st.parent?(isEn?`, under the responsibility of ${esc(st.parent)}`:`, sous la responsabilité de ${esc(st.parent)}`):''}.</p>
+   ${(dc.extraCertFields||[]).filter(f=>f.key!=='title'&&f.label&&f.val).map(f=>`<p>${esc(f.label)} : ${esc(f.val)}.</p>`).join('')}
+  </div>
+  <p style="margin:16px 0;font-size:12px;color:#666;text-align:center">${t('certValidStmt')}</p>
   <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:22px">
    <div style="text-align:left"><div style="font-size:11px;color:#666">${t('certMadeAt')} ${esc(school?.city||'-')}, ${new Date().toLocaleDateString(lang==='en'?'en-GB':lang==='es'?'es-ES':'fr-FR')}</div></div>
    <div style="text-align:center">${dc.showStamp?`<div style="width:70px;height:70px;border:1px dashed #aaa;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:9px;margin:0 auto 5px">Cachet</div>`:''}<div style="font-size:11.5px;font-weight:600">${esc(dc.signTitle2||'Le Chef d\'Établissement')}</div><div style="font-size:11px;color:#666">${esc(principal?.name||'')}</div></div>
