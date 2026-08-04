@@ -2614,17 +2614,65 @@ function buildHonorList(){
 function printHonor(){
  const rankings=rankByTerm(_hrClass,_hrTerm);const honor=rankings.filter(s=>s.avg>=12);
  const cls=DB.classes.find(c=>c.id===_hrClass);const school=schoolOf();const dc=getDocCfg(school);
- const rows=honor.map((s,i)=>`<tr style="${i%2?'background:#f9fafb':''}"><td style="text-align:center">${s.rank===1?'🥇':s.rank===2?'🥈':s.rank===3?'🥉':'#'+s.rank}</td><td><strong>${esc(s.firstName)} ${esc(s.name)}</strong></td><td style="text-align:center;font-weight:700">${s.avg.toFixed(2)}/20</td><td>${getMention(s.avg).l}</td><td>${s.avg>=16?t('excellenceLbl'):s.avg>=14?t('congratsLbl'):t('encouragementLbl')}</td></tr>`).join('');
+ const color=dc.bulletinColor||'#1a3a6c';
+ const principal=school?DB.users.find(u=>u.id===school.principalId):null;
+ const classTeacher=DB.users.find(u=>u.id===cls?.teacherId);
+ const rows=honor.map((s,i)=>{
+  const isTop3=s.rank<=3;
+  const medal=s.rank===1?'🥇':s.rank===2?'🥈':s.rank===3?'🥉':null;
+  const distinction=s.avg>=16?t('excellenceLbl'):s.avg>=14?t('congratsLbl'):t('encouragementLbl');
+  return`<tr style="${i%2?'background:#faf7ee':'background:#fff'}${isTop3?';font-size:12.5px':''}">
+   <td style="text-align:center;font-weight:800;color:${isTop3?color:'#555'};font-size:${isTop3?'15px':'12px'}">${medal||'#'+s.rank}</td>
+   <td style="font-weight:${isTop3?'800':'600'}">${esc(s.firstName)} ${esc(s.name)}</td>
+   <td style="text-align:center;font-weight:800;color:${color}">${s.avg.toFixed(2)}<span style="font-weight:400;color:#999;font-size:10px">/20</span></td>
+   <td style="text-align:center"><span style="background:${s.avg>=16?'#d1fae5':s.avg>=14?'#dbeafe':'#fef3c7'};color:${s.avg>=16?'#047857':s.avg>=14?'#1d4ed8':'#92400e'};padding:3px 10px;border-radius:12px;font-size:10.5px;font-weight:700">${getMention(s.avg).l}</span></td>
+   <td style="text-align:center;font-style:italic;color:#666;font-size:11px">${distinction}</td>
+  </tr>`;
+ }).join('');
  const w=window.open('','_blank');
- w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${t('honorTableTitle')}</title><style>*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}body{font-family:'Times New Roman',serif;font-size:12px;margin:0;padding:14px}table{width:100%;border-collapse:collapse}th{background:#1a3a6c!important;color:#fff!important;padding:8px;font-size:11px;border:1px solid #ccc}td{border:1px solid #ddd;padding:7px}@media print{@page{size:A4;margin:.8cm}}</style></head><body>
- <div style="text-align:center;margin-bottom:12px;border-bottom:2px solid #1a3a6c;padding-bottom:9px">
-  ${school?.logo&&dc.showLogo?`<img src="${school.logo}" style="width:50px;height:50px;object-fit:contain;margin-bottom:5px"><br>`:''}
-  <div style="font-size:15px;font-weight:bold;color:#1a3a6c">${esc(school?.name||'')}</div>
-  <div style="font-size:13px">🏆 ${t('honorTableTitle')} - ${esc(cls?.name||'')} - ${termLbl(_hrTerm)}</div>
-  <div style="font-size:11px;margin-top:3px">${honor.length} ${t('honoredCountLbl')} - ${t('year')}</div>
+ w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${t('honorTableTitle')}</title><style>
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;box-sizing:border-box}
+  body{font-family:'Times New Roman',serif;margin:0;padding:0;background:#fff}
+  .frame{border:3px double ${color};border-radius:6px;margin:14px;padding:0;position:relative;min-height:calc(100vh - 28px)}
+  .frame::before{content:'';position:absolute;inset:8px;border:1px solid ${color};opacity:.35;border-radius:4px;pointer-events:none}
+  .band{background:linear-gradient(135deg,${color},${color}dd);padding:22px 30px 26px;text-align:center;position:relative}
+  .band .crown{font-size:30px;margin-bottom:4px}
+  .band .schname{color:#fff;font-size:14px;letter-spacing:1px;opacity:.9;margin-bottom:2px}
+  .band .maintitle{color:#fff;font-size:28px;font-weight:900;letter-spacing:4px;text-transform:uppercase;margin:6px 0 4px}
+  .band .sub{color:#f0c040;font-size:13px;letter-spacing:2px;text-transform:uppercase;font-weight:700}
+  .meta{display:flex;justify-content:center;gap:26px;padding:12px 20px;font-size:11.5px;color:#555;border-bottom:1px solid #eee}
+  .meta b{color:${color}}
+  .content{padding:16px 34px 10px}
+  table{width:100%;border-collapse:collapse}
+  th{background:#f5f1e6;color:${color};font-size:10.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:9px 10px;text-align:left;border-bottom:2px solid ${color}}
+  td{padding:8px 10px;border-bottom:1px solid #eee}
+  .sigs{display:flex;justify-content:space-around;padding:26px 40px 10px;margin-top:auto}
+  .sig{text-align:center;font-size:11px;min-width:180px}
+  .sig .line{border-top:1px solid #333;margin-top:36px;padding-top:5px}
+  @media print{@page{size:A4 landscape;margin:0}}
+ </style></head><body>
+ <div class="frame">
+  <div class="band">
+   <div class="crown">🏆</div>
+   ${school?.logo&&dc.showLogo?`<img src="${school.logo}" style="width:36px;height:36px;object-fit:contain;margin-bottom:6px">`:''}
+   <div class="schname">${esc(school?.name||'')}</div>
+   <div class="maintitle">${t('honorTableTitle')}</div>
+   <div class="sub">${esc(cls?.name||'')} — ${termLbl(_hrTerm)}</div>
+  </div>
+  <div class="meta">
+   <span>${honor.length} ${t('honoredCountLbl')}</span>
+   <span><b>${t('year')}</b></span>
+   <span>${esc(school?.city||'')}</span>
+  </div>
+  <div class="content">
+   <table><thead><tr><th style="width:70px;text-align:center">${t('rankLbl')}</th><th>${t('fullnameCol')}</th><th style="width:100px;text-align:center">${t('avgOn20Lbl')}</th><th style="width:140px;text-align:center">${t('mentionLbl')}</th><th style="width:150px;text-align:center">${t('distinctionColHdr')}</th></tr></thead><tbody>${rows}</tbody></table>
+  </div>
+  <div class="sigs">
+   <div class="sig"><div class="line">${esc(dc.signTitle1||t('sigteacher'))}</div></div>
+   <div class="sig"><div class="line">${esc(dc.signTitle2||t('sigprincipal'))}</div></div>
+  </div>
  </div>
- <table><thead><tr><th>${t('rankLbl')}</th><th>${t('fullnameCol')}</th><th>${t('avgOn20Lbl')}</th><th>${t('mentionLbl')}</th><th>${t('distinctionColHdr')}</th></tr></thead><tbody>${rows}</tbody></table>
- ${printFooter()}<script>window.onload=()=>setTimeout(()=>window.print(),300)<\/script></body></html>`);
+ <script>window.onload=()=>setTimeout(()=>window.print(),300)<\/script></body></html>`);
  w.document.close();
 }
 
