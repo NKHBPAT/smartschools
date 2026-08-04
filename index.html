@@ -191,7 +191,7 @@ select.fc{cursor:pointer}textarea.fc{resize:vertical;min-height:72px}
 @media(max-width:768px){
  :root{--sw:0px;--fbase:13px}
  .sb{transform:translateX(-268px);width:268px}.sb.open{transform:translateX(0)}
- .main{margin-left:0}#sb-toggle{display:flex}
+ .main{margin-left:0}body.logged-in #sb-toggle{display:flex}
  .fr,.fr3{grid-template-columns:1fr}
  .srow{grid-template-columns:1fr 1fr}
  .tbar{padding:0 13px 0 54px}
@@ -264,9 +264,12 @@ select.fc{cursor:pointer}textarea.fc{resize:vertical;min-height:72px}
 <main id="page-login" role="main">
 
  <nav class="landing-nav">
-  <div>
-   <div class="landing-brand">Smart<em>School</em></div>
-   <div class="landing-nav-tag">Solution Tech Inter</div>
+  <div style="display:flex;align-items:center;gap:10px">
+   <img src="assets/logo.png" alt="SmartSchool" style="height:38px;width:auto">
+   <div>
+    <div class="landing-brand">Smart<em>School</em></div>
+    <div class="landing-nav-tag">Solution Tech Inter</div>
+   </div>
   </div>
  </nav>
 
@@ -281,9 +284,9 @@ select.fc{cursor:pointer}textarea.fc{resize:vertical;min-height:72px}
    <input class="fi" type="password" id="inp-pw" autocomplete="current-password" required>
    <button class="btn-login" type="submit" id="btnl">Se connecter</button>
    <div class="ll-langs" role="group" aria-label="Langue">
-    <button class="ll-lb active" onclick="setLang('fr')" aria-pressed="true">🇫🇷 FR</button>
-    <button class="ll-lb" onclick="setLang('en')" aria-pressed="false">🇬🇧 EN</button>
-    <button class="ll-lb" onclick="setLang('es')" aria-pressed="false">🇪🇸 ES</button>
+    <button type="button" class="ll-lb active" onclick="setLang('fr')" aria-pressed="true">🇫🇷 FR</button>
+    <button type="button" class="ll-lb" onclick="setLang('en')" aria-pressed="false">🇬🇧 EN</button>
+    <button type="button" class="ll-lb" onclick="setLang('es')" aria-pressed="false">🇪🇸 ES</button>
    </div>
    <div class="dsect" style="display:none">
     <div class="dlbl" id="demo-lbl">Comptes de démonstration</div>
@@ -298,49 +301,29 @@ select.fc{cursor:pointer}textarea.fc{resize:vertical;min-height:72px}
  </div>
 
  <section class="landing-hero">
-  <div class="landing-wrap">
-   <h1>L'avenir de votre école <span class="hero-strong">commence aujourd'hui</span></h1>
-   <p>Chaque année, les établissements scolaires font face aux mêmes contraintes : dossiers administratifs qui s'accumulent, bulletins qui prennent des semaines à produire, parents en attente d'informations, enseignants qui consacrent un temps précieux à des tâches répétitives.</p>
-   <p><strong style="color:#fff">SmartSchool n'est pas un simple logiciel de gestion scolaire. C'est une nouvelle façon de diriger un établissement.</strong></p>
-   <p>Imaginez une école où les résultats sont publiés en quelques secondes, où les parents suivent la scolarité de leurs enfants en temps réel, où chaque décision s'appuie sur des données fiables, accessibles à tout moment.</p>
-  </div>
+  <div class="landing-wrap" id="landing-hero-content"></div>
  </section>
 
  <section class="landing-section">
-  <div class="landing-wrap">
-   <h2>Ce que SmartSchool vous apporte</h2>
-   <p class="sec-sub">Une plateforme complète pour gérer votre établissement, du premier jour d'école au dernier bulletin.</p>
-   <div class="feat-grid">
-    <div class="feat-card"><div class="fic">✨</div><h3>Inscriptions & dossiers</h3><p>Gérez les inscriptions et les dossiers scolaires en toute simplicité, du dossier papier à la fiche numérique.</p></div>
-    <div class="feat-card"><div class="fic">📊</div><h3>Notes & bulletins</h3><p>Publiez notes, bulletins et relevés de résultats en quelques clics, avec calcul automatique des moyennes et rangs.</p></div>
-    <div class="feat-card"><div class="fic">👨‍🏫</div><h3>Organisation pédagogique</h3><p>Organisez classes, emplois du temps, matières et enseignants sur une seule plateforme centralisée.</p></div>
-    <div class="feat-card"><div class="fic">📱</div><h3>Communication instantanée</h3><p>Informez immédiatement les parents grâce aux notifications SMS et à la messagerie intégrée.</p></div>
-    <div class="feat-card"><div class="fic">🔒</div><h3>Sécurité des données</h3><p>Protégez les données de votre établissement sur une plateforme sécurisée et fiable.</p></div>
-    <div class="feat-card"><div class="fic">📈</div><h3>Tableaux de bord</h3><p>Suivez les performances de votre école grâce à des statistiques et synthèses claires et détaillées.</p></div>
-    <div class="feat-card"><div class="fic">☁️</div><h3>Accès partout</h3><p>Accédez à votre établissement où que vous soyez, depuis un ordinateur, une tablette ou un smartphone.</p></div>
-   </div>
-  </div>
+  <div class="landing-wrap" id="landing-features-content"></div>
  </section>
 
  <section class="landing-why">
-  <div class="landing-wrap">
-   <h2>Plus qu'une plateforme, un partenaire pour votre réussite</h2>
-   <p>Chez SmartSchool, nous croyons qu'un chef d'établissement ne devrait pas consacrer son énergie à la paperasse, mais à ce qui compte réellement : la qualité de l'enseignement et la réussite de ses élèves. C'est pourquoi nous avons conçu une plateforme intuitive, rapide et évolutive, adaptée aussi bien à une petite école qu'à un grand complexe scolaire.</p>
-  </div>
+  <div class="landing-wrap" id="landing-why-content"></div>
  </section>
 
  <section class="landing-contact">
-  <div class="landing-wrap">
-   <h2>Demandez votre démonstration dès aujourd'hui</h2>
-   <p>Offrez à votre établissement l'image d'une institution innovante et tournée vers l'avenir.</p>
-   <div class="contact-row">
-    <a href="tel:+237677947690">📞 +237 677 947 690 / 696 503 130</a>
-    <a href="mailto:hermanbruce50@gmail.com">📧 hermanbruce50@gmail.com</a>
-   </div>
-  </div>
+  <div class="landing-wrap" id="landing-contact-content"></div>
  </section>
 
- <footer class="landing-footer">SmartSchool — La technologie au service de l'excellence éducative.</footer>
+ <footer class="landing-footer">
+  <div style="margin-bottom:10px;font-size:13px;color:rgba(255,255,255,.75)" id="landing-follow-lbl">Suivez-nous !</div>
+  <div style="display:flex;justify-content:center;gap:14px;margin-bottom:14px">
+   <a href="https://www.facebook.com/profile.php?id=61586803858823&mibextid=wwXIfr&mibextid=wwXIfr" target="_blank" rel="noopener" style="color:var(--gold-lt);text-decoration:none;font-size:20px" aria-label="Facebook">📘</a>
+  </div>
+  <div id="landing-copy-txt">SmartSchool — La technologie au service de l'excellence éducative.</div>
+  <div style="margin-top:6px;font-size:11px;color:rgba(255,255,255,.4)">© <span id="landing-year"></span> SmartSchool — Solution Tech Inter. Tous droits reserves.</div>
+ </footer>
 
 </main>
 
@@ -588,6 +571,22 @@ fr:{
  selectStudentDash:'-- Élève --',selectClassNoDash:'-- Selectionner une classe --',
  wholeSchoolDash:'-- Tout l\'etablissement --',allClassesDash2:'-- Toutes classes --',
  svgTitleLbl:'Le Surveillant General',
+ landHeroH1a:'L\'avenir de votre école',landHeroH1b:'commence aujourd\'hui',
+ landHeroP1:'Chaque année, les établissements scolaires font face aux mêmes contraintes : dossiers administratifs qui s\'accumulent, bulletins qui prennent des semaines à produire, parents en attente d\'informations, enseignants qui consacrent un temps précieux à des tâches répétitives.',
+ landHeroP2:'SmartSchool n\'est pas un simple logiciel de gestion scolaire. C\'est une nouvelle façon de diriger un établissement.',
+ landHeroP3:'Imaginez une école où les résultats sont publiés en quelques secondes, où les parents suivent la scolarité de leurs enfants en temps réel, où chaque décision s\'appuie sur des données fiables, accessibles à tout moment.',
+ landFeatH2:'Ce que SmartSchool vous apporte',landFeatSub:'Une plateforme complète pour gérer votre établissement, du premier jour d\'école au dernier bulletin.',
+ landFeat1T:'Inscriptions & dossiers',landFeat1D:'Gérez les inscriptions et les dossiers scolaires en toute simplicité, du dossier papier à la fiche numérique.',
+ landFeat2T:'Notes & bulletins',landFeat2D:'Publiez notes, bulletins et relevés de résultats en quelques clics, avec calcul automatique des moyennes et rangs.',
+ landFeat3T:'Organisation pédagogique',landFeat3D:'Organisez classes, emplois du temps, matières et enseignants sur une seule plateforme centralisée.',
+ landFeat4T:'Communication instantanée',landFeat4D:'Informez immédiatement les parents grâce aux notifications SMS et à la messagerie intégrée.',
+ landFeat5T:'Sécurité des données',landFeat5D:'Protégez les données de votre établissement sur une plateforme sécurisée et fiable.',
+ landFeat6T:'Tableaux de bord',landFeat6D:'Suivez les performances de votre école grâce à des statistiques et synthèses claires et détaillées.',
+ landFeat7T:'Accès partout',landFeat7D:'Accédez à votre établissement où que vous soyez, depuis un ordinateur, une tablette ou un smartphone.',
+ landWhyH2:'Plus qu\'une plateforme, un partenaire pour votre réussite',
+ landWhyP:'Chez SmartSchool, nous croyons qu\'un chef d\'établissement ne devrait pas consacrer son énergie à la paperasse, mais à ce qui compte réellement : la qualité de l\'enseignement et la réussite de ses élèves. C\'est pourquoi nous avons conçu une plateforme intuitive, rapide et évolutive, adaptée aussi bien à une petite école qu\'à un grand complexe scolaire.',
+ landContactH2:'Demandez votre démonstration dès aujourd\'hui',landContactP:'Offrez à votre établissement l\'image d\'une institution innovante et tournée vers l\'avenir.',
+ landFollowUs:'Suivez-nous !',landCopyTagline:'SmartSchool — La technologie au service de l\'excellence éducative.',
  dcSchoolToConfig:'Établissement a configurer',dcSelectSchool:'Selectionnez un etablissement.',
  dcStudentInfo:'📄 Informations elève',dcBulletinContent:'📊 Contenu bulletin',
  dcColorsLabels:'🎨 Couleurs & Labels',dcGroupLabels:'🏷 Labels des groupes',
@@ -736,6 +735,22 @@ en:{
  selectStudentDash:'-- Student --',selectClassNoDash:'-- Select a class --',
  wholeSchoolDash:'-- Whole school --',allClassesDash2:'-- All classes --',
  svgTitleLbl:'The Head Prefect',
+ landHeroH1a:'The future of your school',landHeroH1b:'starts today',
+ landHeroP1:'Every year, schools face the same challenges: piling paperwork, report cards that take weeks to produce, parents waiting for information, and teachers spending precious time on repetitive tasks.',
+ landHeroP2:'SmartSchool is not just school management software. It\'s a new way to run an institution.',
+ landHeroP3:'Imagine a school where results are published in seconds, where parents follow their children\'s progress in real time, and where every decision relies on reliable data, accessible anytime.',
+ landFeatH2:'What SmartSchool brings you',landFeatSub:'A complete platform to manage your school, from the first day of class to the last report card.',
+ landFeat1T:'Enrollment & Records',landFeat1D:'Manage enrollments and student records with ease, from paper files to digital profiles.',
+ landFeat2T:'Grades & Report Cards',landFeat2D:'Publish grades, report cards and transcripts in a few clicks, with automatic averages and rankings.',
+ landFeat3T:'Academic Organization',landFeat3D:'Organize classes, timetables, subjects and teachers on one centralized platform.',
+ landFeat4T:'Instant Communication',landFeat4D:'Notify parents immediately through SMS notifications and built-in messaging.',
+ landFeat5T:'Data Security',landFeat5D:'Protect your school\'s data on a secure and reliable platform.',
+ landFeat6T:'Dashboards',landFeat6D:'Track your school\'s performance with clear, detailed statistics and summaries.',
+ landFeat7T:'Access Anywhere',landFeat7D:'Access your school wherever you are, from a computer, tablet or smartphone.',
+ landWhyH2:'More than a platform, a partner for your success',
+ landWhyP:'At SmartSchool, we believe a school principal shouldn\'t spend their energy on paperwork, but on what truly matters: the quality of teaching and student success. That\'s why we built an intuitive, fast, and scalable platform, suited to both a small school and a large school complex.',
+ landContactH2:'Request your demo today',landContactP:'Give your school the image of an innovative institution, ready for the future.',
+ landFollowUs:'Follow us!',landCopyTagline:'SmartSchool — Technology serving educational excellence.',
  dcSchoolToConfig:'School to configure',dcSelectSchool:'Select a school.',
  dcStudentInfo:'📄 Student Information',dcBulletinContent:'📊 Report Card Content',
  dcColorsLabels:'🎨 Colors & Labels',dcGroupLabels:'🏷 Group Labels',
@@ -884,6 +899,22 @@ es:{
  noSmsEmpty:'📭 Ningún SMS enviado',certIndivBtn:'🖨 Certificado individual',
  selectStudentDash:'-- Alumno --',selectClassNoDash:'-- Seleccionar una clase --',
  svgTitleLbl:'El Vigilante General',
+ landHeroH1a:'El futuro de su escuela',landHeroH1b:'comienza hoy',
+ landHeroP1:'Cada año, las instituciones educativas enfrentan los mismos retos: papeleo administrativo acumulado, boletines que tardan semanas en prepararse, padres a la espera de información, y docentes que dedican tiempo valioso a tareas repetitivas.',
+ landHeroP2:'SmartSchool no es solo un software de gestión escolar. Es una nueva forma de dirigir una institución.',
+ landHeroP3:'Imagine una escuela donde los resultados se publican en segundos, donde los padres siguen el progreso de sus hijos en tiempo real, y donde cada decisión se basa en datos confiables, accesibles en todo momento.',
+ landFeatH2:'Lo que SmartSchool le ofrece',landFeatSub:'Una plataforma completa para gestionar su institución, desde el primer día de clases hasta el último boletín.',
+ landFeat1T:'Inscripciones y expedientes',landFeat1D:'Gestione las inscripciones y los expedientes escolares con facilidad, del papel al perfil digital.',
+ landFeat2T:'Notas y boletines',landFeat2D:'Publique notas, boletines y actas de resultados en unos clics, con cálculo automático de promedios y rangos.',
+ landFeat3T:'Organización académica',landFeat3D:'Organice clases, horarios, materias y docentes en una sola plataforma centralizada.',
+ landFeat4T:'Comunicación instantánea',landFeat4D:'Informe de inmediato a los padres mediante notificaciones SMS y mensajería integrada.',
+ landFeat5T:'Seguridad de datos',landFeat5D:'Proteja los datos de su institución en una plataforma segura y confiable.',
+ landFeat6T:'Paneles de control',landFeat6D:'Siga el rendimiento de su institución con estadísticas y síntesis claras y detalladas.',
+ landFeat7T:'Acceso desde cualquier lugar',landFeat7D:'Acceda a su institución donde esté, desde una computadora, tableta o smartphone.',
+ landWhyH2:'Más que una plataforma, un socio para su éxito',
+ landWhyP:'En SmartSchool, creemos que un director no debería dedicar su energía al papeleo, sino a lo que realmente importa: la calidad de la enseñanza y el éxito de sus alumnos. Por eso diseñamos una plataforma intuitiva, rápida y escalable, adecuada tanto para una pequeña escuela como para un gran complejo educativo.',
+ landContactH2:'Solicite su demostración hoy mismo',landContactP:'Ofrezca a su institución la imagen de una entidad innovadora y orientada al futuro.',
+ landFollowUs:'¡Síganos!',landCopyTagline:'SmartSchool — La tecnología al servicio de la excelencia educativa.',
  dcSchoolToConfig:'Institución a configurar',dcSelectSchool:'Seleccione una institución.',
  dcStudentInfo:'📄 Información del alumno',dcBulletinContent:'📊 Contenido del boletín',
  dcColorsLabels:'🎨 Colores y Etiquetas',dcGroupLabels:'🏷 Etiquetas de grupos',
@@ -1750,6 +1781,26 @@ function printFooter(){const now=new Date();return`<div style="border-top:1px so
 function fmtDate(dt){try{return new Date(dt).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});}catch(e){return dt||'-';}}
 function getDocCfg(school){const def=defaultDocConfig();return{...def,...(school?.docConfig||{})};}
 
+function renderLanding(){
+ const hc=document.getElementById('landing-hero-content');
+ if(hc)hc.innerHTML=`<h1>${t('landHeroH1a')} <span class="hero-strong">${t('landHeroH1b')}</span></h1>
+  <p>${t('landHeroP1')}</p>
+  <p><strong style="color:#fff">${t('landHeroP2')}</strong></p>
+  <p>${t('landHeroP3')}</p>`;
+ const fc=document.getElementById('landing-features-content');
+ if(fc){
+  const feats=[['✨','landFeat1T','landFeat1D'],['📊','landFeat2T','landFeat2D'],['👨‍🏫','landFeat3T','landFeat3D'],['📱','landFeat4T','landFeat4D'],['🔒','landFeat5T','landFeat5D'],['📈','landFeat6T','landFeat6D'],['☁️','landFeat7T','landFeat7D']];
+  fc.innerHTML=`<h2>${t('landFeatH2')}</h2><p class="sec-sub">${t('landFeatSub')}</p>
+   <div class="feat-grid">${feats.map(f=>`<div class="feat-card"><div class="fic">${f[0]}</div><h3>${t(f[1])}</h3><p>${t(f[2])}</p></div>`).join('')}</div>`;
+ }
+ const wc=document.getElementById('landing-why-content');
+ if(wc)wc.innerHTML=`<h2>${t('landWhyH2')}</h2><p>${t('landWhyP')}</p>`;
+ const cc=document.getElementById('landing-contact-content');
+ if(cc)cc.innerHTML=`<h2>${t('landContactH2')}</h2><p>${t('landContactP')}</p>
+  <div class="contact-row"><a href="tel:+237677947690">📞 +237 677 947 690 / 696 503 130</a><a href="mailto:hermanbruce50@gmail.com">📧 hermanbruce50@gmail.com</a></div>`;
+ const flw=document.getElementById('landing-follow-lbl');if(flw)flw.textContent=t('landFollowUs');
+ const cpy=document.getElementById('landing-copy-txt');if(cpy)cpy.textContent=t('landCopyTagline');
+}
 /* ===== LANGUAGE ===== */
 function setLang(l){
  lang=l;
@@ -1762,7 +1813,7 @@ function setLang(l){
   'btn-lo-txt':'↩ '+t('logout')
  };
  Object.entries(updates).forEach(([id,v])=>{const el=document.getElementById(id);if(el)el.textContent=v;});
- if(CU)renderCV();
+ if(CU)renderCV();else renderLanding();
 }
 
 /* ===== AUTH ===== */
@@ -1789,6 +1840,7 @@ async function doLogin(){
   err.style.display='none';
   document.getElementById('page-login').style.display='none';
   document.getElementById('app').classList.add('on');
+  document.body.classList.add('logged-in');
   const ini=(CU.name||'U').split(' ').map(x=>x[0]).join('').substring(0,2).toUpperCase();
   document.getElementById('uav').textContent=ini;
   document.getElementById('uname').textContent=CU.name;
@@ -1816,9 +1868,10 @@ async function doLogout(){
  clearInterval(window._msgInterval);
  CU=null;
  document.getElementById('app').classList.remove('on');
- document.getElementById('page-login').style.display='flex';
+ document.getElementById('page-login').style.display='block';
  document.getElementById('inp-em').value='';document.getElementById('inp-pw').value='';
  document.title='SmartSchool — Solution Tech Inter';
+ document.body.classList.remove('logged-in');
 }
 
 /* ===== NAV ===== */
@@ -3845,6 +3898,7 @@ window.addEventListener('DOMContentLoaded',()=>{
  document.getElementById('inp-pw').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
  document.getElementById('inp-em').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('inp-pw').focus();});
  setLang('fr');
+ const yEl=document.getElementById('landing-year');if(yEl)yEl.textContent=new Date().getFullYear();
  // Show app version
  console.log('%cSmartSchool - Production Mode','color:#1a3a6c;font-weight:bold;font-size:13px');
  console.log('%cAPI:', 'color:#059669;font-weight:bold', API_BASE);
