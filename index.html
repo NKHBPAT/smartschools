@@ -1766,7 +1766,27 @@ const schoolName=id=>DB.schools.find(s=>s.id===id)?.name||'-';
 const typeLbl=tp=>({primaire:'Primaire',college:'Collège',lycee:'Lycee',lycee_tech:'Lycee Tech.',college_tech:'Collège Tech.'}[tp]||tp);
 const typeBd=tp=>({primaire:'bblue',college:'bnavy',lycee:'bpur',lycee_tech:'borange',college_tech:'bteal'}[tp]||'bgray');
 const sb=(i,v,l,bg,cl)=>`<div class="sbox"><div class="sico" style="background:${bg};color:${cl}">${i}</div><div><div class="snum">${v}</div><div class="slbl">${l}</div></div></div>`;
-const empty=msg=>`<div style="text-align:center;padding:34px 16px;color:var(--muted)"><div style="font-size:34px;margin-bottom:9px">📭</div><p style="font-size:13.5px">${msg||t('nodata')}</p></div>`;
+
+function buildBarChart(dist,total){
+ const maxV=Math.max(...dist.map(d=>d.n),1);
+ const w=600,h=230,barW=76,gap=20,baseY=h-46,chartTop=24;
+ const startX=(w-(dist.length*barW+(dist.length-1)*gap))/2;
+ const bars=dist.map((d,i)=>{
+  const bh=total?Math.max((d.n/maxV)*(baseY-chartTop),d.n>0?4:0):0;
+  const x=startX+i*(barW+gap);const y=baseY-bh;
+  const pct=total?Math.round(d.n/total*100):0;
+  return`<g>
+   <rect x="${x}" y="${y}" width="${barW}" height="${bh}" fill="${d.c}" rx="5"/>
+   ${d.n>0?`<text x="${x+barW/2}" y="${y-8}" text-anchor="middle" font-size="15" font-weight="800" fill="${d.c}" font-family="Nunito,sans-serif">${d.n}</text>`:''}
+   <text x="${x+barW/2}" y="${baseY+18}" text-anchor="middle" font-size="10.5" fill="#5a6a7e" font-family="Nunito,sans-serif" font-weight="700">${d.l}</text>
+   <text x="${x+barW/2}" y="${baseY+32}" text-anchor="middle" font-size="9.5" fill="#94a3b8" font-family="Nunito,sans-serif">${pct}%</text>
+  </g>`;
+ }).join('');
+ return`<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:auto;max-width:620px;display:block;margin:0 auto">
+  <line x1="16" y1="${baseY}" x2="${w-16}" y2="${baseY}" stroke="#e2e8f0" stroke-width="1.5"/>
+  ${bars}
+ </svg>`;
+}const empty=msg=>`<div style="text-align:center;padding:34px 16px;color:var(--muted)"><div style="font-size:34px;margin-bottom:9px">📭</div><p style="font-size:13.5px">${msg||t('nodata')}</p></div>`;
 const bd=(l,c)=>`<span class="bd ${c}">${l}</span>`;
 function getMention(a){if(a>=16)return{l:t('excellent'),c:'bgreen'};if(a>=14)return{l:t('verygood'),c:'bblue'};if(a>=12)return{l:t('good'),c:'bnavy'};if(a>=10)return{l:t('fairgood'),c:'bgold'};return{l:t('fail'),c:'bred'};}
 function getApp(a){if(a===null||a===undefined)return{l:'-',c:'bgray',cls:''};if(a>=14)return{l:t('apprAcq'),c:'bgreen',cls:'acq'};if(a>=10)return{l:t('apprCours'),c:'bgold',cls:'enc'};return{l:t('apprNon'),c:'bred',cls:'non'};}
@@ -3317,7 +3337,10 @@ function buildSynContent(school,cls,dc){
   ${sb('📊',total,t('totalStudentsLbl'),'#eff6ff','#2563eb')}${sb('📝',notees,t('grades'),'#fdf4ff','#9333ea')}${sb('✅',admitted,t('admittedGeLbl'),'#f0fdf4','#16a34a')}${sb('🏆',honor,t('honorGeLbl'),'#fffbeb','#d97706')}${sb('❌',rankings.filter(r=>r.avg<10).length,t('insuffLtLbl'),'#fef2f2','#dc2626')}${sb('📉',avg.toFixed(2),t('classAvgSlashLbl'),'#fff7ed','#c2410c')}
  </div>
  ${dc.synShowDist!==false?`<div class="card"><div class="ch"><span class="ct2">${t('distMentionsLbl')}</span></div><div class="cb">
-  ${dist.map(d=>`<div class="dist-bar"><div class="dist-label" style="font-size:12.5px">${d.l}</div><div class="dist-track"><div class="dist-fill" style="width:${notees?Math.round(d.n/notees*100):0}%;background:${d.c}">${d.n>0?Math.round(d.n/notees*100)+'%':''}</div></div><div class="dist-n">${d.n}</div></div>`).join('')}
+  ${buildBarChart(dist,notees)}
+ </div></div>`:''}
+ ${dc.synShowDist!==false?`<div class="card"><div class="ch"><span class="ct2">${lang==='en'?'Pass / Honor / Fail Overview':lang==='es'?'Aprobados / Honor / Insuficiente':'Vue Admis / Honneur / Insuffisant'}</span></div><div class="cb">
+  ${buildBarChart([{l:t('admittedGeLbl'),n:admitted,c:'#16a34a'},{l:t('honorGeLbl'),n:honor,c:'#d97706'},{l:t('insuffLtLbl'),n:notees-admitted,c:'#dc2626'}],notees)}
  </div></div>`:''}
  ${dc.synShowStats!==false?`<div class="card"><div class="ch"><span class="ct2">${t('keyStatsLbl')}</span></div><div class="cb">
   ${[[t('classAvgFullLbl'),avg.toFixed(2)+'/20'],[t('maxNoteLbl'),maxA.toFixed(2)+'/20'],[t('minNoteLbl'),minA.toFixed(2)+'/20'],[t('passRateLbl'),notees?Math.round(admitted/notees*100)+'%':'-'],[t('honorRateLbl'),notees?Math.round(honor/notees*100)+'%':'-'],[t('maxMinGapLbl'),(maxA-minA).toFixed(2)]].map(([l,v])=>`<div style="display:flex;justify-content:space-between;padding:6px 10px;background:#f8fafc;border-radius:7px;margin-bottom:5px;font-size:13px"><span>${l}</span><strong>${v}</strong></div>`).join('')}
