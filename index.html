@@ -2631,9 +2631,9 @@ function rCerts(){
  const el=document.getElementById('pg-certs');const school=schoolOf();const cls=clsOf(school?.id||'');
  el.innerHTML=`<div class="ph"><h2>📜 ${t('certs')}</h2></div>
  <div class="card"><div class="ch" style="flex-wrap:wrap;gap:8px">
-  <select class="fc" style="max-width:230px" id="cf-cl" onchange="_cfClass=this.value;_cfSt='';rCerts2()"><option value="">${t('selectClassDash')}</option>${cls.map(c=>`<option value="${c.id}" ${_cfClass===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select>
-  <select class="fc" style="max-width:230px" id="cf-st" onchange="_cfSt=this.value;rCerts2()"><option value="">${t('selectStudentDash')}</option>${(_cfClass?stOf(_cfClass):[]).map(s=>`<option value="${s.id}">${esc(s.firstName+' '+s.name)}</option>`).join('')}</select>
-  <button class="btn btl" ${!_cfSt?'disabled':''} onclick="printCertSingle(_cfSt)">${t('certIndivBtn')}</button>
+  <select class="fc" style="max-width:230px" id="cf-cl" onchange="_cfClass=this.value;_cfSt='';rCerts2();document.getElementById('cf-print-btn').disabled=true;"><option value="">${t('selectClassDash')}</option>${cls.map(c=>`<option value="${c.id}" ${_cfClass===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select>
+  <select class="fc" style="max-width:230px" id="cf-st" onchange="_cfSt=this.value;rCerts2();document.getElementById('cf-print-btn').disabled=!_cfSt;"><option value="">${t('selectStudentDash')}</option>${(_cfClass?stOf(_cfClass):[]).map(s=>`<option value="${s.id}">${esc(s.firstName+' '+s.name)}</option>`).join('')}</select>
+  <button class="btn btl" id="cf-print-btn" ${!_cfSt?'disabled':''} onclick="printCertSingle(_cfSt)">${t('certIndivBtn')}</button>
   ${_cfClass?`<button class="btn bgo" onclick="printAllCerts()">${t('printAllBull')}</button>`:''}
  </div></div>
  <div id="cf-area"></div>`;
