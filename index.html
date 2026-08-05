@@ -1766,6 +1766,8 @@ const schoolName=id=>DB.schools.find(s=>s.id===id)?.name||'-';
 const typeLbl=tp=>({primaire:'Primaire',college:'Collège',lycee:'Lycee',lycee_tech:'Lycee Tech.',college_tech:'Collège Tech.'}[tp]||tp);
 const typeBd=tp=>({primaire:'bblue',college:'bnavy',lycee:'bpur',lycee_tech:'borange',college_tech:'bteal'}[tp]||'bgray');
 const sb=(i,v,l,bg,cl)=>`<div class="sbox"><div class="sico" style="background:${bg};color:${cl}">${i}</div><div><div class="snum">${v}</div><div class="slbl">${l}</div></div></div>`;
+function pageCSS(fmt){return fmt==='landscape'?'@page{size:A4 landscape;margin:.8cm}':'@page{size:A4;margin:.8cm}';}
+const fmtSelect=(id,val)=>`<select class="fc" id="${id}" style="max-width:160px"><option value="portrait" ${val!=='landscape'?'selected':''}>${lang==='en'?'📄 Portrait':lang==='es'?'📄 Vertical':'📄 Portrait'}</option><option value="landscape" ${val==='landscape'?'selected':''}>${lang==='en'?'📄 Landscape':lang==='es'?'📄 Horizontal':'📄 Paysage'}</option></select>`;
 
 function buildBarChart(dist,total){
  const maxV=Math.max(...dist.map(d=>d.n),1);
@@ -3305,7 +3307,7 @@ function rSynthesis(){
  if(isAdmin&&!_synSch)_synSch=school.id;
  const cls=clsOf(school.id);
  const dc=getDocCfg(school);
- el.innerHTML=`<div class="ph"><h2>📈 ${t('synthesis')}</h2>${hasPerm('print_synthesis')?`<button class="btn bgo" onclick="printSynthesis()">${t('printSynthBtn')}</button>`:''}</div>
+ el.innerHTML=`<div class="ph"><h2>📈 ${t('synthesis')}</h2>${hasPerm('print_synthesis')?`<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">${fmtSelect('syn-fmt','portrait')}<button class="btn bgo" onclick="printSynthesis()">${t('printSynthBtn')}</button></div>`:''}</div>
  ${isAdmin?`<div style="margin-bottom:13px"><label class="lab">🏫 ${t('school')}</label><select class="fc" style="max-width:280px" onchange="_synSch=this.value;_synClass='';rSynthesis()">${DB.schools.map(s=>`<option value="${s.id}" ${_synSch===s.id?'selected':''}>${esc(s.name)}</option>`).join('')}</select></div>`:''}
  <div class="tabs">
   <button class="tab ${_synMode==='seq'?'on':''}" onclick="_synMode='seq';rSynthesis()">${t('bySeq')}</button>
@@ -3378,6 +3380,7 @@ function printSynthesis(){
  const label=_synMode==='seq'?seqLbl(_synPeriod):_synMode==='term'?termLbl(_synPeriod):_synMode==='annual'?'Bilan annuel':'Synthèse generale';
  const clsObj=_synClass?DB.classes.find(c=>c.id===_synClass):null;
  const w=window.open('','_blank');
+ const synFmt=document.getElementById('syn-fmt')?.value||'portrait';
  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Synthèse</title><style>
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
   :root{--navy:#1a3a6c;--border:#e2e8f0;--muted:#5a6a7e;--text:#1e293b;--green:#059669;--red:#dc2626;--gold:#d97706;--bg:#eef2f7}
@@ -3400,7 +3403,7 @@ function printSynthesis(){
   .gp{display:inline-block;padding:2px 8px;border-radius:6px;font-size:12.5px;font-weight:700}
   .gex{background:#d1fae5;color:#047857}.ggd{background:#dbeafe;color:#1d4ed8}.gav{background:#fef3c7;color:#92400e}.gfl{background:#fee2e2;color:#dc2626}
   .pbar{height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden;margin-top:2px}.pbf{height:100%;border-radius:4px}
-  @media print{@page{size:A4;margin:.8cm}body{padding:0}}
+ @media print{${pageCSS(synFmt)}body{padding:0}}
  </style></head><body>
  <div style="text-align:center;margin-bottom:14px;border-bottom:2px solid #1a3a6c;padding-bottom:10px">
   ${school?.logo&&dc.showLogo?`<img src="${school.logo}" style="width:45px;height:45px;object-fit:contain;margin-bottom:5px"><br>`:''}
@@ -3438,7 +3441,10 @@ function rStudentList(){
    <div style="margin-bottom:11px"><div style="font-size:12.5px;font-weight:700;color:var(--navy);margin-bottom:7px">${t('columnsLbl')}</div>
     <div style="display:flex;flex-wrap:wrap;gap:5px">${allCols.map(col=>`<label style="display:flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:12.5px"><input type="checkbox" class="lc-col" value="${col.k}" ${defCols.includes(col.k)?'checked':''} style="accent-color:var(--navy)">${col.l}</label>`).join('')}</div>
    </div>
-   <button class="bpr" onclick="printStudentList()">${t('printStdList')}</button>
+   <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+    ${fmtSelect('sl-fmt','portrait')}
+    <button class="bpr" onclick="printStudentList()">${t('printStdList')}</button>
+   </div>
   </div></div>
   <div class="card"><div class="ch"><span class="ct2">${t('previewLbl')} - ${DB.students.filter(s=>s.schoolId===school?.id).length} ${t('studentsCountLbl')}</span></div><div class="cb"><div class="tw"><table>
    <thead><tr><th>${t('numCol')}</th><th>${t('matCol')}</th><th>${t('fullnameCol')}</th><th>${t('genderCol')}</th><th>${t('classCol')}</th><th>${t('dobCol')}</th><th>${t('parentCol')}</th></tr></thead>
@@ -3490,6 +3496,7 @@ function rStudentList(){
     <div id="sln-sb-list" style="display:flex;flex-wrap:wrap;gap:5px"></div>
    </div>
    <div style="display:flex;gap:8px;flex-wrap:wrap">
+    ${fmtSelect('sln-fmt','landscape')}
     <button class="bpr" onclick="printNotesTable()">${t('printListNotesBtn')}</button>
     <button class="btn bo" onclick="previewNotesTable()">${t('previewBtn')}</button>
    </div>
@@ -3628,6 +3635,7 @@ function printNotesTable(){
  const pdLabel={'term1':'Trimestre 1 (Seq.1+2)','term2':'Trimestre 2 (Seq.3+4)','term3':'Trimestre 3 (Seq.5+6)','seq1':'Sequence 1','seq2':'Sequence 2','seq3':'Sequence 3','seq4':'Sequence 4','seq5':'Sequence 5','seq6':'Sequence 6','annual':'Bilan annuel'}[pd]||pd;
  const tableHTML=buildNotesTableHTML(cid,pd,sort,true);
  const w=window.open('','_blank');
+ const slnFmt=document.getElementById('sln-fmt')?.value||'landscape';
  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Liste Notes</title><style>
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
   body{font-family:'Times New Roman',serif;padding:12px;font-size:11px}
@@ -3636,7 +3644,7 @@ function printNotesTable(){
   td{border:1px solid #ddd;padding:3px 5px;font-size:11px}
   .card{margin-bottom:12px}.ch{padding:8px 12px;border-bottom:1px solid #ddd}.cb{padding:10px 12px}
   .ct2{font-size:13px;font-weight:800;color:${color}}.tw{overflow-x:auto}
-  @media print{@page{size:A4 landscape;margin:.7cm}body{padding:0}}
+  @media print{${pageCSS(slnFmt)}body{padding:0}}
  </style></head><body>
  <div style="text-align:center;margin-bottom:12px;border-bottom:2px solid ${color};padding-bottom:8px">
   ${school?.logo&&dc.showLogo?`<img src="${school.logo}" style="width:35px;height:35px;object-fit:contain;vertical-align:middle;margin-right:8px">`:''}
@@ -3664,7 +3672,8 @@ function printStudentList(){
  const usedCols=selCols.filter(k=>colDefs[k]);
  const rows=sts.map((s,i)=>`<tr style="${i%2?'background:#f9fafb':''}"><td>${i+1}</td>${usedCols.map(k=>`<td>${colDefs[k].v(s)}</td>`).join('')}</tr>`).join('');
  const w=window.open('','_blank');
- w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${t('listOfStudentsTitle')}</title><style>*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}body{font-family:sans-serif;font-size:11px;margin:0;padding:12px}table{width:100%;border-collapse:collapse}th{background:#1a3a6c!important;color:#fff!important;padding:6px 7px;font-size:10px;border:1px solid #ccc;text-align:left}td{border:1px solid #ddd;padding:4px 6px}@media print{@page{size:A4;margin:.8cm}}</style></head><body>
+ const slFmt=document.getElementById('sl-fmt')?.value||'portrait';
+ w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${t('listOfStudentsTitle')}</title><style>*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}body{font-family:sans-serif;font-size:11px;margin:0;padding:12px}table{width:100%;border-collapse:collapse}th{background:#1a3a6c!important;color:#fff!important;padding:6px 7px;font-size:10px;border:1px solid #ccc;text-align:left}td{border:1px solid #ddd;padding:4px 6px}@media print{${pageCSS(slFmt)}}</style></head><body>
  <div style="text-align:center;margin-bottom:12px;border-bottom:2px solid #1a3a6c;padding-bottom:9px">
   ${school?.logo&&dc.showLogo?`<img src="${school.logo}" style="width:40px;height:40px;object-fit:contain;margin-bottom:4px"><br>`:''}
   <div style="font-size:14.5px;font-weight:bold;color:#1a3a6c">${esc(school?.name||'')}</div>
