@@ -2145,11 +2145,17 @@ function openUserModal(id){
   <div class="fr"><div class="fg"><label class="lab">${t('phoneSmsLbl')}</label><input class="fc" id="um-ph" value="${esc(u?.phone||'')}"></div>
   <div class="fg"><label class="lab">${t('code')}</label><div style="display:flex;gap:5px"><input class="fc" id="um-cd" value="${esc(u?.accessCode||'')}" style="flex:1"><button class="btn bo bsm" onclick="document.getElementById('um-cd').value=genCode()">🔄</button></div></div></div>
   <div class="fr"><div class="fg"><label class="lab">${t('validYearLbl')}</label><select class="fc" id="um-vy">${[yn,yn+1,yn+2].map(y=>`<option value="${y}" ${u?.validYear==y?'selected':''}>${y}</option>`).join('')}</select></div>
-  <div class="fg" id="um-ch-w" style="display:${u?.role==='parent'?'':'none'}"><label class="lab">IDs enfants (virgule)</label><input class="fc" id="um-ch" value="${esc((u?.childIds||[]).join(','))}"></div></div>
+  <div class="fg" id="um-ch-w" style="display:${u?.role==='parent'?'':'none'}"><label class="lab">${lang==='en'?'Linked children':lang==='es'?'Hijos vinculados':'Enfants rattaches'}</label>
+   <div style="max-height:160px;overflow-y:auto;border:1.5px solid var(--border);border-radius:8px;padding:8px">
+    <div class="sw" style="max-width:none;margin-bottom:7px"><span>🔍</span><input id="um-ch-search" placeholder="${t('search')}" oninput="filterChildOptions()"></div>
+    <div id="um-ch-list">${DB.students.filter(s=>!u||!isAdmin||s.schoolId===(document.getElementById('um-sc')?.value||CU.schoolId)).map(s=>`<label class="perm-item" style="margin-bottom:3px" data-name="${esc((s.firstName+' '+s.name).toLowerCase())}"><input type="checkbox" class="um-ch-cb" value="${s.id}" ${(u?.childIds||[]).includes(s.id)?'checked':''}><span>${esc(s.firstName)} ${esc(s.name)} — ${esc(className(s.classId))}</span></label>`).join('')}</div>
+   </div>
+  </div></div>
  `,`<button class="btn bo" onclick="closeModal()">${t('cancel')}</button><button class="btn bp" onclick="saveUser('${id||''}')">💾 ${t('save')}</button>`,'mlg');
  toggleUExtra();
 }
 function toggleUExtra(){const r=document.getElementById('um-r')?.value;if(document.getElementById('um-sc-w'))document.getElementById('um-sc-w').style.display=r==='admin'?'none':'';if(document.getElementById('um-ch-w'))document.getElementById('um-ch-w').style.display=r==='parent'?'':'none';}
+function filterChildOptions(){const q=(document.getElementById('um-ch-search')?.value||'').toLowerCase();document.querySelectorAll('#um-ch-list label').forEach(l=>{l.style.display=l.dataset.name.includes(q)?'':'none';});}
 async function saveUser(id){
  const n=sanitize(document.getElementById('um-n').value),e=sanitize(document.getElementById('um-e').value);
  const p=document.getElementById('um-p').value;const r=document.getElementById('um-r')?.value||'teacher';
@@ -2160,7 +2166,7 @@ async function saveUser(id){
  const ph=sanitize(document.getElementById('um-ph')?.value||'');
  const body={name:n,email:e,role:r,school_id:sc||null,access_code:cd,valid_year:vy,phone:ph};
  if(p)body.password=p;
- if(r==='parent'){const ch=document.getElementById('um-ch');if(ch)body.child_ids=ch.value.split(',').map(x=>x.trim()).filter(Boolean);}
+ if(r==='parent'){body.child_ids=[...document.querySelectorAll('.um-ch-cb:checked')].map(el=>el.value);}
  let res;
  if(id){res=await apiPut('/users/'+id,body);}
  else{if(!p){alert('Mot de passe requis pour un nouvel utilisateur');return;}res=await apiPost('/users',body);}
