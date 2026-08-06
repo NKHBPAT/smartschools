@@ -1537,7 +1537,7 @@ function defaultDocConfig(){return{
  bulletinColor:'#1a3a6c',headerBg:'#1a3a6c',
  grpSciLabel:'Groupe Scientifique',grpLitLabel:'Groupe Litteraire',grpCompLabel:'Groupe Complementaire',
  grpGenLabel:'Enseignements Generaux',grpTechLabel:'Enseignements Techniques',grpProLabel:'Enseignements Complementaires',
- customHeader:'',certHeader:'',footerNote:'',signTitle1:'Le Professeur Principal',signTitle2:'Le Chef d\'Établissement',
+ customHeader:'',certHeader:'',synHeader:'',footerNote:'',signTitle1:'Le Professeur Principal',signTitle2:'Le Chef d\'Établissement',
  listColumns:['mat','name','gender','class','dob','pob','parent','phone'],
  // Extra fields for bulletins (custom rows)
  extraBulletinFields:[],
@@ -1812,6 +1812,11 @@ function buildGroupedBarChart(cats,aLabel,aColor,bLabel,bColor){
   <span><span style="display:inline-block;width:11px;height:11px;background:${bColor};border-radius:2px;margin-right:5px;vertical-align:middle"></span>${bLabel}</span>
  </div>`;
 }
+function ordinalLbl(n){
+ if(lang==='en')return n===1?'1st':n===2?'2nd':n===3?'3rd':n+'th';
+ if(lang==='es')return n+'º';
+ return n===1?'1er':n+'e';
+}
 function buildActaClassHTML(cid,mode,period,school,dc){
  const cls=DB.classes.find(c=>c.id===cid);const sbs=sbOf(cid);const sts=stOf(cid);
  const color=dc.bulletinColor||'#1a3a6c';
@@ -1824,9 +1829,8 @@ function buildActaClassHTML(cid,mode,period,school,dc){
  const globalAvg=rankings.length?(rankings.reduce((s,r)=>s+r.avg,0)/rankings.length):null;
  const passRate=totalN?Math.round(totalPassed/totalN*100):null;
  const subjRows=subjStats.map(x=>`<tr><td>${esc(x.name)}</td><td style="text-align:center">${x.n||'—'}</td><td style="text-align:center;font-weight:700;color:${x.avg!==null?color:'#999'}">${x.avg!==null?x.avg.toFixed(2):'—'}</td><td style="text-align:center;color:#059669;font-weight:700">${x.passed||0}</td><td style="text-align:center;color:#dc2626;font-weight:700">${x.n?x.failed:0}</td><td style="text-align:center">${x.pct!==null?x.pct+'%':'—'}</td></tr>`).join('');
- const medalIcon=i=>i===0?'🥇':i===1?'🥈':'🥉';
- const top3Rows=rankings.slice(0,3).map((s,i)=>`<tr><td style="text-align:center">${medalIcon(i)}</td><td>${esc(s.firstName)} ${esc(s.name)}</td><td style="text-align:center;font-weight:800;color:${color}">${s.avg.toFixed(2)}</td></tr>`).join('');
- const subjHead=sbs.map(sb=>`<th style="writing-mode:vertical-rl;text-orientation:mixed;padding:6px 3px;font-size:9px;max-width:26px">${esc(sb.name)}</th>`).join('');
+ const top5Rows=rankings.slice(0,5).map(s=>`<tr><td style="text-align:center;font-weight:800;color:${color}">${ordinalLbl(s.rank)}</td><td>${esc(s.firstName)} ${esc(s.name)}</td><td style="text-align:center;font-weight:800;color:${color}">${s.avg.toFixed(2)}</td></tr>`).join('');
+ const subjHead=sbs.map(sb=>`<th style="writing-mode:vertical-rl;text-orientation:mixed;padding:8px 4px;font-size:10.5px;font-weight:700;max-width:28px;color:#fff;background:${color}">${esc(sb.name)}</th>`).join('');
  const gridRows=sts.map((st,i)=>{
   const r=rankings.find(x=>x.id===st.id);
   const cells=sbs.map(sb=>{
@@ -1836,12 +1840,12 @@ function buildActaClassHTML(cid,mode,period,school,dc){
    const col=v===null?'#ccc':v<10?'#dc2626':'#1e293b';
    return`<td style="text-align:center;color:${col};font-size:10.5px">${v!==null?v.toFixed(1):'—'}</td>`;
   }).join('');
-  return`<tr style="${i%2?'background:#f9fafb':''}"><td style="text-align:center">${i+1}</td><td style="min-width:130px">${esc(st.firstName)} ${esc(st.name)}</td>${cells}<td style="text-align:center;font-weight:800;color:${r?color:'#999'}">${r?r.avg.toFixed(2):'—'}</td><td style="text-align:center;font-weight:700">${r?(r.rank<=3?medalIcon(r.rank-1):r.rank+'º'):'—'}</td></tr>`;
+  return`<tr style="${i%2?'background:#f9fafb':''}"><td style="text-align:center">${i+1}</td><td style="min-width:130px">${esc(st.firstName)} ${esc(st.name)}</td>${cells}<td style="text-align:center;font-weight:800;color:${r?color:'#999'}">${r?r.avg.toFixed(2):'—'}</td><td style="text-align:center;font-weight:700">${r?ordinalLbl(r.rank):'—'}</td></tr>`;
  }).join('');
  return`<div style="page-break-after:always">
  <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid ${color};padding-bottom:10px;margin-bottom:14px">
   <div style="width:56px">${school?.logo&&dc.showLogo?`<img src="${school.logo}" style="width:50px;height:50px;object-fit:contain">`:''}</div>
-  <div style="text-align:center;flex:1"><div style="font-size:15px;font-weight:800;color:${color}">${esc(school?.name||'')}</div>
+  <div style="text-align:center;flex:1">${dc.synHeader?`<div style="font-size:10px;color:#666;font-style:italic;margin-bottom:3px">${esc(dc.synHeader)}</div>`:''}<div style="font-size:15px;font-weight:800;color:${color}">${esc(school?.name||'')}</div>
    <div style="font-size:10.5px;color:#666">${esc(school?.city||'')}${school?.region?' — '+esc(school.region):''}</div>
    <div style="font-size:12.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:${color};margin-top:4px">${t('synthesisWordLbl')}</div></div>
   <div style="width:56px"></div>
@@ -1861,14 +1865,14 @@ function buildActaClassHTML(cid,mode,period,school,dc){
   <thead><tr style="background:#f5f7fa"><th style="text-align:left;padding:6px 8px;border-bottom:2px solid ${color}">${t('subjects')}</th><th style="padding:6px 8px;border-bottom:2px solid ${color}">${t('students')}</th><th style="padding:6px 8px;border-bottom:2px solid ${color}">${lang==='en'?'Average':lang==='es'?'Promedio':'Moyenne'}</th><th style="padding:6px 8px;border-bottom:2px solid ${color}">${t('admitted')}</th><th style="padding:6px 8px;border-bottom:2px solid ${color}">${t('repeated')}</th><th style="padding:6px 8px;border-bottom:2px solid ${color}">%</th></tr></thead>
   <tbody>${subjRows}</tbody>
  </table>
- ${top3Rows?`<div style="font-size:12.5px;font-weight:800;color:#b8860b;margin-bottom:6px">🏆 Top 3 — ${esc(cls?.name||'')}</div>
- <table style="width:60%;border-collapse:collapse;margin-bottom:18px;font-size:11.5px">
+ ${top5Rows?`<div style="font-size:12.5px;font-weight:800;color:#b8860b;margin-bottom:6px">🏆 Top 5 — ${esc(cls?.name||'')}</div>
+ <table style="width:65%;border-collapse:collapse;margin-bottom:18px;font-size:11.5px">
   <thead><tr style="background:#fdf6e3"><th style="padding:6px 8px;border-bottom:2px solid #d4a017">#</th><th style="text-align:left;padding:6px 8px;border-bottom:2px solid #d4a017">${t('fullnameCol')}</th><th style="padding:6px 8px;border-bottom:2px solid #d4a017">${t('avgOn20Lbl')}</th></tr></thead>
-  <tbody>${top3Rows}</tbody>
+  <tbody>${top5Rows}</tbody>
  </table>`:''}
  <div style="font-size:12.5px;font-weight:800;color:${color};margin-bottom:6px">📋 ${lang==='en'?'Grades by Subject':lang==='es'?'Notas por materia':'Notes par matière'}</div>
  <table style="width:100%;border-collapse:collapse;font-size:10.5px">
-  <thead><tr style="background:${color}!important"><th style="color:#fff;padding:6px 3px">#</th><th style="color:#fff;text-align:left;padding:6px 6px">${t('fullnameCol')}</th>${subjHead}<th style="color:#fff;padding:6px 4px">${t('avgOn20Lbl')}</th><th style="color:#fff;padding:6px 4px">${t('rankLbl')}</th></tr></thead>
+  <thead><tr style="background:${color}!important"><th style="color:#fff;padding:8px 5px;font-size:11px;font-weight:800">#</th><th style="color:#fff;text-align:left;padding:8px 8px;font-size:11px;font-weight:800">${t('fullnameCol')}</th>${subjHead}<th style="color:#fff;padding:8px 5px;font-size:11px;font-weight:800">${t('avgOn20Lbl')}</th><th style="color:#fff;padding:8px 5px;font-size:11px;font-weight:800">${t('rankLbl')}</th></tr></thead>
   <tbody>${gridRows}</tbody>
  </table></div>`;
 }
@@ -1886,13 +1890,13 @@ function buildActaGlobalHTML(school,cls,dc,mode,period){
  const globalPct=totalNoted?Math.round(totalPassed/totalNoted*100):null;
  const classRows=perClass.map(x=>`<tr><td style="font-weight:700">${esc(x.cls.name)}</td><td style="text-align:center">${x.total}</td><td style="text-align:center">${sbOf(x.cls.id).length}</td><td style="text-align:center">${x.n}</td><td style="text-align:center;font-weight:700;color:${x.avg!==null?color:'#999'}">${x.avg!==null?x.avg.toFixed(2):'—'}</td><td style="text-align:center;color:#059669;font-weight:700">${x.passed}</td><td style="text-align:center;color:#dc2626;font-weight:700">${x.failed}</td><td style="text-align:center">${x.pct!==null?x.pct+'%':'—'}</td></tr>`).join('');
  const chartCats=perClass.filter(x=>x.n>0).map(x=>({label:x.cls.name,a:x.passed,b:x.failed}));
- const top3Block=perClass.filter(x=>x.n>0).map(x=>{
+ const top5Block=perClass.filter(x=>x.n>0).map(x=>{
   const rk=mode==='seq'?rankBySeq(x.cls.id,period):mode==='term'?rankByTerm(x.cls.id,period):rankAnnual(x.cls.id);
-  return rk.slice(0,3).map((s,i)=>`<tr><td style="font-weight:700">${i===0?esc(x.cls.name):''}</td><td style="text-align:center">${i===0?'🥇':i===1?'🥈':'🥉'}</td><td>${esc(s.firstName)} ${esc(s.name)}</td><td style="text-align:center;font-weight:800;color:${color}">${s.avg.toFixed(2)}</td></tr>`).join('');
+  return rk.slice(0,5).map((s,i)=>`<tr><td style="font-weight:700">${i===0?esc(x.cls.name):''}</td><td style="text-align:center;font-weight:800;color:${color}">${ordinalLbl(s.rank)}</td><td>${esc(s.firstName)} ${esc(s.name)}</td><td style="text-align:center;font-weight:800;color:${color}">${s.avg.toFixed(2)}</td></tr>`).join('');
  }).join('');
  return`<div style="display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid ${color};padding-bottom:10px;margin-bottom:16px">
   <div style="width:56px">${school?.logo&&dc.showLogo?`<img src="${school.logo}" style="width:50px;height:50px;object-fit:contain">`:''}</div>
-  <div style="text-align:center;flex:1"><div style="font-size:15px;font-weight:800;color:${color}">${esc(school?.name||'')}</div><div style="font-size:10.5px;color:#666">${esc(school?.city||'')}</div></div>
+  <div style="text-align:center;flex:1">${dc.synHeader?`<div style="font-size:10px;color:#666;font-style:italic;margin-bottom:3px">${esc(dc.synHeader)}</div>`:''}<div style="font-size:15px;font-weight:800;color:${color}">${esc(school?.name||'')}</div><div style="font-size:10.5px;color:#666">${esc(school?.city||'')}</div></div>
   <div style="width:56px"></div>
  </div>
  <div style="font-size:17px;font-weight:800;color:${color};margin-bottom:4px">${t('wholeSchool')} — ${lang==='en'?'Full Detail':lang==='es'?'Detalle completo':'Detail complet'}</div>
@@ -1903,10 +1907,10 @@ function buildActaGlobalHTML(school,cls,dc,mode,period){
   <tbody>${classRows}</tbody>
  </table>
  ${chartCats.length?`<div style="font-size:13px;font-weight:800;color:${color};margin-bottom:10px">${lang==='en'?'Pass / Fail by Class':lang==='es'?'Aprobados / Insuf. por clase':'Admis / Insuffisants par classe'}</div>${buildGroupedBarChart(chartCats,t('admitted'),'#16a34a',t('repeated'),'#dc2626')}`:''}
- ${top3Block?`<div style="font-size:13px;font-weight:800;color:#b8860b;margin:20px 0 8px">🏆 Top 3 ${lang==='en'?'per class':lang==='es'?'por clase':'par classe'}</div>
+ ${top5Block?`<div style="font-size:13px;font-weight:800;color:#b8860b;margin:20px 0 8px">🏆 Top 5 ${lang==='en'?'per class':lang==='es'?'por clase':'par classe'}</div>
  <table style="width:100%;border-collapse:collapse;font-size:11.5px">
   <thead><tr style="background:#fdf6e3"><th style="text-align:left;padding:6px 8px;border-bottom:2px solid #d4a017">${t('classCol')}</th><th style="padding:6px 8px;border-bottom:2px solid #d4a017">#</th><th style="text-align:left;padding:6px 8px;border-bottom:2px solid #d4a017">${t('fullnameCol')}</th><th style="padding:6px 8px;border-bottom:2px solid #d4a017">${t('avgOn20Lbl')}</th></tr></thead>
-  <tbody>${top3Block}</tbody>
+  <tbody>${top5Block}</tbody>
  </table>`:''}
  <div style="display:flex;justify-content:space-between;margin-top:44px;font-size:11.5px;color:#333">
   <div>${lang==='en'?'Principal signature':lang==='es'?'Firma del Director/a':'Signature du Chef d\'Établissement'}: ..................................</div>
@@ -3001,6 +3005,7 @@ function buildDocConfigForm(sid){
    <div class="fg"><label class="lab">${t('dcSignTitle2')}</label><input class="fc" id="dcc-signTitle2" value="${esc(dc.signTitle2||'Le Chef d\'Établissement')}"></div>
    <div class="fg"><label class="lab">${t('dcCustomHeader')} (${t('bulletin')})</label><textarea class="fc" id="dcc-customHeader" rows="2">${esc(dc.customHeader||'')}</textarea></div>
    <div class="fg"><label class="lab">${t('dcCustomHeader')} (${t('certs')})</label><textarea class="fc" id="dcc-certHeader" rows="2">${esc(dc.certHeader||'')}</textarea></div>
+   <div class="fg"><label class="lab">${t('dcCustomHeader')} (${t('synthesis')})</label><textarea class="fc" id="dcc-synHeader" rows="2">${esc(dc.synHeader||'')}</textarea></div>
    <div class="fg"><label class="lab">${t('dcFooterNote')}</label><input class="fc" id="dcc-footerNote" value="${esc(dc.footerNote||'')}"></div>
   </div></div>
   <div class="card"><div class="ch"><span class="ct2">${t('dcGroupLabels')}</span></div><div class="cb">
@@ -3050,7 +3055,7 @@ async function saveDocConfig(sid){
  const dc=getDocCfg(DB.schools[i]);
  const bools=['showLogo','showMatricule','showDOB','showPOB','showGender','showParent','showPhone','showAddress','showClassTeacher','showAbsences','showObservations','showRank','showClassStats','showDecision','showStamp','showGroupHeaders','useGroups','synShowDist','synShowRanking','synShowStats','synShowChart'];
  bools.forEach(k=>{const el=document.getElementById('dcc-'+k);if(el)dc[k]=el.checked;});
- ['signTitle1','signTitle2','customHeader','certHeader','footerNote','grpSciLabel','grpLitLabel','grpCompLabel','grpTechLabel','grpGenLabel'].forEach(k=>{const el=document.getElementById('dcc-'+k);if(el)dc[k]=sanitize(el.value);});
+ ['signTitle1','signTitle2','customHeader','certHeader','synHeader','footerNote','grpSciLabel','grpLitLabel','grpCompLabel','grpTechLabel','grpGenLabel'].forEach(k=>{const el=document.getElementById('dcc-'+k);if(el)dc[k]=sanitize(el.value);});
  const colEl=document.getElementById('dcc-bulletinColor');if(colEl)dc.bulletinColor=colEl.value;
  dc.listColumns=[...document.querySelectorAll('[id^="dcc-lc-"]:checked')].map(el=>el.id.replace('dcc-lc-',''));
  const buls=[];document.querySelectorAll('[id^="ebf-l-"]').forEach(el=>{const idx=parseInt(el.id.replace('ebf-l-',''));const vEl=document.getElementById('ebf-v-'+idx);if(el.value||vEl?.value)buls.push({label:sanitize(el.value),val:sanitize(vEl?.value||'')});});dc.extraBulletinFields=buls;
@@ -3547,7 +3552,8 @@ function buildSchoolSynthesis(school,cls,dc){
   *{box-sizing:border-box;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
   body{font-family:'Nunito',sans-serif;padding:20px;font-size:13px;color:#1e293b;margin:0}
   table{width:100%;border-collapse:collapse}
-  @media print{${pageCSS(synFmt)}body{padding:14px}}
+  th,td{border:1px solid #cbd5e1}
+  @media print{${pageCSS(synFmt)}body{padding:14px}table{font-size:10px}}
  </style></head><body>
  ${content}
  ${printFooter()}
